@@ -27,10 +27,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int RESULT_REGISTER = 999;
+
     public MainActivity(){}
     public final static int REQUEST_CODE = 0;
     private FirebaseAuth mAuth;
-    String mEmail;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private TextView mTextMessage;
     public final static String EMAIL_KEY = "email";
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null){
-                    //Logged in
+
                 } else {
                     //Logged out
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
 
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -137,14 +139,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Intent i = getIntent();
+
         /**
          * NULL POINTER EXCEPTION IS BEING CAUGHT HERE
          * ERROR FOR SOME UNKNOWN REASON
          * DATA IS RETRIEVED FROM LoginActivity.java
          */
-        if(requestCode == Activity.RESULT_OK){
-            mAuth.signInWithEmailAndPassword(getIntent().getExtras().getString("email"),  getIntent().getExtras().getString("password"))
+        if(requestCode == RESULT_OK){
+            mAuth.signInWithEmailAndPassword(data.getExtras().getString(EMAIL_KEY),  data.getExtras().getString(PASSWORD_KEY))
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -162,8 +164,8 @@ public class MainActivity extends AppCompatActivity {
                             // ...
                         }
                     });
-        } else {
-            mAuth.createUserWithEmailAndPassword(getIntent().getExtras().getString("email"),  getIntent().getExtras().getString("password"))
+        } else if(requestCode == RESULT_REGISTER){
+            mAuth.createUserWithEmailAndPassword(data.getExtras().getString(EMAIL_KEY),  data.getExtras().getString(PASSWORD_KEY))
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {

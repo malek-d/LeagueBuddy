@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "";
     public static String USER_KEY = "user";
-    public static String AUTH_KEY = "auth";
     public boolean mBool;
     public EditText emailEditText;
     public EditText passwordEditText;
@@ -51,8 +50,12 @@ public class LoginActivity extends AppCompatActivity {
                 Intent result = new Intent();
                 Log.d(TAG, emailEditText.getText().toString());
                 Log.d(TAG, passwordEditText.getText().toString());
-                result.putExtra("email", emailEditText.getText().toString());
-                result.putExtra("password", passwordEditText.getText().toString());
+                result.putExtra(MainActivity.EMAIL_KEY, emailEditText.getText().toString());
+                result.putExtra(MainActivity.PASSWORD_KEY, passwordEditText.getText().toString());
+                if(mBool){
+                    setResult(MainActivity.RESULT_OK, result);
+                }
+                else {setResult(MainActivity.RESULT_REGISTER, result);}
                 finish();
 
                 /**
