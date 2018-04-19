@@ -76,15 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        final Button button = findViewById(R.id.getSummonerBtn);
-        Intent intent = getIntent();
         Toasty.success(MainActivity.this, getString(R.string.loggedinMessage)+ " " + mUser.getEmail()).show();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-test
     }
 
     @Override

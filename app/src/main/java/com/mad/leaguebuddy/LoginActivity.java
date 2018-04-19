@@ -113,16 +113,13 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                         if (task.isSuccessful()) {
-                            mUser = mAuth.getCurrentUser();
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra(MainActivity.USER_KEY, mUser);
-                            startActivity(intent);
+                            finish();
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-        if(mUser == null) {
-            Toasty.error(LoginActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
-        }
     }
     private void tryLogin() {
         String email = emailEditText.getText().toString();

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/lissandra_castle_blurred"
     tools:context="com.mad.leaguebuddy.MainActivity">
 
     <FrameLayout
@@ -15,12 +16,7 @@
         android:layout_weight="1">
 
 
-        <Button
-            android:id="@+id/getSummonerBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Get Summoner"/>
+
 
     </FrameLayout>
 
@@ -29,7 +25,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
+        android:background="#80000000"
+        app:itemIconTint="@color/buttonColor"
+        app:itemTextColor="@color/buttonColor"
         app:menu="@menu/navigation" />
 
 </LinearLayout>
