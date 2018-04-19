@@ -47,16 +47,15 @@ public class LoginActivity extends AppCompatActivity {
                 Button btn = findViewById(R.id.CancelButton);
                 //btn.setText(emailEditText.getText().toString());
 
-                Intent result = new Intent();
+                Intent result = new Intent(LoginActivity.this, MainActivity.class);
                 Log.d(TAG, emailEditText.getText().toString());
                 Log.d(TAG, passwordEditText.getText().toString());
                 result.putExtra(MainActivity.EMAIL_KEY, emailEditText.getText().toString());
                 result.putExtra(MainActivity.PASSWORD_KEY, passwordEditText.getText().toString());
-                if(mBool){
-                    setResult(MainActivity.RESULT_OK, result);
+                if(mBool) {
+                    result.putExtra(MainActivity.LOGIN_KEY, mBool);
                 }
-                else {setResult(MainActivity.RESULT_REGISTER, result);}
-                finish();
+                startActivity(result);
 
             }
         });

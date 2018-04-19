@@ -29,13 +29,15 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
     public static final int RESULT_REGISTER = 999;
 
-    public MainActivity(){}
+
     public final static int REQUEST_CODE = 0;
+    private static final String TAG = "";
+    public static final String LOGIN_KEY = "";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private TextView mTextMessage;
     public final static String EMAIL_KEY = "email";
-    public final static String PASSWORD_KEY ="password";
+    public final static String PASSWORD_KEY = "password";
 
     //private String mUrl = "https://oc1.api.riotgames.com/lol/summoner/v3/summoners/by-name/";
     //private String mKey = "RGAPI-9323199c-92b9-49f4-ade1-124160937f82";
@@ -62,57 +64,101 @@ public class MainActivity extends AppCompatActivity {
 
     };
 
-    public MainActivity(FirebaseAuth.AuthStateListener mAuthListener) {
-        this.mAuthListener = mAuthListener;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-
-        mAuthListener = new FirebaseAuth.AuthStateListener(){
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null){
-
-                } else {
-                    //Logged out
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    intent.putExtra(LoginActivity.USER_KEY, mUser);;
-                    startActivityForResult(intent, REQUEST_CODE);
-                }
-            }
-        };
-
-
-
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        final Button button = findViewById(R.id.getSummonerBtn);
+        Intent intent = getIntent();
+        boolean bool = intent.getExtras().getBoolean(LOGIN_KEY);
+        if(bool){
+            mAuth.signInWithEmailAndPassword(intent.getExtras().getString(EMAIL_KEY), intent.getExtras().getString(PASSWORD_KEY))
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                            if (task.isSuccessful()) {
+                                mUser = mAuth.getCurrentUser();
+                                updateUI(mUser);
 
+                            }
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
 
+                            else {
+                                Toast.makeText(MainActivity.this, R.string.auth_failed,
+                                        Toast.LENGTH_SHORT).show();
+                                updateUI(null);
+                            }
 
+                            // ...
+                        }
+                    });
+        }else{
+            mAuth.createUserWithEmailAndPassword(intent.getExtras().getString(EMAIL_KEY), intent.getExtras().getString(PASSWORD_KEY))
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                            if (task.isSuccessful()) {
+                                mUser = mAuth.getCurrentUser();
+                                updateUI(mUser);
+                                button.setText("it worked");
+                            }
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            else {
+                                Toast.makeText(MainActivity.this, R.string.auth_failed,
+                                        Toast.LENGTH_SHORT).show();
+                                updateUI(null);
+                            }
+                        }
+                    });
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        mUser = mAuth.getCurrentUser();
+        updateUI(mUser);
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+
+        } else {
+
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (mAuthListener != null) { mAuth.removeAuthStateListener(mAuthListener); }
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     class getSummonerTask extends AsyncTask<Void, Void, String> {
         String url;
-        public getSummonerTask(String string){
+
+        public getSummonerTask(String string) {
             url = string;
         }
+
         @Override
         protected String doInBackground(Void... strings) {
             Request request = new Request.Builder()
@@ -132,50 +178,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             mTextMessage.setText(s);
-        }
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == RESULT_OK){
-            mAuth.signInWithEmailAndPassword(data.getExtras().getString(EMAIL_KEY),  data.getExtras().getString(PASSWORD_KEY))
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            if (!task.isSuccessful()) {
-                                //Log.w(TAG, "signInWithEmail:failed", task.getException());
-                                Toast.makeText(MainActivity.this, R.string.auth_failed,
-                                        Toast.LENGTH_SHORT).show();
-                            }
-
-                            // ...
-                        }
-                    });
-        } else if(requestCode == RESULT_REGISTER){
-            mAuth.createUserWithEmailAndPassword(data.getExtras().getString(EMAIL_KEY),  data.getExtras().getString(PASSWORD_KEY))
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            //Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(MainActivity.this, R.string.auth_failed,
-                                        Toast.LENGTH_SHORT).show();
-                            }
-
-                            // ...
-                        }
-                    });
         }
     }
 }
