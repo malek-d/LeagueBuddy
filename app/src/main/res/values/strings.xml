@@ -14,4 +14,7 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="auth_failed">Authentication Failed</string>
+    <string name="loggedinMessage">Logged in as:</string>
+    <string name="registeredMessage">Registered as:</string>
+    <string name="loginFailedString">Login Failed</string>
 </resources>

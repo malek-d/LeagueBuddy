@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -32,12 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
     public final static int REQUEST_CODE = 0;
     private static final String TAG = "";
-    public static final String LOGIN_KEY = "";
+    public static final String USER_KEY = "";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private TextView mTextMessage;
-    public final static String EMAIL_KEY = "email";
-    public final static String PASSWORD_KEY = "password";
 
     //private String mUrl = "https://oc1.api.riotgames.com/lol/summoner/v3/summoners/by-name/";
     //private String mKey = "RGAPI-9323199c-92b9-49f4-ade1-124160937f82";
@@ -74,53 +73,8 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         final Button button = findViewById(R.id.getSummonerBtn);
         Intent intent = getIntent();
-        boolean bool = intent.getExtras().getBoolean(LOGIN_KEY);
-        if(bool){
-            mAuth.signInWithEmailAndPassword(intent.getExtras().getString(EMAIL_KEY), intent.getExtras().getString(PASSWORD_KEY))
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                            if (task.isSuccessful()) {
-                                mUser = mAuth.getCurrentUser();
-                                updateUI(mUser);
-
-                            }
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-
-                            else {
-                                Toast.makeText(MainActivity.this, R.string.auth_failed,
-                                        Toast.LENGTH_SHORT).show();
-                                updateUI(null);
-                            }
-
-                            // ...
-                        }
-                    });
-        }else{
-            mAuth.createUserWithEmailAndPassword(intent.getExtras().getString(EMAIL_KEY), intent.getExtras().getString(PASSWORD_KEY))
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                            if (task.isSuccessful()) {
-                                mUser = mAuth.getCurrentUser();
-                                updateUI(mUser);
-                                button.setText("it worked");
-                            }
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            else {
-                                Toast.makeText(MainActivity.this, R.string.auth_failed,
-                                        Toast.LENGTH_SHORT).show();
-                                updateUI(null);
-                            }
-                        }
-                    });
-        }
+        mUser = (FirebaseUser) intent.getExtras().get(USER_KEY);
+        Toasty.success(MainActivity.this, getString(R.string.loggedinMessage)+ " " + mUser.getEmail()).show();
     }
 
     @Override
