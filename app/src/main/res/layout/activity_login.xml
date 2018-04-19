@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/freljord_tower_wallpaper_blurred"
+    tools:context="com.mad.leaguebuddy.LoginActivity">
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/LogoLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:src="@drawable/league_of_legends_logo_transparent"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/FormLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_centerInParent="true"
+        >
+        <TableLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1"
+            >
+            <TableRow>
+                <TextView android:text="@string/email" android:textStyle="bold"/>
+                <EditText
+                    android:textColor="@color/buttonColor"
+                    android:id="@+id/emailEditText"
+                    android:inputType="textEmailAddress"/>
+            </TableRow>
+            <TableRow>
+                <TextView android:text="@string/password"  android:textStyle="bold"/>
+                <EditText
+                    android:textColor="@color/buttonColor"
+                    android:id="@+id/passwordEditText"
+                    android:inputType="textPassword"/>
+            </TableRow>
+            <TextView android:text="@string/signInQuestion" android:textStyle="bold"/>
+            <ToggleButton
+                android:id="@+id/ToggleButton"
+                android:layout_gravity="center"
+                android:textOff="@string/no"
+                android:textOn="@string/Yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_below="@+id/FormLayout"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:id="@+id/AuthenticateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/authenticateColor"
+            android:textColor="@color/buttonColor"
+            android:text="@string/register"/>
+        <Button
+            android:id="@+id/CancelButton"
+            android:backgroundTint="@color/redCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Cancel"
+            android:textStyle="bold"
+            android:textColor="@color/buttonColor"/>
+    </LinearLayout>
+
+</RelativeLayout>

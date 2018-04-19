@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">League Buddy</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="settings">Settings</string>
+    <string name="email">Email: </string>
+    <string name="emailAddress">Insert Email Address</string>
+    <string name="password">Password: </string>
+    <string name="signInQuestion">Sign in?</string>
+    <string name="no">No</string>
+    <string name="Yes">Yes</string>
+    <string name="Cancel">Cancel</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="auth_failed">Authentication Failed</string>
+</resources>

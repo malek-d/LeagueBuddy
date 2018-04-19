@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "940566792800",
+    "firebase_url": "https://leaguebuddy-b19c7.firebaseio.com",
+    "project_id": "leaguebuddy-b19c7",
+    "storage_bucket": "leaguebuddy-b19c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940566792800:android:7d3a4d23fae53473",
+        "android_client_info": {
+          "package_name": "com.mad.leaguebuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940566792800-5e6odafqjh45fuh4nqofn4jlfvci2v4k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mad.leaguebuddy",
+            "certificate_hash": "ebb1cb09f290b74019478f4e48db309b890c51c7"
+          }
+        },
+        {
+          "client_id": "940566792800-nmivpdno5b8m6opdlo6d5umlc6hp0r2d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjsp3HwiYx4_0eyxdwrp3-8GGzBH7uq5M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940566792800-nmivpdno5b8m6opdlo6d5umlc6hp0r2d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
