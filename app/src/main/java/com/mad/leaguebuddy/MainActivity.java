@@ -139,12 +139,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        /**
-         * NULL POINTER EXCEPTION IS BEING CAUGHT HERE
-         * ERROR FOR SOME UNKNOWN REASON
-         * DATA IS RETRIEVED FROM LoginActivity.java
-         */
         if(requestCode == RESULT_OK){
             mAuth.signInWithEmailAndPassword(data.getExtras().getString(EMAIL_KEY),  data.getExtras().getString(PASSWORD_KEY))
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

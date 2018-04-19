@@ -58,9 +58,6 @@ public class LoginActivity extends AppCompatActivity {
                 else {setResult(MainActivity.RESULT_REGISTER, result);}
                 finish();
 
-                /**
-                 * THE DATA IS NOT NULL HERE
-                 */
             }
         });
 
