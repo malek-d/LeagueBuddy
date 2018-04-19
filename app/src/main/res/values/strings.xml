@@ -17,4 +17,20 @@
     <string name="loggedinMessage">Logged in as:</string>
     <string name="registeredMessage">Registered as:</string>
     <string name="loginFailedString">Login Failed</string>
+    <string name="enterSummoner">Enter summoner name</string>
+
+
+    <string-array name="regions">
+        <item name="OCE">OCE</item>
+        <item name="RU">RU</item>
+        <item name="KR">KR</item>
+        <item name="BR">BR</item>
+        <item name="JP">JP</item>
+        <item name="NA">NA</item>
+        <item name="EUN">EUN</item>
+        <item name="EUW">EUW</item>
+        <item name="TR">TR</item>
+        <item name="EUW">EUW</item>
+    </string-array>
+    <string name="title_activity_settings">SettingsActivity</string>
 </resources>

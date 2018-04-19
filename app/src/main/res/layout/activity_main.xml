@@ -17,7 +17,6 @@
 
 
 
-
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
@@ -25,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="#80000000"
+        android:background="@color/slightlyTransparent"
         app:itemIconTint="@color/buttonColor"
         app:itemTextColor="@color/buttonColor"
         app:menu="@menu/navigation" />

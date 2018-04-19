@@ -6,4 +6,6 @@
     <color name="redCancel">#E53935</color>
     <color name="authenticateColor">#006666</color>
     <color name="buttonColor">#FFFFFF</color>
+    <color name="whiteText">#FFFFFF</color>
+    <color name="slightlyTransparent">#80000000</color>
 </resources>

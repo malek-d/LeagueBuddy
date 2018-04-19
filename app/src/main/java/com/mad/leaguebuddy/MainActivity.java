@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private TextView mTextMessage;
 
-    //private String mUrl = "https://oc1.api.riotgames.com/lol/summoner/v3/summoners/by-name/";
-    //private String mKey = "RGAPI-9323199c-92b9-49f4-ade1-124160937f82";
+    private String mUrl = "https://oc1.api.riotgames.com/lol/summoner/v3/summoners/by-name/";
+    private String mKey = "RGAPI-0f76286c-8a5e-41db-ace9-f14f2b98e7a0";
     private OkHttpClient mClient = new OkHttpClient();
     private FirebaseUser mUser;
 
@@ -50,14 +52,17 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+
                     return true;
+                case R.id.navigation_settings:
+                    Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(intent);break;
             }
             return false;
         }
@@ -69,10 +74,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //getActionBar().setDisplayShowTitleEnabled(false);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
