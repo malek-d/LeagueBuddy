@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "";
     public static final String USER_KEY = "";
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private TextView mTextMessage;
 
@@ -68,19 +69,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         final Button button = findViewById(R.id.getSummonerBtn);
         Intent intent = getIntent();
-        mUser = (FirebaseUser) intent.getExtras().get(USER_KEY);
         Toasty.success(MainActivity.this, getString(R.string.loggedinMessage)+ " " + mUser.getEmail()).show();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
+test
     }
 
     @Override
