@@ -33,4 +33,9 @@
         <item name="EUW">EUW</item>
     </string-array>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="summonerNameString">Summoner Name:</string>
+    <string name="soloQueueTableTitle">Solo Queue Stats</string>
+    <string name="winsStr">Wins</string>
+    <string name="lossesStr">Losses</string>
+    <string name="winrateStr">Win Rate</string>
 </resources>

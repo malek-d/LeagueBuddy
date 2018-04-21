@@ -13,42 +13,60 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.mad.leaguebuddy.model.*;
+
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "";
     public static String USER_KEY = "user";
-    public boolean mBool;
-    public EditText emailEditText;
-    public EditText passwordEditText;
-    public FirebaseUser mUser;
-    public Button mAuthButton;
-    public ProgressBar mProgressBar;
-    public FirebaseAuth mAuth;
+    private boolean mBool;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private Button mAuthButton;
+    private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private TableRow summonerInfoRow;
+    private Spinner regionSpinner;
+    private EditText summonerNameEditText;
+    private API api = new API();
+
+    private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ToggleButton toggleButton = (ToggleButton) findViewById(R.id.ToggleButton);
+        ToggleButton toggleButton = findViewById(R.id.ToggleButton);
         mAuth = FirebaseAuth.getInstance();
-        mAuthButton = (Button) findViewById(R.id.AuthenticateButton);
-        emailEditText = (EditText) findViewById(R.id.emailEditText);
-        passwordEditText = (EditText) findViewById(R.id.passwordEditText);
-        //getActionBar().setDisplayShowTitleEnabled(false);
+        mAuthButton =  findViewById(R.id.AuthenticateButton);
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        summonerInfoRow = findViewById(R.id.summonerTablerow);
+        regionSpinner = findViewById(R.id.regionSpinner);
+        summonerNameEditText = findViewById(R.id.summonerEditText);
 
-        mProgressBar = findViewById(R.id.loginProgressBar);
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -71,8 +89,11 @@ public class LoginActivity extends AppCompatActivity {
                 mBool = b;
                 if (b) {
                     mAuthButton.setText(getString(R.string.login));
+                    summonerInfoRow.setVisibility(View.GONE);
+
                 } else {
                     mAuthButton.setText(getString(R.string.register));
+                    summonerInfoRow.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -113,8 +134,18 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                         if (task.isSuccessful()) {
+
+                            String summonerName = summonerNameEditText.getText().toString();
+                            String region = api.returnRegion(regionSpinner.getSelectedItem().toString());
+
+
+                            DatabaseReference summonerRef = mDatabase.getReference("users");
+                            summonerRef.child(mAuth.getUid()).setValue(new User(summonerName, region));
+
+
                             finish();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
                         } else {
                             Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
                         }

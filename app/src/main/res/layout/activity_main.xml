@@ -9,15 +9,88 @@
     android:background="@drawable/lissandra_castle_blurred"
     tools:context="com.mad.leaguebuddy.MainActivity">
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/imageLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:maxHeight="100dp"
+                android:maxWidth="100dp"
+                android:adjustViewBounds="true"
+                android:id="@+id/profileImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/slightlyTransparent"
+                />
+            <TextView
+                android:textStyle="italic"
+                android:textColor="@color/whiteText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/levelText"/>
+
+            <TextView android:textStyle="bold" android:textSize="30dp" android:layout_marginTop="20dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/summonerName" android:textColor="@color/whiteText" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rankIcon"/>
+            <TextView
+                android:id="@+id/rankTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textColor="@color/whiteText"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:background="@color/slightlyTransparent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:textSize="25dp"
+                android:textColor="@color/whiteText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/soloQueueTableTitle"/>
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TableRow>
+                    <TextView android:textColor="@color/whiteText" android:text="@string/winsStr"/>
+                    <TextView android:id="@+id/winsTextView" android:textColor="@color/whiteText" android:textStyle="bold"/>
+                </TableRow>
+                <TableRow>
+                    <TextView android:textColor="@color/whiteText" android:text="@string/lossesStr"/>
+                    <TextView android:id="@+id/lossesTextView" android:textColor="@color/whiteText" android:textStyle="bold"/>
+                </TableRow>
+                <TableRow>
+                    <TextView android:textColor="@color/whiteText" android:text="@string/winrateStr"/>
+                    <TextView android:id="@+id/winrateTextView" android:textColor="@color/whiteText" android:textStyle="bold"/>
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
 
 
 
-    </FrameLayout>
+
+    </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

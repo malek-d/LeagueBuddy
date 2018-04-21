@@ -8,4 +8,6 @@
     <color name="buttonColor">#FFFFFF</color>
     <color name="whiteText">#FFFFFF</color>
     <color name="slightlyTransparent">#80000000</color>
+    <color name="tableLayoutBackground">#48000000</color>
+    <color name="spinnerBackground">#96FFFFFF</color>
 </resources>

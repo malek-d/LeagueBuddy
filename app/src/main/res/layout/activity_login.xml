@@ -38,22 +38,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:stretchColumns="1"
+            android:background="@color/tableLayoutBackground"
             >
             <TableRow>
-                <TextView android:text="@string/email" android:textStyle="bold"/>
+                <TextView android:textColor="@color/whiteText" android:text="@string/email" android:textStyle="bold"/>
                 <EditText
                     android:textColor="@color/buttonColor"
                     android:id="@+id/emailEditText"
                     android:inputType="textEmailAddress"/>
             </TableRow>
             <TableRow>
-                <TextView android:text="@string/password"  android:textStyle="bold"/>
+                <TextView android:textColor="@color/whiteText" android:text="@string/password"  android:textStyle="bold"/>
                 <EditText
                     android:textColor="@color/buttonColor"
                     android:id="@+id/passwordEditText"
                     android:inputType="textPassword"/>
             </TableRow>
-            <TextView android:text="@string/signInQuestion" android:textStyle="bold"/>
+            <TableRow  android:id="@+id/summonerTablerow" >
+                <TextView android:textColor="@color/whiteText" android:textStyle="bold" android:id="@+id/summonerName" android:text="@string/summonerNameString" />
+                <EditText
+                    android:textColor="@color/buttonColor"
+                    android:id="@+id/summonerEditText"
+                    android:inputType="text"/>
+                <Spinner
+                    android:background="@color/spinnerBackground"
+                    android:id="@+id/regionSpinner"
+                    android:entries="@array/regions"></Spinner>
+            </TableRow>
+            <TextView android:textColor="@color/whiteText" android:text="@string/signInQuestion" android:textStyle="bold"/>
             <ToggleButton
                 android:id="@+id/ToggleButton"
                 android:layout_gravity="center"
