@@ -1,8 +1,11 @@
 package com.mad.leaguebuddy;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,6 +39,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mad.leaguebuddy.model.*;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private String mSummonerName, mURL, mRegion, mRankedURL;
     private Long mAccountID;
-    private TextView mSummonerNameText, mLevelText;
-    private TextView  mRankTextView;
+    private TextView mSummonerNameText, mLevelText,  mRankTextView, mWinsTextView, mLossesTextView, mAverageTextView;
     private API api = new API();
     private OkHttpClient mClient = new OkHttpClient();
     private FirebaseUser mUser;
@@ -91,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //getActionBar().setDisplayShowTitleEnabled(false);
         mProfileIcon = findViewById(R.id.profileImageView);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -115,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
         mLevelText = findViewById(R.id.levelText);
         mRankTextView = findViewById(R.id.rankTextView);
         mSummonerNameText.setText(mSummonerName);
+        mWinsTextView = findViewById(R.id.winsTextView);
+        mLossesTextView = findViewById(R.id.lossesTextView);
+        mAverageTextView = findViewById(R.id.winrateTextView);
     }
 
     private void showData(DataSnapshot dataSnapshot) {
@@ -229,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class getRankedInfoTask extends AsyncTask<Void, Void, JSONObject> {
+    private class getRankedInfoTask extends AsyncTask<Void, Void, JSONArray> {
         String url;
         String jsonData;
         public getRankedInfoTask(String mRankedURL) {
@@ -237,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected JSONObject doInBackground(Void... voids) {
+        protected JSONArray doInBackground(Void... voids) {
             Request request = new Request.Builder()
                     .url(url)
                     .build();
@@ -245,7 +250,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Response response = mClient.newCall(request).execute();
                 jsonData = response.body().string();
-                return new JSONObject(jsonData);
+                JSONArray array = new JSONArray(jsonData);
+                return array;
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -255,22 +261,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(JSONObject jsonObject) {
-            Iterator<String> it = jsonObject.keys();
-            //String iteratorStr;
-            mRankTextView.setText(jsonData);
-            /*while (it.hasNext()) {
-                iteratorStr = it.next();
-                if (iteratorStr.equals("tier")) {
-                    try {
-                        mRankTextView.setText(jsonObject.get(iteratorStr).toString() + jsonObject.getString("rank").toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+        protected void onPostExecute(JSONArray array) {
+            for(int i = 0; i < array.length(); ++i){
+                try {
+                    JSONObject object = array.getJSONObject(i);
+                    mRankTextView.setText(object.getString("tier") + " " +object.getString("rank").toString());
+                    mWinsTextView.setText(object.getString("wins"));
+                    mLossesTextView.setText(object.getString("losses"));
+                    mAverageTextView.setText("  " + object.getString("wins") + " || " + object.getString("losses"));
+                    setTitle(getString(R.string.tierNameString)+ "  " + object.getString("leagueName"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }*/
-
-        }
+            }
+                    }
     }
 }
 

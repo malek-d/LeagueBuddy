@@ -46,6 +46,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/rankIcon"/>
             <TextView
+                android:layout_gravity="center"
+                android:textSize="20dp"
                 android:id="@+id/rankTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,6 +62,8 @@
             android:layout_centerInParent="true"
             android:background="@color/slightlyTransparent"
             android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             >
             <TextView
                 android:textSize="25dp"
@@ -70,7 +74,12 @@
                 android:text="@string/soloQueueTableTitle"/>
             <TableLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:stretchColumns="1"
+                android:divider="?android:attr/dividerHorizontal"
+                android:dividerPadding="5dp"
+                android:showDividers="middle"
+               >
                 <TableRow>
                     <TextView android:textColor="@color/whiteText" android:text="@string/winsStr"/>
                     <TextView android:id="@+id/winsTextView" android:textColor="@color/whiteText" android:textStyle="bold"/>

@@ -1,6 +1,8 @@
 package com.mad.leaguebuddy;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -58,6 +60,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+
         ToggleButton toggleButton = findViewById(R.id.ToggleButton);
         mAuth = FirebaseAuth.getInstance();
         mAuthButton =  findViewById(R.id.AuthenticateButton);
