@@ -10,4 +10,6 @@
     <color name="slightlyTransparent">#80000000</color>
     <color name="tableLayoutBackground">#48000000</color>
     <color name="spinnerBackground">#96FFFFFF</color>
+    <color name="androidGreen">#A4C639</color>
+    <color name="negativeWinrateRed">#cc0000</color>
 </resources>

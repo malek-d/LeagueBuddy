@@ -268,7 +268,18 @@ public class MainActivity extends AppCompatActivity {
                     mRankTextView.setText(object.getString("tier") + " " +object.getString("rank").toString());
                     mWinsTextView.setText(object.getString("wins"));
                     mLossesTextView.setText(object.getString("losses"));
-                    mAverageTextView.setText("  " + object.getString("wins") + " || " + object.getString("losses"));
+                    int wins = Integer.parseInt(object.getString("wins"));
+                    int losses = Integer.parseInt(object.getString("losses"));
+                    double winrate = (wins + losses);
+                    winrate = wins / winrate;
+                    winrate = winrate * 100;
+                    winrate = Math.round(winrate * 100 ) / 100;
+                    if(winrate >= 50){
+                        mAverageTextView.setTextColor(getResources().getColor(R.color.androidGreen));
+                    }else{
+                        mAverageTextView.setTextColor(getResources().getColor(R.color.negativeWinrateRed));
+                    }
+                    mAverageTextView.setText("  " + winrate + "%");
                     setTitle(getString(R.string.tierNameString)+ "  " + object.getString("leagueName"));
                 } catch (JSONException e) {
                     e.printStackTrace();
