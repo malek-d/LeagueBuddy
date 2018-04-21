@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.nfc.Tag;
 import android.os.AsyncTask;
@@ -59,11 +60,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private String mSummonerName, mURL, mRegion, mRankedURL;
     private Long mAccountID;
-    private TextView mSummonerNameText, mLevelText,  mRankTextView, mWinsTextView, mLossesTextView, mAverageTextView;
+    private TextView mSummonerNameText, mLevelText,  mRankTextView, mWinsTextView, mLossesTextView, mAverageTextView, lastOnlineTextView;
     private API api = new API();
     private OkHttpClient mClient = new OkHttpClient();
     private FirebaseUser mUser;
-    private ImageView mProfileIcon;
+    private ImageView mProfileIcon, mRankIcon;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -116,17 +117,25 @@ public class MainActivity extends AppCompatActivity {
         mSummonerNameText = findViewById(R.id.summonerName);
         mLevelText = findViewById(R.id.levelText);
         mRankTextView = findViewById(R.id.rankTextView);
-        mSummonerNameText.setText(mSummonerName);
+
+
+
         mWinsTextView = findViewById(R.id.winsTextView);
         mLossesTextView = findViewById(R.id.lossesTextView);
         mAverageTextView = findViewById(R.id.winrateTextView);
+        mRankIcon  = findViewById(R.id.rankIcon);
+        lastOnlineTextView = findViewById(R.id.lastOnlineTextView);
     }
 
     private void showData(DataSnapshot dataSnapshot) {
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
             if (ds.getKey().equals(mUser.getUid())) {
-                //Toasty.info(MainActivity.this,ds.child("summonerName").getValue().toString() + ds.child("region").getValue().toString(), Toast.LENGTH_SHORT ).show();
+
+
                 mSummonerName = ds.child("summonerName").getValue().toString();
+                Typeface font = Typeface.createFromAsset(getAssets(), "cinzel_regular.ttf");
+                mSummonerNameText.setTypeface(font);
+                mSummonerNameText.setText(mSummonerName);
                 mRegion = ds.child("region").getValue().toString();
                 mURL = api.getSummonerURL(mSummonerName, mRegion.toLowerCase());
                 summonerTask(mURL);
@@ -206,29 +215,42 @@ public class MainActivity extends AppCompatActivity {
             String iteratorStr;
             while (it.hasNext()) {
                 iteratorStr = it.next();
-
-                if (iteratorStr.equals("id")) {
-                    try {
-                        int id = Integer.parseInt(s.getString(iteratorStr));
-                        mAccountID = new Long(id);
-                        mRankedURL = api.getRankedStatsURL(mRegion.toLowerCase(), mAccountID);
-                        summonerRankTask(mRankedURL);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                try {
+                    if (iteratorStr.equals("id")) {
+                        try {
+                            int id = Integer.parseInt(s.getString(iteratorStr));
+                            mAccountID = new Long(id);
+                            mRankedURL = api.getRankedStatsURL(mRegion.toLowerCase(), mAccountID);
+                            summonerRankTask(mRankedURL);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (iteratorStr.equals("profileIconId")) {
+                        try {
+                            Glide.with(MainActivity.this)
+                                    .load("http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/" + s.getString(iteratorStr) + ".png").into(mProfileIcon);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (iteratorStr.equals("summonerLevel")) {
+                        try {
+                            mLevelText.setText("Level: " + s.getString(iteratorStr));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (iteratorStr.equals("revisionDate")) {
+                        Long i = new Long(s.getString(iteratorStr));
+                        int days = (int) (i / 1000%60%60%24);
+                        if(days == 0){
+                            lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " + getString(R.string.todayString));
+                        }else if(days == 1){
+                            lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " +  getString(R.string.dayAgoString));
+                        }else {
+                            lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " + days + " " + getString(R.string.daysAgoString));
+                        }
                     }
-                }else if (iteratorStr.equals("profileIconId")) {
-                    try {
-                        Glide.with(MainActivity.this)
-                                .load("http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/" + s.getString(iteratorStr) + ".png").into(mProfileIcon);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else if (iteratorStr.equals("summonerLevel")) {
-                    try {
-                        mLevelText.setText("Level: " + s.getString(iteratorStr));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                } catch (JSONException e){
+                    e.printStackTrace();
                 }
             }
         }
@@ -279,13 +301,33 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         mAverageTextView.setTextColor(getResources().getColor(R.color.negativeWinrateRed));
                     }
-                    mAverageTextView.setText("  " + winrate + "%");
+                    mAverageTextView.setText(winrate + "%");
                     setTitle(getString(R.string.tierNameString)+ "  " + object.getString("leagueName"));
+                    setRankIcon(object.getString("tier"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
                     }
+    }
+
+    private void setRankIcon(String tier) {
+        switch (tier){
+            case "BRONZE" :
+                mRankIcon.setImageResource(R.drawable.bronze_rank_icon); break;
+            case "SILVER" :
+                mRankIcon.setImageResource(R.drawable.silver_rank_icon);break;
+            case "GOLD" :
+                mRankIcon.setImageResource(R.drawable.gold_rank_icon);break;
+            case "PLATINUM" :
+                mRankIcon.setImageResource(R.drawable.platinum_rank_icon);break;
+            case "DIAMOND":
+                mRankIcon.setImageResource(R.drawable.platinum_rank_icon); break;
+            case "MASTER" :
+                mRankIcon.setImageResource(R.drawable.master_rank_icon); break;
+            case "CHALLENGER":
+                mRankIcon.setImageResource(R.drawable.challenger_rank_icon); break;
+        }
     }
 }
 

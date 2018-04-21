@@ -39,4 +39,9 @@
     <string name="lossesStr">Losses</string>
     <string name="winrateStr">Win Rate</string>
     <string name="tierNameString">Tier Name:</string>
+    <string name="lastOnlineString">Last Online:</string>
+    <string name="daysAgoString">Days ago</string>
+    <string name="Yesterday">dayAgoString</string>
+    <string name="dayAgoString">Yesterday</string>
+    <string name="todayString">Today</string>
 </resources>
