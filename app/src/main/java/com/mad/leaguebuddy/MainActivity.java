@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mAdapter = new ChampionsAdapter(mChampionList, MainActivity.this, mRegion);
                 recyclerView = findViewById(R.id.championMasteryView);
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MainActivity.this,  LinearLayoutManager.HORIZONTAL, false );
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(mAdapter);
@@ -327,10 +327,18 @@ public class MainActivity extends AppCompatActivity {
                     }
     }
 
+    /**
+     *
+     * @param championMasteryUrl
+     */
     private void masteryTask(String championMasteryUrl) {
         new championMasteryTask(championMasteryUrl).execute();
     }
 
+    /**
+     * Sets the Tier icon depending the ranked tier provided
+     * @param tier
+     */
     private void setRankIcon(String tier) {
         switch (tier){
             case "BRONZE" :
@@ -350,6 +358,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * AsyncTask which gets champion ID, Mastery Level & Mastery Points
+     * champion Object is created with these options and then stored in mChampionList
+     * to be forwarded to the adapter
+     */
     private class championMasteryTask extends AsyncTask<Void, Void, JSONArray>{
         private String masteryURL;
         private String jsonData;
@@ -379,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
             super.onPostExecute(jsonArray);
-            for(int i = 0; i < 5; ++i){
+            for(int i = 0; i < 4; ++i){
                 try {
                     JSONObject object = jsonArray.getJSONObject(i);
                     //String str = object.toString();

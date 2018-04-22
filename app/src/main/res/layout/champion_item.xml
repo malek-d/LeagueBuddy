@@ -1,29 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/championLayout">
-    <TextView
-        android:textColor="@color/whiteText"
-        android:id="@+id/championName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:id="@+id/championIcon"
-        android:maxHeight="20dp"
-        android:maxWidth="20dp"
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
-    <TextView
-        android:textColor="@color/whiteText"
-        android:id="@+id/championLevel"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="1dp"
+    android:layout_marginTop="1dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@color/slightlyTransparent">
+
+    <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="17.3k"/>
-    <TextView
-        android:textColor="@color/whiteText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/championPoints"/>
-</LinearLayout>
+        app:cardCornerRadius="4dp"
+        app:cardMaxElevation="2dp"
+        app:cardElevation="1dp"
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="@color/slightlyTransparent"
+
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:id="@+id/championName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/whiteText"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"/>
+
+            <ImageView
+                android:id="@+id/championIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/championName"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/championLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/whiteText"
+                android:layout_below="@id/championIcon"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/championPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/whiteText"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/championLevel"
+                android:textSize="10dp"
+                android:text="17.3k"
+                android:layout_marginBottom="10dp"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
