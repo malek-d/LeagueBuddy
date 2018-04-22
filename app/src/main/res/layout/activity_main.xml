@@ -59,8 +59,7 @@
                 android:id="@+id/summonerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-
+                android:layout_marginTop="10dp"
                 android:textColor="@color/whiteText"
                 android:textSize="40dp"
                 android:textStyle="bold" />
@@ -165,7 +164,13 @@
             </TableLayout>
 
         </LinearLayout>
-
+        <android.support.v7.widget.RecyclerView
+            android:layout_centerHorizontal="true"
+            android:scrollbars="horizontal"
+            android:layout_below="@id/statsLayout"
+            android:id="@+id/championMasteryView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/lastOnlineTextView"
@@ -176,7 +181,6 @@
             android:textColor="@color/whiteText"
             android:textStyle="italic" />
     </RelativeLayout>
-
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"

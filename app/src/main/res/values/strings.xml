@@ -44,4 +44,5 @@
     <string name="Yesterday">dayAgoString</string>
     <string name="dayAgoString">Yesterday</string>
     <string name="todayString">Today</string>
+    <string name="masteryLevelString">Mastery Level:</string>
 </resources>

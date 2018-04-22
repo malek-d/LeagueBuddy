@@ -15,6 +15,9 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import es.dmoral.toasty.Toasty;
@@ -65,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
     private OkHttpClient mClient = new OkHttpClient();
     private FirebaseUser mUser;
     private ImageView mProfileIcon, mRankIcon;
+    private ArrayList<Champion> mChampionList = new ArrayList<>();
+    private ChampionsAdapter mAdapter;
+    private RecyclerView recyclerView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -119,12 +126,12 @@ public class MainActivity extends AppCompatActivity {
         mRankTextView = findViewById(R.id.rankTextView);
 
 
-
         mWinsTextView = findViewById(R.id.winsTextView);
         mLossesTextView = findViewById(R.id.lossesTextView);
         mAverageTextView = findViewById(R.id.winrateTextView);
         mRankIcon  = findViewById(R.id.rankIcon);
         lastOnlineTextView = findViewById(R.id.lastOnlineTextView);
+
     }
 
     private void showData(DataSnapshot dataSnapshot) {
@@ -139,6 +146,13 @@ public class MainActivity extends AppCompatActivity {
                 mRegion = ds.child("region").getValue().toString();
                 mURL = api.getSummonerURL(mSummonerName, mRegion.toLowerCase());
                 summonerTask(mURL);
+
+                mAdapter = new ChampionsAdapter(mChampionList, MainActivity.this, mRegion);
+                recyclerView = findViewById(R.id.championMasteryView);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(mAdapter);
             }
         }
     }
@@ -304,11 +318,17 @@ public class MainActivity extends AppCompatActivity {
                     mAverageTextView.setText(winrate + "%");
                     setTitle(getString(R.string.tierNameString)+ "  " + object.getString("leagueName"));
                     setRankIcon(object.getString("tier"));
+
+                    masteryTask(api.getChampionMasteryUrl(mAccountID.toString(), mRegion));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
                     }
+    }
+
+    private void masteryTask(String championMasteryUrl) {
+        new championMasteryTask(championMasteryUrl).execute();
     }
 
     private void setRankIcon(String tier) {
@@ -327,6 +347,52 @@ public class MainActivity extends AppCompatActivity {
                 mRankIcon.setImageResource(R.drawable.master_rank_icon); break;
             case "CHALLENGER":
                 mRankIcon.setImageResource(R.drawable.challenger_rank_icon); break;
+        }
+    }
+
+    private class championMasteryTask extends AsyncTask<Void, Void, JSONArray>{
+        private String masteryURL;
+        private String jsonData;
+        public championMasteryTask(String championMasteryUrl) {
+            masteryURL = championMasteryUrl;
+        }
+
+        @Override
+        protected JSONArray doInBackground(Void... voids) {
+            Request request = new Request.Builder()
+                    .url(masteryURL)
+                    .build();
+
+            try {
+                Response response = mClient.newCall(request).execute();
+                jsonData = response.body().string();
+                JSONArray array = new JSONArray(jsonData);
+                return array;
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            super.onPostExecute(jsonArray);
+            for(int i = 0; i < 5; ++i){
+                try {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    //String str = object.toString();
+                    //testTextView.setText(str);
+                    Champion champion = new Champion(object.getString("championLevel"),
+                            object.getString("championPoints"),
+                            object.getString("championId"),
+                            object.getString("championPointsUntilNextLevel"));
+                    mChampionList.add(champion);
+                } catch (org.json.JSONException e){
+                }
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 }

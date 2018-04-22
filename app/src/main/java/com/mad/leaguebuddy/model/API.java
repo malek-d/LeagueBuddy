@@ -10,6 +10,8 @@ public class API {
     private String summonerURL = "summoner/v3/summoners/by-name/";
     private String mAPIKey = "?api_key=RGAPI-0f76286c-8a5e-41db-ace9-f14f2b98e7a0";
     private String leagueURL = "league/v3/positions/by-summoner/";
+    private static String CHAMPION_MASTERY_URL = "champion-mastery/v3/champion-masteries/by-summoner/";
+    private static String CHAMPION_INFO_URL = "static-data/v3/champions/";
 
     public API(){}
 
@@ -27,6 +29,14 @@ public class API {
             case "LA" : return "la1";
         }
         return null;
+    }
+
+    public String getChampionMasteryUrl(String summonerID, String region){
+        return mHttps + region + mUrl + CHAMPION_MASTERY_URL + summonerID + mAPIKey;
+    }
+
+    public String getChampionInfoUrl(String champID, String region){
+        return mHttps + region + mUrl + CHAMPION_INFO_URL + champID + mAPIKey;
     }
 
     public String getSummonerURL(String summonerName, String region){
