@@ -72,16 +72,23 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@color/slightlyTransparent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
+            <ProgressBar
+                android:id="@+id/statsProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
 
             <TextView
+                android:id="@+id/soloqueueTitleTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/soloQueueTableTitle"
                 android:textColor="@color/whiteText"
                 android:textSize="25dp"
-                android:textStyle="bold" />
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -158,7 +165,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/championMasteryView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/statsLayout"
             android:layout_centerHorizontal="true"

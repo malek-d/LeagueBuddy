@@ -8,16 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mad.leaguebuddy.MainActivity;
 import com.mad.leaguebuddy.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -33,24 +36,20 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
 
     private ArrayList<Champion> championsList;
     private Context mContext;
-    private LinearLayout mChampionLayout;
-    private API api = new API();
-    private String mRegion, mChampionName, mChampion, mChampionKey, mChampionTitle;
-    private OkHttpClient mClient = new OkHttpClient();
-    private boolean mHasStoredInfo = false;
-    private Champion mChamp;
+    private String mRegion;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView mChampionName, mChampionLevel, mChampionPoints;
         private ImageView mChampionIcon;
+        private ProgressBar mProgressBar;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             mChampionName = itemView.findViewById(R.id.championName);
             mChampionIcon = itemView.findViewById(R.id.championIcon);
             mChampionLevel = itemView.findViewById(R.id.championLevel);
-           // mChampionLayout = itemView.findViewById(R.id.championLayout);
             mChampionPoints = itemView.findViewById(R.id.championPoints);
+            mProgressBar = itemView.findViewById(R.id.itemProgressBar);
 
         }
     }
@@ -74,19 +73,11 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
         Champion champion = championsList.get(position);
         holder.mChampionLevel.setText(mContext.getString(R.string.masteryLevelString) + " " + champion.getChampionLevel());
         holder.mChampionPoints.setText(mContext.getString(R.string.pointsString) + " " + champion.getChampionPoints());
-        String url = api.getChampionInfoUrl(champion.getChampionID(), mRegion);
-        if(!mHasStoredInfo) {
-            championInfoTask(url, position, holder.mChampionName, holder.mChampionIcon);
-        }else{
-            holder.mChampionName.setText(champion.getChampionName() + "\n" + champion.getChampionTitle());
-            Glide.with(mContext)
-                    .load("https://ddragon.leagueoflegends.com/cdn/8.8.1/img/champion/" + champion.getChampionKey() + ".png")
-                    .into(holder.mChampionIcon);
-        }
+        championInfoTask(position, holder.mChampionName, holder.mChampionIcon, holder.mProgressBar);
     }
 
-    private void championInfoTask(String url, int position, TextView champName, ImageView champIcon) {
-        new getChampionInfoTask(url, position, champName, champIcon).execute();
+    private void championInfoTask(int position, TextView champName, ImageView champIcon, ProgressBar progressBar) {
+        new getChampionInfoTask(position, champName, champIcon, progressBar).execute();
     }
 
     @Override
@@ -95,55 +86,66 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
     }
 
 
-    private class getChampionInfoTask extends AsyncTask<Void, Void, JSONObject> {
-        private String mURL;
-        private Champion champ;
+    private class getChampionInfoTask extends AsyncTask<Void, Void, String> {
+        private Champion mChamp;
         private TextView championNameTV; //TV = TextView
         private ImageView championIconIV; //IV = ImageView
         int championArrayPosition;
+        private ProgressBar progressBar;
 
-        public getChampionInfoTask(String url, int position, TextView champName, ImageView champIcon) {
-            mURL = url;
+        public getChampionInfoTask(int position, TextView champName, ImageView champIcon, ProgressBar progress) {
             championNameTV = champName;
             championArrayPosition = position;
             championIconIV = champIcon;
+            progressBar = progress;
         }
 
         @Override
-        protected JSONObject doInBackground(Void... voids) {
-            Request request = new Request.Builder()
-                    .url(mURL)
-                    .build();
-
-            try {
-                Response response = mClient.newCall(request).execute();
-                String jsonData = response.body().string();
-                JSONObject jsonObject = new JSONObject(jsonData);
-                return jsonObject;
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
-        protected void onPostExecute(JSONObject jsonObject) {
+        protected String doInBackground(Void... voids) {
+            String obj = loadJSONFromAsset();
+            return obj;
+        }
+
+        @Override
+        protected void onPostExecute(String jsonObject) {
             try {
                 mChamp = championsList.get(championArrayPosition);
-                mChamp.setChampionName(jsonObject.getString("name"));
-                mChamp.setChampionTitle(jsonObject.getString("title"));
-                mChamp.setChampionKey(jsonObject.getString("key"));
-                championNameTV.setText(jsonObject.getString("name") + "\n" + jsonObject.getString("title"));
+                JSONObject jo = new JSONObject(jsonObject);
+                JSONObject champion = jo.getJSONObject(mChamp.getChampionID());
+                mChamp.setChampionKey(champion.getString("key"));
+                mChamp.setChampionName(champion.getString("name"));
+                mChamp.setChampionTitle(champion.getString("title"));
+                championNameTV.setText(mChamp.getChampionName() + "\n" + mChamp.getChampionTitle());
                 Glide.with(mContext)
                         .load("https://ddragon.leagueoflegends.com/cdn/8.8.1/img/champion/" + mChamp.getChampionKey() + ".png")
                         .into(championIconIV);
-                mHasStoredInfo = true;
-            } catch (org.json.JSONException e){
-
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            progressBar.setVisibility(View.GONE);
 
         }
+
+    }
+
+    public String loadJSONFromAsset() {
+        String json = null;
+        try {
+            InputStream is = mContext.getAssets().open("champions.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
 }
