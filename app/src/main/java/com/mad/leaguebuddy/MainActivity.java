@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if (iteratorStr.equals("profileIconId")) {
                         try {
                             Glide.with(MainActivity.this)
-                                    .load("http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/" + s.getString(iteratorStr) + ".png")
+                                    .load("http://ddragon.leagueoflegends.com/cdn/8.8.1/img/profileicon/" + s.getString(iteratorStr) + ".png")
                                     .placeholder(R.drawable.poro_question)
                                     .into(mProfileIcon);
                         } catch (JSONException e) {
