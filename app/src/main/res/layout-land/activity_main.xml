@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/freljord_ashe_blurred"
+    android:orientation="vertical"
+    tools:context="com.mad.leaguebuddy.activities.MainActivity">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/imageLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/profileImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@color/slightlyTransparent"
+                    android:maxHeight="100dp"
+                    android:maxWidth="100dp" />
+
+                <TextView
+                    android:id="@+id/levelText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/whiteText"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nameLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/summonerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/whiteText"
+                    android:textSize="40dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/statsLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nameLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/slightlyTransparent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:id="@+id/statsProgressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/soloqueueTitleTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/soloQueueTableTitle"
+                    android:textColor="@color/whiteText"
+                    android:textSize="25dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/rankIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:maxHeight="80dp"
+                        android:maxWidth="80dp" />
+
+                    <TextView
+                        android:id="@+id/rankTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/whiteText"
+                        android:textSize="25dp"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:divider="?android:attr/dividerHorizontal"
+                    android:dividerPadding="5dp"
+                    android:showDividers="middle"
+                    android:stretchColumns="0,1">
+
+                    <TableRow>
+
+                        <TextView
+                            android:text="@string/winsStr"
+                            android:textColor="@color/whiteText"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/winsTextView"
+                            android:textColor="@color/whiteText"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:text="@string/lossesStr"
+                            android:textColor="@color/whiteText"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/lossesTextView"
+                            android:textColor="@color/whiteText"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:text="@string/winrateStr"
+                            android:textColor="@color/whiteText"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/winrateTextView"
+                            android:textColor="@color/whiteText"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </TableRow>
+                </TableLayout>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/championMasteryView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/statsLayout"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/mLastOnlineTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:textColor="@color/whiteText"
+                android:textStyle="italic" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/slightlyTransparent"
+        app:itemIconTint="@color/buttonColor"
+        app:itemTextColor="@color/buttonColor"
+        app:menu="@menu/navigation" />
+
+</LinearLayout>

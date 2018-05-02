@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/freljord_tower_wallpaper_blurred"
-    tools:context="com.mad.leaguebuddy.LoginActivity">
+    tools:context="com.mad.leaguebuddy.activities.LoginActivity">
 
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:stretchColumns="1"
-            android:background="@color/tableLayoutBackground"
+            android:background="@drawable/bordered_background"
             >
             <TableRow>
                 <TextView android:textColor="@color/whiteText" android:text="@string/email" android:textStyle="bold"/>
@@ -60,10 +60,15 @@
                     android:textColor="@color/buttonColor"
                     android:id="@+id/summonerEditText"
                     android:inputType="text"/>
-                <Spinner
-                    android:background="@color/spinnerBackground"
+            </TableRow>
+            <TableRow android:id="@+id/regionTableRow">
+                <TextView android:textColor="@color/whiteText" android:textStyle="bold"  android:text="@string/regionText" />
+                <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/regionSpinner"
-                    android:entries="@array/regions"></Spinner>
+                    app:ms_background_color="@color/slightlyTransparent"
+                    app:ms_text_color="@color/whiteText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             </TableRow>
             <TextView android:textColor="@color/whiteText" android:text="@string/signInQuestion" android:textStyle="bold"/>
             <ToggleButton

@@ -1,41 +1,25 @@
-package com.mad.leaguebuddy;
+package com.mad.leaguebuddy.activities;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
-import android.nfc.Tag;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,6 +27,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mad.leaguebuddy.R;
+import com.mad.leaguebuddy.data.urlFactory;
 import com.mad.leaguebuddy.model.*;
 
 import org.json.JSONArray;
@@ -54,7 +40,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import es.dmoral.toasty.Toasty;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -66,12 +51,16 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mRef;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser mUser;
+
+    private urlFactory urlFactory = new urlFactory();
+    private OkHttpClient mClient = new OkHttpClient();
+
     private String mSummonerName, mURL, mRegion, mRankedURL;
     private Long mAccountID;
-    private TextView mSummonerNameText, mLevelText, mRankTextView, mWinsTextView, mLossesTextView, mAverageTextView, lastOnlineTextView, mSoloQueueTitle;
-    private API api = new API();
-    private OkHttpClient mClient = new OkHttpClient();
-    private FirebaseUser mUser;
+    private TextView mSummonerNameText, mLevelText, mRankTextView, mWinsTextView,
+            mLossesTextView, mAverageTextView, lastOnlineTextView, mSoloQueueTitle;
+
     private ImageView mProfileIcon, mRankIcon;
     private ArrayList<Champion> mChampionList = new ArrayList<>();
     private ChampionsAdapter mAdapter;
@@ -91,16 +80,15 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
 
                     return true;
-                case R.id.navigation_dashboard:
-
-                    return true;
+                case R.id.navigation_search:
+                    Intent intent = new Intent(MainActivity.this, PlayerSearchActivity.class);
+                    startActivity(intent);
+                    break;
                 case R.id.navigation_notifications:
 
                     return true;
                 case R.id.navigation_settings:
-                    Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                    startActivity(intent);
-                    break;
+                    return true;
             }
             return false;
         }
@@ -118,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance();
         mRef = mDatabase.getReference();
 
-        //Listener to get current user from Firebase Database
+        //Listener to get current user from FireBase Database
         mRef.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -142,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         mLossesTextView = findViewById(R.id.lossesTextView);
         mAverageTextView = findViewById(R.id.winrateTextView);
         mRankIcon = findViewById(R.id.rankIcon);
-        lastOnlineTextView = findViewById(R.id.lastOnlineTextView);
+        lastOnlineTextView = findViewById(R.id.mLastOnlineTV);
         mProgressBar = findViewById(R.id.statsProgressBar);
         mSoloQueueTitle = findViewById(R.id.soloqueueTitleTV);
         mStatsLayout = findViewById(R.id.statsLayout);
@@ -171,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 mSummonerNameText.setTypeface(font);
                 mSummonerNameText.setText(mSummonerName);
                 mRegion = ds.child("region").getValue().toString();
-                mURL = api.getSummonerURL(mSummonerName, mRegion.toLowerCase());
+                mURL = urlFactory.getSummonerURL(mSummonerName, mRegion.toLowerCase());
                 summonerTask(mURL);
 
                 mAdapter = new ChampionsAdapter(mChampionList, MainActivity.this, mRegion);
@@ -185,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Calls the getRankedInfoTask AsyncTask to call a riot api to
+     * Calls the getRankedInfoTask AsyncTask to call a riot urlFactory to
      * retrieve player information and also ranked queue information
      * @param mRankedURL
      */
@@ -248,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         protected void onPostExecute(JSONObject s) {
             Iterator<String> it = s.keys();
@@ -259,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             int id = Integer.parseInt(s.getString(iteratorStr));
                             mAccountID = new Long(id);
-                            mRankedURL = api.getRankedStatsURL(mRegion.toLowerCase(), mAccountID);
+                            mRankedURL = urlFactory.getRankedStatsURL(mRegion.toLowerCase(), mAccountID);
                             summonerRankTask(mRankedURL);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -270,12 +259,13 @@ public class MainActivity extends AppCompatActivity {
                                     .load("http://ddragon.leagueoflegends.com/cdn/8.8.1/img/profileicon/" + s.getString(iteratorStr) + ".png")
                                     .placeholder(R.drawable.poro_question)
                                     .into(mProfileIcon);
+                            mProfileIcon.setBackground(getResources().getDrawable(R.drawable.image_shape));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     } else if (iteratorStr.equals("summonerLevel")) {
                         try {
-                            mLevelText.setText("Level: " + s.getString(iteratorStr));
+                            mLevelText.setText(getString(R.string.levelString)+ " " + s.getString(iteratorStr));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -353,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
                     setTitle(getString(R.string.tierNameString) + "  " + object.getString("leagueName"));
                     setRankIcon(object.getString("tier"));
 
-                    masteryTask(api.getChampionMasteryUrl(mAccountID.toString(), mRegion));
+                    masteryTask(urlFactory.getChampionMasteryUrl(mAccountID.toString(), mRegion));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -1,19 +1,19 @@
-package com.mad.leaguebuddy.model;
+package com.mad.leaguebuddy.data;
 
 /**
  * Created by Maleks on 21-Apr-18.
  */
 
-public class API {
-    private String mHttps = "https://";
-    private String mUrl = ".api.riotgames.com/lol/";
-    private String summonerURL = "summoner/v3/summoners/by-name/";
-    private String mAPIKey = "?api_key=RGAPI-0f76286c-8a5e-41db-ace9-f14f2b98e7a0";
-    private String leagueURL = "league/v3/positions/by-summoner/";
-    private static String CHAMPION_MASTERY_URL = "champion-mastery/v3/champion-masteries/by-summoner/";
-    private static String CHAMPION_INFO_URL = "static-data/v3/champions/";
+public class urlFactory {
+    private static final String mHttps = "https://";
+    private static final String mUrl = ".api.riotgames.com/lol/";
+    private static final String summonerURL = "summoner/v3/summoners/by-name/";
+    private static final String mAPIKey = "?api_key=RGAPI-0f76286c-8a5e-41db-ace9-f14f2b98e7a0";
+    private static final String leagueURL = "league/v3/positions/by-summoner/";
+    private static final String CHAMPION_MASTERY_URL = "champion-mastery/v3/champion-masteries/by-summoner/";
+    private static final String CHAMPION_INFO_URL = "static-data/v3/champions/";
 
-    public API(){}
+    public urlFactory(){}
 
     public String returnRegion(String region){
         switch (region){

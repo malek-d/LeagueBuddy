@@ -7,26 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.mad.leaguebuddy.MainActivity;
 import com.mad.leaguebuddy.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by Malek Darwiche on 22/04/2018.
@@ -34,7 +26,7 @@ import okhttp3.Response;
 
 public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyViewHolder> {
 
-    private ArrayList<Champion> championsList;
+    private ArrayList<Champion> mChampList;
     private Context mContext;
     private String mRegion;
 
@@ -50,13 +42,12 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
             mChampionLevel = itemView.findViewById(R.id.championLevel);
             mChampionPoints = itemView.findViewById(R.id.championPoints);
             mProgressBar = itemView.findViewById(R.id.itemProgressBar);
-
         }
     }
 
 
-    public ChampionsAdapter(ArrayList<Champion> championsList, Context context, String region) {
-        this.championsList = championsList;
+    public ChampionsAdapter(ArrayList<Champion> mChampList, Context context, String region) {
+        this.mChampList = mChampList;
         this.mContext = context;
         this.mRegion = region;
     }
@@ -70,7 +61,7 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Champion champion = championsList.get(position);
+        Champion champion = mChampList.get(position);
         holder.mChampionLevel.setText(mContext.getString(R.string.masteryLevelString) + " " + champion.getChampionLevel());
         holder.mChampionPoints.setText(mContext.getString(R.string.pointsString) + " " + champion.getChampionPoints());
         championInfoTask(position, holder.mChampionName, holder.mChampionIcon, holder.mProgressBar);
@@ -82,20 +73,20 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
 
     @Override
     public int getItemCount() {
-        return championsList.size();
+        return mChampList.size();
     }
 
 
     private class getChampionInfoTask extends AsyncTask<Void, Void, String> {
         private Champion mChamp;
-        private TextView championNameTV; //TV = TextView
-        private ImageView championIconIV; //IV = ImageView
-        int championArrayPosition;
+        private TextView championNameTV;
+        private ImageView championIconIV;
+        private int mChampionArrayPosition;
         private ProgressBar progressBar;
 
         public getChampionInfoTask(int position, TextView champName, ImageView champIcon, ProgressBar progress) {
             championNameTV = champName;
-            championArrayPosition = position;
+            mChampionArrayPosition = position;
             championIconIV = champIcon;
             progressBar = progress;
         }
@@ -107,14 +98,13 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
 
         @Override
         protected String doInBackground(Void... voids) {
-            String obj = loadJSONFromAsset();
-            return obj;
+            return loadJSONFromAsset();
         }
 
         @Override
         protected void onPostExecute(String jsonObject) {
             try {
-                mChamp = championsList.get(championArrayPosition);
+                mChamp = mChampList.get(mChampionArrayPosition);
                 JSONObject jo = new JSONObject(jsonObject);
                 JSONObject champion = jo.getJSONObject(mChamp.getChampionID());
                 mChamp.setChampionKey(champion.getString("key"));
@@ -128,7 +118,6 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
                 e.printStackTrace();
             }
             progressBar.setVisibility(View.GONE);
-
         }
 
     }

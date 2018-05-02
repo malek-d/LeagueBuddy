@@ -1,28 +1,25 @@
-package com.mad.leaguebuddy;
+package com.mad.leaguebuddy.activities;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.nfc.Tag;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.mad.leaguebuddy.R;
+import com.mad.leaguebuddy.data.urlFactory;
 import com.mad.leaguebuddy.model.*;
 
 
@@ -31,11 +28,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 
@@ -48,10 +40,11 @@ public class LoginActivity extends AppCompatActivity {
     private Button mAuthButton;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private TableRow summonerInfoRow;
-    private Spinner regionSpinner;
+    private TableRow summonerInfoRow, mRegionTableRow;
+    private MaterialSpinner regionSpinner;
     private EditText summonerNameEditText;
-    private API api = new API();
+    private urlFactory urlFactory = new urlFactory();
+    private String mRegion;
 
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
@@ -60,9 +53,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
-
         ToggleButton toggleButton = findViewById(R.id.ToggleButton);
         mAuth = FirebaseAuth.getInstance();
         mAuthButton =  findViewById(R.id.AuthenticateButton);
@@ -71,7 +61,8 @@ public class LoginActivity extends AppCompatActivity {
         summonerInfoRow = findViewById(R.id.summonerTablerow);
         regionSpinner = findViewById(R.id.regionSpinner);
         summonerNameEditText = findViewById(R.id.summonerEditText);
-
+        mRegionTableRow = findViewById(R.id.regionTableRow);
+        regionSpinner.setItems(getResources().getStringArray(R.array.regions));
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -95,10 +86,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (b) {
                     mAuthButton.setText(getString(R.string.login));
                     summonerInfoRow.setVisibility(View.GONE);
+                    mRegionTableRow.setVisibility(View.GONE);
 
                 } else {
                     mAuthButton.setText(getString(R.string.register));
                     summonerInfoRow.setVisibility(View.VISIBLE);
+                    mRegionTableRow.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -112,6 +105,13 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     tryRegister();
                 }
+            }
+        });
+
+        regionSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+
+            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                mRegion = item;
             }
         });
 
@@ -131,8 +131,14 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void tryRegister() {
+        if(emailEditText.getText().toString().equals("") || passwordEditText.getText().toString().equals("") || summonerNameEditText.getText().toString().equals("")){
+            Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show();
+        }else{
+            validateRegistration();
+        }
+    }
 
-
+    private void validateRegistration(){
         mAuth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -141,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             String summonerName = summonerNameEditText.getText().toString();
-                            String region = api.returnRegion(regionSpinner.getSelectedItem().toString());
+                            String region = urlFactory.returnRegion(mRegion);
 
 
                             DatabaseReference summonerRef = mDatabase.getReference("users");
@@ -152,12 +158,21 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
+                            Toasty.info(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
+
     private void tryLogin() {
+        if(emailEditText.getText().toString().equals("") || passwordEditText.getText().toString().equals("")){
+            Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show();
+        }else{
+            validateLogin();
+        }
+    }
+
+    private void validateLogin(){
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         mAuth.signInWithEmailAndPassword(email, password)
@@ -169,7 +184,7 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
-                            Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
+                            Toasty.info(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

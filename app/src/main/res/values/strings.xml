@@ -17,9 +17,8 @@
     <string name="loggedinMessage">Logged in as:</string>
     <string name="registeredMessage">Registered as:</string>
     <string name="loginFailedString">Login Failed</string>
+    <string name="regionText">Region: </string>
     <string name="enterSummoner">Enter summoner name</string>
-
-
     <string-array name="regions">
         <item name="OCE">OCE</item>
         <item name="RU">RU</item>
@@ -46,4 +45,11 @@
     <string name="todayString">Today</string>
     <string name="masteryLevelString">Mastery Level:</string>
     <string name="pointsString">Points:</string>
+    <string name="rankIconDescription">Imageview displays the division icon of the user corresponding to their tier name</string>
+    <string name="profileImageViewDescription">Displays the profile picture of the user based off of their summoner ID</string>
+
+    <string name="levelString">Level:</string>
+    <string name="searchForSummoner">Search for Summoner</string>
+    <string name="emptyFieldsString">Please Entire All Fields</string>
+    <string name="searchString">Search</string>
 </resources>
