@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -53,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ToggleButton toggleButton = findViewById(R.id.ToggleButton);
+        Switch toggleButton = findViewById(R.id.ToggleButton);
         mAuth = FirebaseAuth.getInstance();
         mAuthButton =  findViewById(R.id.AuthenticateButton);
         emailEditText = findViewById(R.id.emailEditText);
@@ -61,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         summonerInfoRow = findViewById(R.id.summonerTablerow);
         regionSpinner = findViewById(R.id.regionSpinner);
         summonerNameEditText = findViewById(R.id.summonerEditText);
-        mRegionTableRow = findViewById(R.id.regionTableRow);
+        //mRegionTableRow = findViewById(R.id.regionTableRow);
         regionSpinner.setItems(getResources().getStringArray(R.array.regions));
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -86,12 +88,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (b) {
                     mAuthButton.setText(getString(R.string.login));
                     summonerInfoRow.setVisibility(View.GONE);
-                    mRegionTableRow.setVisibility(View.GONE);
+                    //mRegionTableRow.setVisibility(View.GONE);
 
                 } else {
                     mAuthButton.setText(getString(R.string.register));
                     summonerInfoRow.setVisibility(View.VISIBLE);
-                    mRegionTableRow.setVisibility(View.VISIBLE);
+                    //mRegionTableRow.setVisibility(View.VISIBLE);
                 }
 
             }

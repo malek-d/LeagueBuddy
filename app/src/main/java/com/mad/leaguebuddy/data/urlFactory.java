@@ -12,6 +12,8 @@ public class urlFactory {
     private static final String leagueURL = "league/v3/positions/by-summoner/";
     private static final String CHAMPION_MASTERY_URL = "champion-mastery/v3/champion-masteries/by-summoner/";
     private static final String CHAMPION_INFO_URL = "static-data/v3/champions/";
+    private static final String DDRAGON_IMAGE_URL = "http://ddragon.leagueoflegends.com/cdn/8.8.1/img/profileicon/";
+    private static final String PNG_FORMAT = ".png";
 
     public urlFactory(){}
 
@@ -29,6 +31,10 @@ public class urlFactory {
             case "LA" : return "la1";
         }
         return null;
+    }
+
+    public String getDdragonImageUrl(String iconId){
+        return DDRAGON_IMAGE_URL + iconId + PNG_FORMAT;
     }
 
     public String getChampionMasteryUrl(String summonerID, String region){

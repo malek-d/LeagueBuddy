@@ -1,33 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/settings_background"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="@drawable/settings_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bordered_background"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:layout_marginRight="60dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="40dp"
-        android:layout_centerHorizontal="true"
+        android:background="@drawable/bordered_background"
         android:orientation="vertical">
-        <EditText
-            android:layout_height="wrap_content"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:hint="@string/searchForSummoner"
-            android:textColor="@color/whiteText"
-            android:drawableRight="@mipmap/image_search_icon"
-            />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/searchSummonerNameEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:hint="@string/searchForSummoner"
+                android:textColor="@color/whiteText"
+                />
+
+            <ImageView
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="commenceSearch"
+                android:src="@mipmap/ic_search_icon_white"/>
+        </LinearLayout>
+
         <com.jaredrummler.materialspinner.MaterialSpinner
             android:id="@id/regionSpinner"
-            app:ms_background_color="@color/slightlyTransparent"
-            app:ms_text_color="@color/whiteText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            app:ms_background_color="@color/slightlyTransparent"
+            app:ms_text_color="@color/whiteText"/>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/searchResultRV"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/regionSpinner"></android.support.v7.widget.RecyclerView>
+
+
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:backgroundTint="@color/androidGreen"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

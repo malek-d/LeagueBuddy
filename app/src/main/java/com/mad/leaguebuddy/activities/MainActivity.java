@@ -239,50 +239,31 @@ public class MainActivity extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         protected void onPostExecute(JSONObject s) {
-            Iterator<String> it = s.keys();
-            String iteratorStr;
-            while (it.hasNext()) {
-                iteratorStr = it.next();
-                try {
-                    if (iteratorStr.equals("id")) {
-                        try {
-                            int id = Integer.parseInt(s.getString(iteratorStr));
-                            mAccountID = new Long(id);
-                            mRankedURL = urlFactory.getRankedStatsURL(mRegion.toLowerCase(), mAccountID);
-                            summonerRankTask(mRankedURL);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    } else if (iteratorStr.equals("profileIconId")) {
-                        try {
-                            Glide.with(MainActivity.this)
-                                    .load("http://ddragon.leagueoflegends.com/cdn/8.8.1/img/profileicon/" + s.getString(iteratorStr) + ".png")
-                                    .placeholder(R.drawable.poro_question)
-                                    .into(mProfileIcon);
-                            mProfileIcon.setBackground(getResources().getDrawable(R.drawable.image_shape));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    } else if (iteratorStr.equals("summonerLevel")) {
-                        try {
-                            mLevelText.setText(getString(R.string.levelString)+ " " + s.getString(iteratorStr));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    } else if (iteratorStr.equals("revisionDate")) {
-                        Long i = new Long(s.getString(iteratorStr));
-                        int days = (int) (i / 1000 % 60 % 60 % 24);
-                        if (days == 0) {
-                            lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " + getString(R.string.todayString));
-                        } else if (days == 1) {
-                            lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " + getString(R.string.dayAgoString));
-                        } else {
-                            lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " + days + " " + getString(R.string.daysAgoString));
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            try{
+                int id = Integer.parseInt(s.getString("id"));
+                mAccountID = new Long(id);
+                mRankedURL = urlFactory.getRankedStatsURL(mRegion.toLowerCase(), mAccountID);
+                summonerRankTask(mRankedURL);
+                //--------------
+                Glide.with(MainActivity.this)
+                        .load(urlFactory.getDdragonImageUrl(s.getString("profileIconId")))
+                        .placeholder(R.drawable.poro_question)
+                        .into(mProfileIcon);
+                mProfileIcon.setBackground(getResources().getDrawable(R.drawable.image_shape));
+                //--------------
+                mLevelText.setText(getString(R.string.levelString)+ " " + s.getString("summonerLevel"));
+                //--------------
+                Long i = new Long(s.getString("revisionDate"));
+                int days = (int) (i / 1000 % 60 % 60 % 24);
+                if (days == 0) {
+                    lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " + getString(R.string.todayString));
+                } else if (days == 1) {
+                    lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " + getString(R.string.dayAgoString));
+                } else {
+                    lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " + days + " " + getString(R.string.daysAgoString));
                 }
+            }catch(JSONException e){
+
             }
         }
     }

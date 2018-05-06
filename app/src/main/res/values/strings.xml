@@ -32,7 +32,7 @@
         <item name="EUW">EUW</item>
     </string-array>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="summonerNameString">Summoner Name:</string>
+    <string name="summonerNameString">Username:</string>
     <string name="soloQueueTableTitle">SOLO QUEUE STATS</string>
     <string name="winsStr">Wins</string>
     <string name="lossesStr">Losses</string>

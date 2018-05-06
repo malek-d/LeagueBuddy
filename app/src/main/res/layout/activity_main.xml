@@ -32,16 +32,16 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:background="@color/slightlyTransparent"
+                android:contentDescription="@string/profileImageViewDescription"
                 android:maxHeight="100sp"
-                android:maxWidth="100sp"
-                android:contentDescription="@string/profileImageViewDescription"/>
+                android:maxWidth="100sp"/>
 
             <TextView
                 android:id="@+id/levelText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/whiteText"
-                android:textStyle="italic" />
+                android:textStyle="italic"/>
         </LinearLayout>
 
         <LinearLayout
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/whiteText"
                 android:textSize="40sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
@@ -70,12 +70,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/nameLayout"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="20sp"
             android:layout_marginRight="20sp"
-            android:layout_marginBottom="20dp"
             android:background="@drawable/bordered_background"
             android:orientation="vertical"
             android:visibility="gone">
+
             <ProgressBar
                 android:id="@+id/statsProgressBar"
                 android:layout_width="match_parent"
@@ -90,32 +91,33 @@
                 android:text="@string/soloQueueTableTitle"
                 android:textColor="@color/whiteText"
                 android:textSize="25sp"
-                 />
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="vertical" android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/rankIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:contentDescription="@string/rankIconDescription"
                     android:maxHeight="80sp"
-                    android:maxWidth="80sp"
-                    android:contentDescription="@string/rankIconDescription"/>
+                    android:maxWidth="80sp"/>
 
                 <TextView
                     android:id="@+id/rankTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/whiteText"
                     android:textSize="25sp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textStyle="italic" />
+                    android:textStyle="italic"/>
 
             </LinearLayout>
 
@@ -123,46 +125,52 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
                 android:divider="?android:attr/dividerHorizontal"
                 android:dividerPadding="5sp"
-                android:layout_marginBottom="10dp"
                 android:showDividers="middle"
                 android:stretchColumns="0,1">
 
                 <TableRow>
+
                     <TextView
                         android:text="@string/winsStr"
                         android:textColor="@color/whiteText"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"/>
+
                     <TextView
                         android:id="@+id/winsTextView"
                         android:textColor="@color/whiteText"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
                         android:text="@string/lossesStr"
                         android:textColor="@color/whiteText"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"/>
+
                     <TextView
                         android:id="@+id/lossesTextView"
                         android:textColor="@color/whiteText"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
                         android:text="@string/winrateStr"
                         android:textColor="@color/whiteText"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"/>
+
                     <TextView
                         android:id="@+id/winrateTextView"
                         android:textColor="@color/whiteText"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
                 </TableRow>
             </TableLayout>
 
@@ -170,11 +178,13 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/championMasteryView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/statsLayout"
+            android:layout_alignRight="@id/statsLayout"
             android:layout_below="@id/statsLayout"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
         </android.support.v7.widget.RecyclerView>
 
@@ -185,7 +195,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
             android:textColor="@color/whiteText"
-            android:textStyle="italic" />
+            android:textStyle="italic"/>
     </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView
