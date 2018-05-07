@@ -56,6 +56,7 @@ public class PlayerSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player_search);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         regionSpinner = findViewById(R.id.regionSpinner);
         mSummonerName = findViewById(R.id.searchSummonerNameEditText);
         mResultRV = findViewById(R.id.searchResultRV);
@@ -141,5 +142,14 @@ public class PlayerSearchActivity extends AppCompatActivity {
             mResultRV.setVisibility(View.VISIBLE);
 
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();    //Call the back button's method
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
