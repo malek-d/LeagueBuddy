@@ -12,7 +12,11 @@ import com.bumptech.glide.Glide;
 import com.mad.leaguebuddy.R;
 import com.mad.leaguebuddy.data.urlFactory;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Maleks on 05-May-18.
@@ -30,13 +34,14 @@ public class SummonerAdapter extends RecyclerView.Adapter<SummonerAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mIcon;
-        private TextView mSummonerName, mSummonerLevel;
+        private TextView mSummonerName, mSummonerLevel, mLastOnline;
 
         public ViewHolder(View view) {
             super(view);
             mIcon = view.findViewById(R.id.summonerIcon);
             mSummonerLevel = view.findViewById(R.id.summonerLevel);
             mSummonerName = view.findViewById(R.id.summonerName);
+            mLastOnline = view.findViewById(R.id.searchLastOnlineTV);
         }
     }
 
@@ -52,6 +57,13 @@ public class SummonerAdapter extends RecyclerView.Adapter<SummonerAdapter.ViewHo
         Summoner summoner = mSummoners.get(position);
         holder.mSummonerName.setText(summoner.getSummonerName());
         holder.mSummonerLevel.setText(mContext.getResources().getString(R.string.levelString)+ " "  + summoner.getSummonerLevel());
+
+        Long i = new Long(summoner.getRevisionDate());
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(i);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E d/MMM hh:mm:ss a");
+
+        holder.mLastOnline.setText(mContext.getString(R.string.lastOnlineString) + " " + dateFormat.format(cal.getTime()));
 
         Glide.with(mContext).load(mUrlFactory.getDdragonImageUrl(summoner.getIconID()))
                 .placeholder(R.drawable.poro_question)

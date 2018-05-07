@@ -36,7 +36,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 
 import es.dmoral.toasty.Toasty;
@@ -254,14 +257,10 @@ public class MainActivity extends AppCompatActivity {
                 mLevelText.setText(getString(R.string.levelString)+ " " + s.getString("summonerLevel"));
                 //--------------
                 Long i = new Long(s.getString("revisionDate"));
-                int days = (int) (i / 1000 % 60 % 60 % 24);
-                if (days == 0) {
-                    lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " + getString(R.string.todayString));
-                } else if (days == 1) {
-                    lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " + getString(R.string.dayAgoString));
-                } else {
-                    lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " + days + " " + getString(R.string.daysAgoString));
-                }
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(i);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("E d/MMM hh:mm:ss a");
+                    lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " +  dateFormat.format(cal.getTime()));
             }catch(JSONException e){
 
             }

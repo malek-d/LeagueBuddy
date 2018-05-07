@@ -118,7 +118,7 @@ public class PlayerSearchActivity extends AppCompatActivity {
         protected void onPostExecute(JSONObject jsonObject) {
 
             if(jsonObject == null){
-                //TODO add better exception handling here
+                Toasty.error(PlayerSearchActivity.this, "Summoner does not exist!", Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "no user returned");
             }
             try{
