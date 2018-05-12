@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         //Binding All my views
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        //--------------
         mSummonerNameText = findViewById(R.id.summonerName);
         mLevelText = findViewById(R.id.levelText);
         mRankTextView = findViewById(R.id.rankTextView);
@@ -399,6 +400,8 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
+            } catch (NullPointerException e){
+
             }
             return null;
         }
@@ -409,8 +412,6 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < 10; ++i) {
                 try {
                     JSONObject object = jsonArray.getJSONObject(i);
-                    //String str = object.toString();
-                    //testTextView.setText(str);
                     Champion champion = new Champion(object.getString("championLevel"),
                             object.getString("championPoints"),
                             object.getString("championId"),

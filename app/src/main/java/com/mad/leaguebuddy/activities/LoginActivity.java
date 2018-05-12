@@ -35,14 +35,13 @@ import es.dmoral.toasty.Toasty;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "";
-    public static String USER_KEY = "user";
     private boolean mBool;
     private EditText emailEditText;
     private EditText passwordEditText;
     private Button mAuthButton;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private TableRow summonerInfoRow, mRegionTableRow;
+    private TableRow summonerInfoRow;
     private MaterialSpinner regionSpinner;
     private EditText summonerNameEditText;
     private urlFactory urlFactory = new urlFactory();
@@ -63,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         summonerInfoRow = findViewById(R.id.summonerTablerow);
         regionSpinner = findViewById(R.id.regionSpinner);
         summonerNameEditText = findViewById(R.id.summonerEditText);
-        //mRegionTableRow = findViewById(R.id.regionTableRow);
         regionSpinner.setItems(getResources().getStringArray(R.array.regions));
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -76,10 +74,8 @@ public class LoginActivity extends AppCompatActivity {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // ...
             }
         };
-
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -88,17 +84,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (b) {
                     mAuthButton.setText(getString(R.string.login));
                     summonerInfoRow.setVisibility(View.GONE);
-                    //mRegionTableRow.setVisibility(View.GONE);
-
                 } else {
                     mAuthButton.setText(getString(R.string.register));
                     summonerInfoRow.setVisibility(View.VISIBLE);
-                    //mRegionTableRow.setVisibility(View.VISIBLE);
                 }
 
             }
         });
-
         mAuthButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,14 +101,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
         regionSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
-
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 mRegion = item;
             }
         });
-
     }
 
     @Override
@@ -190,9 +179,5 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
-
     }
-
 }
