@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.data.SummonerHandler;
+import com.mad.leaguebuddy.ViewModel.SummonerHandler;
 import com.mad.leaguebuddy.model.Champion;
 
 import org.json.JSONException;

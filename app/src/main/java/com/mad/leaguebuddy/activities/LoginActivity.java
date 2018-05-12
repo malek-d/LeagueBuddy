@@ -4,24 +4,20 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.data.urlFactory;
+import com.mad.leaguebuddy.ViewModel.urlFactory;
 import com.mad.leaguebuddy.model.*;
 
 

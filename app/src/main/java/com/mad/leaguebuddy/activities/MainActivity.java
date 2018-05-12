@@ -30,9 +30,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mad.leaguebuddy.R;
 import com.mad.leaguebuddy.adapters.ChampionsAdapter;
-import com.mad.leaguebuddy.data.RequestHandler;
-import com.mad.leaguebuddy.data.SummonerHandler;
-import com.mad.leaguebuddy.data.urlFactory;
+import com.mad.leaguebuddy.ViewModel.RequestHandler;
+import com.mad.leaguebuddy.ViewModel.SummonerHandler;
+import com.mad.leaguebuddy.ViewModel.urlFactory;
 import com.mad.leaguebuddy.model.*;
 
 import org.json.JSONArray;

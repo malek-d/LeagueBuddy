@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.data.SummonerHandler;
-import com.mad.leaguebuddy.data.urlFactory;
+import com.mad.leaguebuddy.ViewModel.SummonerHandler;
+import com.mad.leaguebuddy.ViewModel.urlFactory;
 import com.mad.leaguebuddy.model.Summoner;
 
 import java.text.SimpleDateFormat;

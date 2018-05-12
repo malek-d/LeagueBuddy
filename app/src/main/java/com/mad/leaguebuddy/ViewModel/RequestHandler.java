@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.data;
+package com.mad.leaguebuddy.ViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;

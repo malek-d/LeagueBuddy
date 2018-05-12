@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.data;
+package com.mad.leaguebuddy.ViewModel;
 
 import android.content.Context;
 import android.widget.ImageView;
