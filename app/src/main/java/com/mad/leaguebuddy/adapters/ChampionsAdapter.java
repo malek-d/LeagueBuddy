@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mad.leaguebuddy.R;
+import com.mad.leaguebuddy.ViewModel.ChampionInfoHandler;
 import com.mad.leaguebuddy.ViewModel.SummonerHandler;
 import com.mad.leaguebuddy.model.Champion;
 
@@ -99,7 +100,8 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
 
         @Override
         protected String doInBackground(Void... voids) {
-            return loadJSONFromAsset();
+            ChampionInfoHandler handler = new ChampionInfoHandler();
+            return handler.loadJSONFromAsset(mContext);
         }
 
         @Override
@@ -113,28 +115,12 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
                 mChamp.setChampionTitle(champion.getString("title"));
                 championNameTV.setText(mChamp.getChampionName() + "\n" + mChamp.getChampionTitle());
                 SummonerHandler summonerHandler = new SummonerHandler();
-                summonerHandler.glideHelper(mContext, "https://ddragon.leagueoflegends.com/cdn/8.8.1/img/champion/" + mChamp.getChampionKey() + ".png", 0 ,championIconIV );
+                summonerHandler.glideHelper(mContext, "https://ddragon.leagueoflegends.com/cdn/8.8.1/img/champion/" + mChamp.getChampionKey() + ".png", 0 , championIconIV );
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             progressBar.setVisibility(View.GONE);
         }
-
     }
 
-    public String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = mContext.getAssets().open("champions.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
 }

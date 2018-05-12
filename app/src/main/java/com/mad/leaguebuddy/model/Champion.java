@@ -17,6 +17,10 @@ public class Champion {
         this.mChampionPointsNeeded = mChampionPointsNeeded;
     }
 
+    public Champion(String championID){
+        mChampionID = championID;
+    }
+
 
     public String getChampionName() {
         return mChampionName;
