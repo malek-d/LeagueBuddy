@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.model;
+package com.mad.leaguebuddy.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,16 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.mad.leaguebuddy.R;
 import com.mad.leaguebuddy.data.SummonerHandler;
 import com.mad.leaguebuddy.data.urlFactory;
+import com.mad.leaguebuddy.model.Summoner;
 
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Maleks on 05-May-18.

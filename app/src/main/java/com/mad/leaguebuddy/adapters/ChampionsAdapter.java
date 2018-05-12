@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.model;
+package com.mad.leaguebuddy.adapters;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.mad.leaguebuddy.R;
 import com.mad.leaguebuddy.data.SummonerHandler;
+import com.mad.leaguebuddy.model.Champion;
 
 import org.json.JSONException;
 import org.json.JSONObject;

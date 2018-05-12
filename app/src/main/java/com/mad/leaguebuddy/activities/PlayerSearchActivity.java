@@ -1,22 +1,14 @@
 package com.mad.leaguebuddy.activities;
 
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -25,7 +17,7 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mad.leaguebuddy.R;
 import com.mad.leaguebuddy.data.urlFactory;
 import com.mad.leaguebuddy.model.Summoner;
-import com.mad.leaguebuddy.model.SummonerAdapter;
+import com.mad.leaguebuddy.adapters.SummonerAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
