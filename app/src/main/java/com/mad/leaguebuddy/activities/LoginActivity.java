@@ -34,10 +34,11 @@ import com.google.firebase.auth.FirebaseUser;
 import es.dmoral.toasty.Toasty;
 
 //Maybe rename to AuthenticationActivity as you also have registration in here
-/*
-* This Activity handles user authentication in regards to both logging into an existing account
-* or registering a new account
-* */
+/**
+ * This Activity handles user authentication in regards to both logging into an existing account
+ * or registering a new account
+ */
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "";
     private boolean mBool; //Rename to make more sense i.e. isLogin, isBtnLogin or something
@@ -68,9 +69,9 @@ public class LoginActivity extends AppCompatActivity {
         regionSpinner = findViewById(R.id.regionSpinner);
         summonerNameEditText = findViewById(R.id.summonerEditText);
         regionSpinner.setItems(getResources().getStringArray(R.array.regions));
-        /*
-        *You Should put all Firebase stuff in a separate class titled something like DbHandler or DbHelper
-        * **/
+        /**
+         * You Should put all Firebase stuff in a separate class titled something like DbHandler or DbHelper
+         */
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -136,10 +137,11 @@ public class LoginActivity extends AppCompatActivity {
 
     //what about validation if email is actually in email format ? and also to ensure email doesn't already exist ?
     //I also feel like validation of data can be done in a different class like the object itself or utils not entirely sure :thinking:
-    /*
-    * Checks if user has entered all required fields and if they have then registers them as a new user
-    * Otherwise alerts user that they need to enter all fields
-    * */
+    /**
+     * Checks if user has entered all required fields and if they have then registers them as a new user
+     * Otherwise alerts user that they need to enter all fields
+     */
+
     private void tryRegister() {
         if(emailEditText.getText().toString().equals("") || passwordEditText.getText().toString().equals("") || summonerNameEditText.getText().toString().equals("")){
             Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show(); //I changed your strings thing to enter instead of Entire btw
@@ -149,10 +151,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //This should be handled in separate class as I mentioned above i.e. dbHelper
-    /*
-    * If user has entered all required fields with valid data then their user details are saved into Firebase database
-    * Once complete the user is automatically logged in and redirected to MainActivity
-    * */
+    /**
+     * If user has entered all required fields with valid data then their user details are saved into Firebase database
+     * Once complete the user is automatically logged in and redirected to MainActivity
+     */
     private void validateRegistration(){
         mAuth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -180,10 +182,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //maybe make helper function isFieldEmpty() to make it more readable but i don't know if that is good standard
-    /*
-    * Checks if user has entered all required fields and if they have then proceeds to log them in
-    * Otherwise alerts user they need to enter all fields
-    * */
+    /**
+     * Checks if user has entered all required fields and if they have then proceeds to log them in
+     * Otherwise alerts user they need to enter all fields
+     */
     private void tryLogin() {
         if(emailEditText.getText().toString().equals("") || passwordEditText.getText().toString().equals("")){
             Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show();
@@ -192,12 +194,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    * Authenticates user by checking if email and password match and exist in Firebase
-    * If user exists then logs them in and redirects them to MainActivity
-    * Otherwise a warning is given to user to alert them their details do not match and they need to retry login
-    *
-    * */
+    /**
+     *  Authenticates user by checking if email and password match and exist in Firebase
+     *  If user exists then logs them in and redirects them to MainActivity
+     *  Otherwise a warning is given to user to alert them their details do not match and they need to retry login
+     *
+     */
     private void validateLogin(){
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
