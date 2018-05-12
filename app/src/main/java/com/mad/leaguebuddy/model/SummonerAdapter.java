@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mad.leaguebuddy.R;
+import com.mad.leaguebuddy.data.SummonerHandler;
 import com.mad.leaguebuddy.data.urlFactory;
 
 import java.text.Format;
@@ -64,10 +65,9 @@ public class SummonerAdapter extends RecyclerView.Adapter<SummonerAdapter.ViewHo
         SimpleDateFormat dateFormat = new SimpleDateFormat("E d/MMM hh:mm:ss a");
 
         holder.mLastOnline.setText(mContext.getString(R.string.lastOnlineString) + " " + dateFormat.format(cal.getTime()));
-
-        Glide.with(mContext).load(mUrlFactory.getDdragonImageUrl(summoner.getIconID()))
-                .placeholder(R.drawable.poro_question)
-                .into(holder.mIcon);
+        SummonerHandler summonerHandler = new SummonerHandler();
+        summonerHandler.glideHelper(mContext,mUrlFactory.getDdragonImageUrl(summoner.getIconID()),
+                R.drawable.poro_question, holder.mIcon);
     }
 
     @Override

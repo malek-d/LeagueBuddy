@@ -11,7 +11,6 @@ public class urlFactory {
     private static final String mAPIKey = "?api_key=RGAPI-0f76286c-8a5e-41db-ace9-f14f2b98e7a0";
     private static final String leagueURL = "league/v3/positions/by-summoner/";
     private static final String CHAMPION_MASTERY_URL = "champion-mastery/v3/champion-masteries/by-summoner/";
-    private static final String CHAMPION_INFO_URL = "static-data/v3/champions/";
     private static final String DDRAGON_IMAGE_URL = "http://ddragon.leagueoflegends.com/cdn/8.8.1/img/profileicon/";
     private static final String PNG_FORMAT = ".png";
 
@@ -39,10 +38,6 @@ public class urlFactory {
 
     public String getChampionMasteryUrl(String summonerID, String region){
         return mHttps + region + mUrl + CHAMPION_MASTERY_URL + summonerID + mAPIKey;
-    }
-
-    public String getChampionInfoUrl(String champID, String region){
-        return mHttps + region + mUrl + CHAMPION_INFO_URL + champID + mAPIKey;
     }
 
     public String getSummonerURL(String summonerName, String region){

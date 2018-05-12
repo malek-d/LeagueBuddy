@@ -196,7 +196,6 @@ public class LoginActivity extends AppCompatActivity {
     * Authenticates user by checking if email and password match and exist in Firebase
     * If user exists then logs them in and redirects them to MainActivity
     * Otherwise a warning is given to user to alert them their details do not match and they need to retry login
-    *
     * */
     private void validateLogin(){
         String email = emailEditText.getText().toString();

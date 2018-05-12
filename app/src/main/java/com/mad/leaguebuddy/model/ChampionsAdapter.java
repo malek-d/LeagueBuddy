@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mad.leaguebuddy.R;
+import com.mad.leaguebuddy.data.SummonerHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -111,9 +112,8 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
                 mChamp.setChampionName(champion.getString("name"));
                 mChamp.setChampionTitle(champion.getString("title"));
                 championNameTV.setText(mChamp.getChampionName() + "\n" + mChamp.getChampionTitle());
-                Glide.with(mContext)
-                        .load("https://ddragon.leagueoflegends.com/cdn/8.8.1/img/champion/" + mChamp.getChampionKey() + ".png")
-                        .into(championIconIV);
+                SummonerHandler summonerHandler = new SummonerHandler();
+                summonerHandler.glideHelper(mContext, "https://ddragon.leagueoflegends.com/cdn/8.8.1/img/champion/" + mChamp.getChampionKey() + ".png", 0 ,championIconIV );
             } catch (JSONException e) {
                 e.printStackTrace();
             }
