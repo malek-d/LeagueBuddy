@@ -187,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 mRegion = ds.child("region").getValue().toString();
                 mURL = urlFactory.getSummonerURL(mSummonerName, mRegion.toLowerCase());
                 summonerTask(mURL);
+
             }
         }
     }
