@@ -20,6 +20,7 @@
     <string name="regionText">Region: </string>
     <string name="enterSummoner">Enter summoner name</string>
     <string-array name="regions">
+        <item name="DEFAULT">Region</item>
         <item name="OCE">OCE</item>
         <item name="RU">RU</item>
         <item name="KR">KR</item>
@@ -55,4 +56,5 @@
     <string name="history">History</string>
     <string name="match_history">Match History:</string>
     <string name="percentString">%</string>
+    <string name="selectRegionString">SELECT A REGION</string>
 </resources>

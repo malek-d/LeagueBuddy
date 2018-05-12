@@ -109,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
         regionSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 mRegion = item;
@@ -141,7 +140,9 @@ public class LoginActivity extends AppCompatActivity {
     private void tryRegister() {
         if(emailEditText.getText().toString().equals("") || passwordEditText.getText().toString().equals("") || summonerNameEditText.getText().toString().equals("")){
             Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show(); //I changed your strings thing to enter instead of Entire btw
-        }else{
+        }else if(mRegion == null || mRegion == "DEFAULT"){
+            Toasty.error(this, getString(R.string.selectRegionString), Toast.LENGTH_SHORT).show();
+        }else {
             validateRegistration();
         }
     }

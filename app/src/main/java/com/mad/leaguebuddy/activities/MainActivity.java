@@ -228,12 +228,9 @@ public class MainActivity extends AppCompatActivity {
 
     class getSummonerTask extends AsyncTask<Void, Void, JSONObject> {
         String url;
-
-
         public getSummonerTask(String string) {
             url = string;
         }
-
 
         @Override
         protected JSONObject doInBackground(Void... strings) {
@@ -258,9 +255,7 @@ public class MainActivity extends AppCompatActivity {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("E d/MMM hh:mm:ss a");
                     lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " +  dateFormat.format(
                             cal.getTime()));
-            }catch(JSONException e){
-
-            }
+            }catch(JSONException e){}
         }
     }
 
