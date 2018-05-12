@@ -50,7 +50,7 @@
 
     <string name="levelString">Level:</string>
     <string name="searchForSummoner">Search for Summoner</string>
-    <string name="emptyFieldsString">Please Entire All Fields</string>
+    <string name="emptyFieldsString">Please Enter All Fields</string>
     <string name="searchString">Search</string>
     <string name="history">History</string>
     <string name="match_history">Match History:</string>

@@ -50,6 +50,9 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     //Here Begins my member declarations
+    /*
+    * Handle firebase stuff separately
+    * */
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
     private FirebaseAuth mAuth;
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         mRef = mDatabase.getReference();
 
         //Listener to get current user from FireBase Database
+        //Handle this in separate class
         mRef.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
