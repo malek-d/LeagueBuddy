@@ -20,6 +20,8 @@ public class Match {
         mTimeStamp = timeStamp;
         mQueueType = queueType;
         mRole = role;
+
+        queueTypeToName(queueType);
     }
 
     public String getLane() {

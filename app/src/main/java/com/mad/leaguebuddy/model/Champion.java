@@ -21,6 +21,8 @@ public class Champion {
         mChampionID = championID;
     }
 
+    public Champion(){}
+
 
     public String getChampionName() {
         return mChampionName;

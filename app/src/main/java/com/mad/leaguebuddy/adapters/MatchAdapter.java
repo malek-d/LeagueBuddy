@@ -9,9 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mad.leaguebuddy.R;
+import com.mad.leaguebuddy.ViewModel.ChampionInfoHandler;
+import com.mad.leaguebuddy.ViewModel.SummonerHandler;
+import com.mad.leaguebuddy.ViewModel.UrlFactory;
+import com.mad.leaguebuddy.model.Champion;
 import com.mad.leaguebuddy.model.Match;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import butterknife.BindView;
 
@@ -57,17 +63,29 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
         holder.mMapNameTextView.setText(match.getMapName());
         holder.mQueueTypeTextView.setText(match.getQueueType());
         setLaneIcon(match, holder.mLaneImageView);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(match.getTimeStamp());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E d/MMM hh:mm:ss a");
+        holder.mGameDateTextView.setText(mContext.getString(R.string.gameDateString) + " " +  dateFormat.format(cal.getTime()));
+
+        UrlFactory urlFactory = new UrlFactory();
+        SummonerHandler summonerHandler = new SummonerHandler();
+        ChampionInfoHandler championInfoHandler = new ChampionInfoHandler(mContext);
+        Champion champion = championInfoHandler.getChampionFromJson(match.getChampId());
+        holder.mMatchChampionNameTV.setText(champion.getChampionName());
+        summonerHandler.glideHelper(mContext, urlFactory.getDdragonChampionUrl(champion.getChampionKey()), R.drawable.poro_question, holder.mMatchChampionIconIV);
     }
 
     private void setLaneIcon(Match match, ImageView laneImageView) {
         switch(match.getLane()){
-            case "BOTTOM": laneImageView.setImageResource(R.drawable.bot); break;
-            case "MID": laneImageView.setImageResource(R.drawable.mid);break;
-            case "JUNGLE": laneImageView.setImageResource(R.drawable.jg);break;
-            case "TOP": laneImageView.setImageResource(R.drawable.top);break;
+            case "BOTTOM": laneImageView.setImageResource(R.mipmap.bot_lane_icon); break;
+            case "MID": laneImageView.setImageResource(R.mipmap.mid_lane_icon);break;
+            case "JUNGLE": laneImageView.setImageResource(R.mipmap.jungle_icon);break;
+            case "TOP": laneImageView.setImageResource(R.mipmap.top_lane_icon);break;
         }
         if(match.getRole().equals("DUO_SUPPORT")){
-            laneImageView.setImageResource(R.drawable.sup);
+            laneImageView.setImageResource(R.mipmap.support_icon);
         }
     }
 

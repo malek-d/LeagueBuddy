@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.mad.leaguebuddy.R;
 import com.mad.leaguebuddy.ViewModel.SummonerHandler;
-import com.mad.leaguebuddy.ViewModel.urlFactory;
+import com.mad.leaguebuddy.ViewModel.UrlFactory;
 import com.mad.leaguebuddy.model.Summoner;
 
 import java.text.SimpleDateFormat;
@@ -22,7 +22,7 @@ import java.util.Calendar;
  */
 
 public class SummonerAdapter extends RecyclerView.Adapter<SummonerAdapter.ViewHolder> {
-    private urlFactory mUrlFactory = new urlFactory();
+    private UrlFactory mUrlFactory = new UrlFactory();
     private ArrayList<Summoner> mSummoners;
     private Context mContext;
 

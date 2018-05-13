@@ -3,13 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100sp"
-    android:layout_marginBottom="5dp"
-    android:background="@color/slightlyTransparent">
+    android:background="@drawable/bordered_item_background"
+    android:layout_marginBottom="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/slightlyTransparent"
         android:orientation="horizontal">
 
         <ImageView
@@ -18,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
+
             android:maxHeight="20dp"
             android:maxWidth="20dp"/>
 
@@ -33,39 +33,47 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:textColor="@color/whiteText"
                     android:id="@+id/mapNameTextView"
                     android:layout_width="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:layout_height="wrap_content"/>
 
                 <TextView
+                    android:textColor="@color/whiteText"
                     android:id="@+id/queueTypeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/gameDateTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/whiteText"/>
+
         </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        android:text="Game date: 2432442343243"
+        android:textSize="10dp"
+        android:id="@+id/gameDateTextView"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/whiteText"/>
+
         <ImageView
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
             android:id="@+id/matchChampionIconIV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
         <TextView
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/matchChampionIconIV"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:textColor="@color/whiteText"
             android:id="@+id/matchChampionNameTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_width="wrap_content"/>
+
 </RelativeLayout>

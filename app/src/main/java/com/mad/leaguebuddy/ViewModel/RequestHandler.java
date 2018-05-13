@@ -56,4 +56,18 @@ public class RequestHandler {
         }
         return null;
     }
+
+    public String RequestHandlerAsString(String url){
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        try{
+            Response response = mClient.newCall(request).execute();
+            return response.body().string();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

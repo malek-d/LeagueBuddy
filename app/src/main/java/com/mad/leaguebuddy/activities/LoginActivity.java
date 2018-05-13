@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.ViewModel.urlFactory;
+import com.mad.leaguebuddy.ViewModel.UrlFactory;
 import com.mad.leaguebuddy.model.*;
 
 
@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private TableRow summonerInfoRow;
     private MaterialSpinner regionSpinner;
     private EditText summonerNameEditText;
-    private urlFactory urlFactory = new urlFactory();
+    private UrlFactory UrlFactory = new UrlFactory();
     private String mRegion;
 
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
@@ -161,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             String summonerName = summonerNameEditText.getText().toString();
-                            String region = urlFactory.returnRegion(mRegion);
+                            String region = UrlFactory.returnRegion(mRegion);
 
 
                             DatabaseReference summonerRef = mDatabase.getReference("users");

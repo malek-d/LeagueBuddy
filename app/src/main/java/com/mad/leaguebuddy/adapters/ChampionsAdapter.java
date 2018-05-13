@@ -13,13 +13,12 @@ import android.widget.TextView;
 import com.mad.leaguebuddy.R;
 import com.mad.leaguebuddy.ViewModel.ChampionInfoHandler;
 import com.mad.leaguebuddy.ViewModel.SummonerHandler;
+import com.mad.leaguebuddy.ViewModel.UrlFactory;
 import com.mad.leaguebuddy.model.Champion;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -100,7 +99,7 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
 
         @Override
         protected String doInBackground(Void... voids) {
-            ChampionInfoHandler handler = new ChampionInfoHandler();
+            ChampionInfoHandler handler = new ChampionInfoHandler(mContext);
             return handler.loadJSONFromAsset(mContext);
         }
 
@@ -115,7 +114,8 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
                 mChamp.setChampionTitle(champion.getString("title"));
                 championNameTV.setText(mChamp.getChampionName() + "\n" + mChamp.getChampionTitle());
                 SummonerHandler summonerHandler = new SummonerHandler();
-                summonerHandler.glideHelper(mContext, "https://ddragon.leagueoflegends.com/cdn/8.8.1/img/champion/" + mChamp.getChampionKey() + ".png", 0 , championIconIV );
+                UrlFactory UrlFactory = new UrlFactory();
+                summonerHandler.glideHelper(mContext, UrlFactory.getDdragonChampionUrl(mChamp.getChampionKey()), 0 , championIconIV );
             } catch (JSONException e) {
                 e.printStackTrace();
             }

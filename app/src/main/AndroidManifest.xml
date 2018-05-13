@@ -25,7 +25,10 @@
             android:name=".activities.PlayerSearchActivity"
             android:label="Player Search"
             android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".activities.PlayerHistoryActivity"></activity>
+        <activity
+            android:name=".activities.PlayerHistoryActivity"
+            android:label="@string/match_history"
+            android:parentActivityName=".activities.MainActivity"/>
     </application>
 
 </manifest>

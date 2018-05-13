@@ -13,4 +13,5 @@
     <color name="androidGreen">#A4C639</color>
     <color name="negativeWinrateRed">#cc0000</color>
     <color name="colorPrimaryTransparent">#80303F9F</color>
+    <color name="black">#90000000</color>
 </resources>

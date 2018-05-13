@@ -4,7 +4,7 @@ package com.mad.leaguebuddy.ViewModel;
  * Created by Maleks on 21-Apr-18.
  */
 
-public class urlFactory {
+public class UrlFactory {
     private static final String mHttps = "https://";
     private static final String mUrl = ".api.riotgames.com/lol/";
     private static final String summonerURL = "summoner/v3/summoners/by-name/";
@@ -13,8 +13,10 @@ public class urlFactory {
     private static final String CHAMPION_MASTERY_URL = "champion-mastery/v3/champion-masteries/by-summoner/";
     private static final String DDRAGON_IMAGE_URL = "http://ddragon.leagueoflegends.com/cdn/8.8.1/img/profileicon/";
     private static final String PNG_FORMAT = ".png";
+    private static final String MATCH_URL = "match/v3/matchlists/by-account/";
+    private static final String DDRAGON_CHAMPION_URL = "ddragon.leagueoflegends.com/cdn/8.8.1/img/champion/";
 
-    public urlFactory(){}
+    public UrlFactory(){}
 
     public String returnRegion(String region){
         switch (region){
@@ -30,6 +32,14 @@ public class urlFactory {
             case "LA" : return "la1";
         }
         return null;
+    }
+
+    public String getDdragonChampionUrl(String champId){
+        return mHttps + DDRAGON_CHAMPION_URL + champId +  PNG_FORMAT;
+    }
+
+    public String getMatchUrl(String region, String accountId){
+        return mHttps + region + mUrl + MATCH_URL + accountId + mAPIKey;
     }
 
     public String getDdragonImageUrl(String iconId){

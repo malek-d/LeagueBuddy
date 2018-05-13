@@ -54,7 +54,9 @@
     <string name="emptyFieldsString">Please Enter All Fields</string>
     <string name="searchString">Search</string>
     <string name="history">History</string>
-    <string name="match_history">Match History:</string>
+    <string name="match_history">Match History</string>
     <string name="percentString">%</string>
     <string name="selectRegionString">SELECT A REGION</string>
+    <string name="accountIdErrorString">Failed to retrieve data, please refresh homepage and try again</string>
+    <string name="gameDateString">Game date:</string>
 </resources>

@@ -29,10 +29,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mad.leaguebuddy.R;
+import com.mad.leaguebuddy.ViewModel.UrlFactory;
 import com.mad.leaguebuddy.adapters.ChampionsAdapter;
 import com.mad.leaguebuddy.ViewModel.RequestHandler;
 import com.mad.leaguebuddy.ViewModel.SummonerHandler;
-import com.mad.leaguebuddy.ViewModel.urlFactory;
 import com.mad.leaguebuddy.model.*;
 
 import org.json.JSONArray;
@@ -47,6 +47,8 @@ import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String ACCOUNT_ID = "accountId";
+    public static final String REGION = "";
     //Here Begins my member declarations
     /*
     * Handle firebase stuff separately
@@ -57,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser mUser;
 
-    private urlFactory urlFactory = new urlFactory();
+    private UrlFactory UrlFactory = new UrlFactory();
     private OkHttpClient mClient = new OkHttpClient();
 
-    private String mSummonerName, mURL, mRegion, mRankedURL;
-    private Long mAccountID;
+    private String mSummonerName, mURL, mRegion, mRankedURL, mAccountId;
+    private Long mSummonerId;
     private TextView mSummonerNameText, mLevelText, mRankTextView, mWinsTextView, mLossesTextView,
             mAverageTextView,lastOnlineTextView, mSoloQueueTitle;
 
@@ -91,8 +93,12 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.navigation_notifications:
+                    Intent historyIntent = new Intent(MainActivity.this, PlayerHistoryActivity.class);
+                    historyIntent.putExtra(ACCOUNT_ID, mRegion);
+                    historyIntent.putExtra(REGION, mAccountId);
 
-                    return true;
+                    startActivity(historyIntent);
+                    break;
                 case R.id.navigation_settings:
                     return true;
             }
@@ -156,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 summonerRankTask(mRankedURL);
-                masteryTask(urlFactory.getChampionMasteryUrl(mAccountID.toString(), mRegion));
+                masteryTask(UrlFactory.getChampionMasteryUrl(mSummonerId.toString(), mRegion));
             }
 
             @Override
@@ -185,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 mSummonerName = ds.child("summonerName").getValue().toString();
                 mSummonerNameText.setText(mSummonerName);
                 mRegion = ds.child("region").getValue().toString();
-                mURL = urlFactory.getSummonerURL(mSummonerName, mRegion.toLowerCase());
+                mURL = UrlFactory.getSummonerURL(mSummonerName, mRegion.toLowerCase());
                 summonerTask(mURL);
 
             }
@@ -193,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Calls the getRankedInfoTask AsyncTask to call a riot urlFactory to
+     * Calls the getRankedInfoTask AsyncTask to call a riot UrlFactory to
      * retrieve player information and also ranked queue information
      * @param mRankedURL
      */
@@ -243,9 +249,11 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(JSONObject s) {
             try{
                 int id = Integer.parseInt(s.getString("id"));
-                mAccountID = new Long(id);
-                mRankedURL = urlFactory.getRankedStatsURL(mRegion.toLowerCase(), mAccountID);
-                mSummonerHandler.glideHelper(MainActivity.this, urlFactory.getDdragonImageUrl
+                mSummonerId = new Long(id);
+
+                mAccountId = s.getString("accountId");
+                mRankedURL = UrlFactory.getRankedStatsURL(mRegion.toLowerCase(), mSummonerId);
+                mSummonerHandler.glideHelper(MainActivity.this, UrlFactory.getDdragonImageUrl
                         (s.getString("profileIconId")),R.drawable.poro_question, mProfileIcon);
                 mLevelText.setText(getString(R.string.levelString)+ " " + s.getString("summonerLevel"));
 

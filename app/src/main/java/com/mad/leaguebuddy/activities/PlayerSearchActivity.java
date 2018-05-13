@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.ViewModel.urlFactory;
+import com.mad.leaguebuddy.ViewModel.UrlFactory;
 import com.mad.leaguebuddy.model.Summoner;
 import com.mad.leaguebuddy.adapters.SummonerAdapter;
 
@@ -37,7 +37,7 @@ public class PlayerSearchActivity extends AppCompatActivity {
     private RecyclerView mResultRV;
     private ProgressBar mProgress;
     private ArrayList<Summoner> mSummoners = new ArrayList<>();
-    private urlFactory mUrlFactor = new urlFactory();
+    private UrlFactory mUrlFactor = new UrlFactory();
     private String mRegion;
     private SummonerAdapter mAdapter;
     private String mName = "";
@@ -62,12 +62,12 @@ public class PlayerSearchActivity extends AppCompatActivity {
         mResultRV.setAdapter(mAdapter);
 
         regionSpinner.setItems(getResources().getStringArray(R.array.regions));
-        mRegion = mUrlFactor.returnRegion(regionsTemp[0]);
+        //mRegion = mUrlFactor.returnRegion(regionsTemp[0]);
         regionSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                mRegion = item;
+                mRegion = mUrlFactor.returnRegion(item);
             }
         });
     }
