@@ -32,7 +32,8 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mLaneImageView, mMatchChampionIconIV;
-        TextView mMapNameTextView, mQueueTypeTextView, mGameDateTextView,  mMatchChampionNameTV;
+        TextView mMapNameTextView, mQueueTypeTextView, mGameDateTextView, mMatchChampionNameTV, mLaneTv;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -42,6 +43,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
             mQueueTypeTextView = itemView.findViewById(R.id.queueTypeTextView);
             mGameDateTextView = itemView.findViewById(R.id.gameDateTextView);
             mMatchChampionNameTV = itemView.findViewById(R.id.matchChampionNameTV);
+            mLaneTv = itemView.findViewById(R.id.laneTV);
         }
     }
 
@@ -67,7 +69,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(match.getTimeStamp());
         SimpleDateFormat dateFormat = new SimpleDateFormat("E d/MMM hh:mm:ss a");
-        holder.mGameDateTextView.setText(mContext.getString(R.string.gameDateString) + " " +  dateFormat.format(cal.getTime()));
+        holder.mGameDateTextView.setText(mContext.getString(R.string.gameDateString) + " " + dateFormat.format(cal.getTime()));
 
         UrlFactory urlFactory = new UrlFactory();
         SummonerHandler summonerHandler = new SummonerHandler();
@@ -75,17 +77,27 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
         Champion champion = championInfoHandler.getChampionFromJson(match.getChampId());
         holder.mMatchChampionNameTV.setText(champion.getChampionName());
         summonerHandler.glideHelper(mContext, urlFactory.getDdragonChampionUrl(champion.getChampionKey()), R.drawable.poro_question, holder.mMatchChampionIconIV);
+        holder.mLaneTv.setText(match.getLane());
     }
 
     private void setLaneIcon(Match match, ImageView laneImageView) {
         switch(match.getLane()){
-            case "BOTTOM": laneImageView.setImageResource(R.mipmap.bot_lane_icon); break;
-            case "MID": laneImageView.setImageResource(R.mipmap.mid_lane_icon);break;
-            case "JUNGLE": laneImageView.setImageResource(R.mipmap.jungle_icon);break;
-            case "TOP": laneImageView.setImageResource(R.mipmap.top_lane_icon);break;
+            case "BOTTOM":
+                laneImageView.setImageResource(R.mipmap.bot_lane_icon);
+                break;
+            case "MID":
+                laneImageView.setImageResource(R.mipmap.mid_lane_icon);
+                break;
+            case "JUNGLE":
+                laneImageView.setImageResource(R.mipmap.jungle_icon);
+                break;
+            case "TOP":
+                laneImageView.setImageResource(R.mipmap.top_lane_icon);
+                break;
         }
         if(match.getRole().equals("DUO_SUPPORT")){
             laneImageView.setImageResource(R.mipmap.support_icon);
+            match.setLane("SUPPORT");
         }
     }
 
