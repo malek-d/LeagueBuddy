@@ -53,7 +53,6 @@ public class PlayerSearchActivity extends AppCompatActivity {
         mSummonerName = findViewById(R.id.searchSummonerNameEditText);
         mResultRV = findViewById(R.id.searchResultRV);
         mProgress = findViewById(R.id.progressBar);
-        String regionsTemp[] = getResources().getStringArray(R.array.regions);
 
         mAdapter = new SummonerAdapter(mSummoners, PlayerSearchActivity.this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -62,7 +61,6 @@ public class PlayerSearchActivity extends AppCompatActivity {
         mResultRV.setAdapter(mAdapter);
 
         regionSpinner.setItems(getResources().getStringArray(R.array.regions));
-        //mRegion = mUrlFactor.returnRegion(regionsTemp[0]);
         regionSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override
@@ -88,8 +86,7 @@ public class PlayerSearchActivity extends AppCompatActivity {
 
         @Override
         protected JSONObject doInBackground(Void... voids) {
-            Request request = new Request.Builder()
-                    .url(mUrlFactor.getSummonerURL(mName, mRegion))
+            Request request = new Request.Builder().url(mUrlFactor.getSummonerURL(mName, mRegion))
                     .build();
             OkHttpClient client = new OkHttpClient();
             Response response;
@@ -102,7 +99,6 @@ public class PlayerSearchActivity extends AppCompatActivity {
             } catch(JSONException e){
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -132,7 +128,6 @@ public class PlayerSearchActivity extends AppCompatActivity {
             }
             mProgress.setVisibility(View.INVISIBLE);
             mResultRV.setVisibility(View.VISIBLE);
-
         }
     }
 
