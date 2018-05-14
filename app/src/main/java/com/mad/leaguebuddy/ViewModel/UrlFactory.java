@@ -25,7 +25,7 @@ public class UrlFactory {
             case "KR" : return "kr";
             case "BR" : return "br1";
             case "JP" : return "jp1";
-            case "NA" : return "na";
+            case "NA" : return "na1";
             case "EUN" : return "eun1";
             case  "EUW" : return  "euw1";
             case "TR" : return "tr1";

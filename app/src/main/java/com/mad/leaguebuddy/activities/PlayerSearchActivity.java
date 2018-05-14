@@ -119,7 +119,7 @@ public class PlayerSearchActivity extends AppCompatActivity {
                 Long revisionDate = Long.parseLong(revisionDateString);
                 Summoner summoner = new Summoner(sumName, iconId, accountId, sumId,revisionDate, sumLevel);
 
-                mSummoners.add(summoner);
+                mSummoners.add(0, summoner);
                 mAdapter.notifyDataSetChanged();
             } catch(JSONException e){
                 e.printStackTrace();
