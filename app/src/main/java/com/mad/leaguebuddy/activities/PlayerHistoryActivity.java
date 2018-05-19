@@ -28,18 +28,15 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 
+/**
+ * This activity handles the display of the users match history data from their 20 most recent games
+ */
 public class PlayerHistoryActivity extends AppCompatActivity {
-
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseUser mUser;
-
-    @BindView(R.id.matchHistoryRV)
-    protected RecyclerView mMatchHistoryRV;
-    @BindView(R.id.historyLayout)
-    protected LinearLayout mHistoryLayout;
+    @BindView(R.id.matchHistoryRV)protected RecyclerView mMatchHistoryRV;
+    @BindView(R.id.historyLayout)protected LinearLayout mHistoryLayout;
 
     private ArrayList<Match> mMatchArrayList = new ArrayList<>();
     private MatchAdapter mMatchAdapter;
@@ -52,9 +49,6 @@ public class PlayerHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player_history);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
-
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
 
         mMatchAdapter = new MatchAdapter(mMatchArrayList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -77,11 +71,12 @@ public class PlayerHistoryActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if(mAuthListener != null){
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
     }
 
+    /**
+     * Method that checks if actual data exists in mAccountId
+     * then begins the matchHistoryTask AsyncTask to get Match History for the given user
+     */
     private void matchHistoryTaskCaller() {
         if(mAccountId == null){
             Toasty.warning(this, getString(R.string.accountIdErrorString), Toast.LENGTH_SHORT).show();
@@ -90,6 +85,11 @@ public class PlayerHistoryActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Utilises urlFactory to get the required web service url for getting match history
+     * upon retrieving that data in string format we convert it into a JSONArray to parse through
+     * in the onPostExecute phase of the task
+     */
     private class matchHistoryTask extends AsyncTask<Void, Void, JSONArray> {
         private String mMatchUrl;
 
@@ -123,7 +123,6 @@ public class PlayerHistoryActivity extends AppCompatActivity {
                         Match match = new Match(current.getString("lane"), current.getString("gameId"),
                                 current.getString("champion"), Long.parseLong(current.getString("timestamp")),
                                 current.getString("queue"), current.getString("role"));
-
                         mMatchArrayList.add(match);
                         mMatchAdapter.notifyItemInserted(mMatchArrayList.size() - 1);
 
