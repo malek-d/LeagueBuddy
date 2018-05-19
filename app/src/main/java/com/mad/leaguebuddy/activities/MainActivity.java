@@ -23,8 +23,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mad.leaguebuddy.R;
 import com.mad.leaguebuddy.ViewModel.FirebaseFactory;
 import com.mad.leaguebuddy.ViewModel.UrlFactory;
@@ -51,9 +54,7 @@ public class MainActivity extends AppCompatActivity {
     /*
     * Handle firebase stuff separately
     * */
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference mRef;
-    private FirebaseAuth mAuth;
+
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser mUser;
 
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout mStatsLayout;
     private SummonerHandler mSummonerHandler = new SummonerHandler();
     private FirebaseFactory mFirebaseFactory = FirebaseFactory.getInstance(this);
+    private DatabaseReference mRef;
     //Here ends my member declarations
 
     /**
@@ -99,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(historyIntent);
                     break;
                 case R.id.navigation_settings:
+                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                     return true;
             }
             return false;
@@ -130,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
         mStatsLayout = findViewById(R.id.statsLayout);
         recyclerView = findViewById(R.id.championMasteryView);
         //Widget binding end
-
         //Custom font binding
         Typeface font = Typeface.createFromAsset(getAssets(), "Elianto-Regular.ttf");
         mSoloQueueTitle.setTypeface(font);
@@ -160,12 +162,33 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+        mRef = mFirebaseFactory.getRef();
+        mRef.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                showData(dataSnapshot);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
 
-        mSummonerName = mFirebaseFactory.getUserName();
-        mSummonerNameText.setText(mSummonerName);
-        mRegion = mFirebaseFactory.getRegion();
-        mURL = UrlFactory.getSummonerURL(mSummonerName, mRegion.toLowerCase());
-        summonerTask(mURL);
+    /**
+     * Method handles finding the correct user based on the provided snapshot of my Firebase Database
+     * when found we save the username and region of the given user to be used in other activities
+     * when needed
+     * @param dataSnapshot
+     */
+    public void showData(DataSnapshot dataSnapshot) {
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+            if(ds.getKey().equals(mUser.getUid())){
+                mSummonerName = ds.child("summonerName").getValue().toString();
+                mSummonerNameText.setText(mSummonerName);
+                mRegion = ds.child("region").getValue().toString();
+                mURL = UrlFactory.getSummonerURL(mSummonerName, mRegion.toLowerCase());
+                summonerTask(mURL);
+            }
+        }
     }
 
     /**
@@ -194,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         if(mAuthListener != null){
-            mAuth.removeAuthStateListener(mAuthListener);
+           mFirebaseFactory.getAuth().removeAuthStateListener(mAuthListener);
         }
     }
 

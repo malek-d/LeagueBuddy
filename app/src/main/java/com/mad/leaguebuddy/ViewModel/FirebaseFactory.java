@@ -3,6 +3,7 @@ package com.mad.leaguebuddy.ViewModel;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -28,10 +29,12 @@ public class FirebaseFactory {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
+    private DatabaseReference mUsersRef;
     private Activity activity;
     private FirebaseUser mUser;
     private String mRegion;
     private String mUserName;
+    private String mEmail;
     private static FirebaseFactory sInstance; //SINGLETON INSTANCE SAVES THE DAY
 
     private FirebaseFactory(Activity activity){
@@ -40,14 +43,8 @@ public class FirebaseFactory {
         mUser = mAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance();
         mRef = mDatabase.getReference();
-        mRef.child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                showData(dataSnapshot);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
+        mUsersRef = mDatabase.getReference("users");
+
     }
 
     public static synchronized FirebaseFactory getInstance(Activity activity){
@@ -81,34 +78,29 @@ public class FirebaseFactory {
         return mUserName;
     }
 
-    /**
-     * Method handles finding the correct user based on the provided snapshot of my Firebase Database
-     * when found we save the username and region of the given user to be used in other activities
-     * when needed
-     * @param dataSnapshot
-     */
-    public void showData(DataSnapshot dataSnapshot) {
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            if(ds.getKey().equals(mUser.getUid())){
-                mUserName = ds.child("summonerName").getValue().toString();
-                mRegion = ds.child("region").getValue().toString();
-            }
-        }
+    public String getEmail() {
+        return mEmail;
     }
+
+    public DatabaseReference getUserRefs(){
+        return mUsersRef;
+    }
+
+
 
     /**
      * If user has entered all required fields with valid data then their user details are saved into Firebase database
      * Once complete the user is automatically logged in and redirected to MainActivity
      */
-    public Boolean validateRegistration(final Context context, String email, String password, final String summonerName, final String region) {
+    public Boolean validateRegistration(final Context context, final String email, String password, final String summonerName, final String region) {
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                 if(task.isSuccessful()){
-                    DatabaseReference summonerRef = mDatabase.getReference("users");
-                    summonerRef.child(mAuth.getUid()).setValue(new User(summonerName, region));
+                    mUsersRef.child(mAuth.getUid()).setValue(new User(summonerName, region, email));
+                    mUsersRef.child(mAuth.getUid()).child("email").setValue(email);
                     activity.startActivity(new Intent(context, MainActivity.class));
                 }
             }
@@ -138,4 +130,11 @@ public class FirebaseFactory {
                 });
         return false;
     }
+
+    public void updateUserInfo(String username, String region){
+        mUsersRef.child(mUser.getUid()).child("summonerName").setValue(username);
+        mUsersRef.child(mUser.getUid()).child("region").setValue(region);
+    }
+
+
 }

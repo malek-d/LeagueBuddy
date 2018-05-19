@@ -8,12 +8,16 @@ package com.mad.leaguebuddy.model;
 public class User {
     String mSummonerName;
     String mRegion;
+    String mEmail;
 
     public User(){}
 
-    public User(String name, String region){
+    public User(String name, String region, String email){
         mSummonerName = name;
         mRegion = region;
+    }
+    public User(String email){
+        this.mEmail = email;
     }
 
     public String getSummonerName() {

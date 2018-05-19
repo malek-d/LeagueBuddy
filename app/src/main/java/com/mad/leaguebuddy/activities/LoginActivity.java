@@ -146,7 +146,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    //maybe make helper function isFieldEmpty() to make it more readable but i don't know if that is good standard
     /**
      * Checks if user has entered all required fields and if they have then proceeds to log them in
      * Otherwise alerts user they need to enter all fields

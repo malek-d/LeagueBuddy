@@ -60,4 +60,7 @@
     <string name="accountIdErrorString">Failed to retrieve data, please refresh homepage and try again</string>
     <string name="gameDateString">Game date:</string>
     <string name="showingLastXGamesString">Showing the last 20 games</string>
+    <string name="string_update">Update</string>
+    <string name="logOutString">Log Out</string>
+    <string name="deleteString">Delete Account</string>
 </resources>

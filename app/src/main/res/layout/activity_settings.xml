@@ -1,10 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
+    android:background="@drawable/summoners_cup_blurred_background"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mad.leaguebuddy.activities.SettingsActivity">
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto">
 
-</android.support.constraint.ConstraintLayout>
+
+    <TableLayout
+        android:background="@drawable/bordered_item_background"
+        android:layout_marginRight="50dp"
+        android:stretchColumns="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <TableRow>
+            <TextView
+                android:text="@string/summonerNameString"
+                android:textColor="@color/whiteText"/>
+
+            <EditText  android:layout_marginLeft="10dp" android:textColor="@color/whiteText" android:id="@+id/userNameET"/>
+        </TableRow>
+
+        <TableRow android:layout_marginTop="20dp">
+            <TextView
+                android:text="@string/regionText"
+                android:textColor="@color/whiteText"/>
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@id/regionSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:ms_background_color="@color/slightlyTransparent"
+                app:ms_text_color="@color/whiteText"/>
+        </TableRow>
+
+        <info.hoang8f.widget.FButton
+            android:onClick="updateInfo"
+            android:id="@+id/updateInfoBtn"
+            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:enabled="false"
+            fbutton:shadowColor="@color/fbutton_color_asbestos"
+            fbutton:buttonColor="@color/fbutton_color_concrete"
+            android:text="@string/string_update"
+            android:textColor="@color/whiteText"
+            fbutton:shadowHeight="2dp"
+            fbutton:cornerRadius="16dp"
+            />
+    </TableLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <info.hoang8f.widget.FButton
+            android:layout_marginBottom="10dp"
+            android:onClick="signOut"
+            android:id="@+id/logOutBtn"
+            android:textColor="@color/whiteText"
+            android:text="@string/logOutString"
+            android:layout_width="145dp"
+            fbutton:buttonColor="@color/fbutton_color_alizarin"
+            fbutton:shadowColor="@color/fbutton_color_pomegranate"
+            fbutton:cornerRadius="16dp"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
