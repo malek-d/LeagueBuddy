@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/freljord_ashe_blurred"
+    android:background="@drawable/freljord_main_blurred"
     android:orientation="vertical"
     tools:context="com.mad.leaguebuddy.activities.MainActivity">
 

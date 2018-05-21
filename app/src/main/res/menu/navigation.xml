@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_history_white_24px"
+        android:icon="@mipmap/ic_history_white"
         android:title="@string/history"
         />
     <item
