@@ -9,13 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.ViewModel.FirebaseFactory;
+import com.mad.leaguebuddy.model.FirebaseFactory;
 import com.mad.leaguebuddy.ViewModel.RequestHandler;
 import com.mad.leaguebuddy.ViewModel.UrlFactory;
 import com.mad.leaguebuddy.adapters.MatchAdapter;
@@ -29,7 +26,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 
 /**

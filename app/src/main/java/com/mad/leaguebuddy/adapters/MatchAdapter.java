@@ -30,11 +30,19 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
     private ArrayList<Match> mMatchArrayList;
     private Context mContext;
 
+    /**
+     * Inner class which is required by the RecyclerView.Adapter
+     * This class holds and instantiates all widgets and views that will be used in this Recycler-
+     * view
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mLaneImageView, mMatchChampionIconIV;
         TextView mMapNameTextView, mQueueTypeTextView, mGameDateTextView, mMatchChampionNameTV, mLaneTv;
 
-
+        /**
+         * Binds all widgets to their respective view in the xml
+         * @param itemView
+         */
         public ViewHolder(View itemView) {
             super(itemView);
             mLaneImageView = itemView.findViewById(R.id.laneImageView);
@@ -47,6 +55,11 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
         }
     }
 
+    /**
+     * Constructor of this class, takes in an ArrayList of matches aswell as the Activity context
+     * @param matchArrayList
+     * @param context
+     */
     public MatchAdapter(ArrayList<Match> matchArrayList, Context context) {
         mMatchArrayList = matchArrayList;
         mContext = context;
@@ -80,6 +93,12 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
         holder.mLaneTv.setText(match.getLane());
     }
 
+    /**
+     * Displays a specific icon based for every match based lane value which then alters the look of
+     * laneImageView
+     * @param match
+     * @param laneImageView
+     */
     private void setLaneIcon(Match match, ImageView laneImageView) {
         switch(match.getLane()){
             case "BOTTOM":

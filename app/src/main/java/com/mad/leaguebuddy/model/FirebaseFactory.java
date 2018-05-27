@@ -1,9 +1,8 @@
-package com.mad.leaguebuddy.ViewModel;
+package com.mad.leaguebuddy.model;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -12,13 +11,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.mad.leaguebuddy.activities.MainActivity;
-import com.mad.leaguebuddy.model.User;
 
 /**
  * Java class that handles all FireBase java code in a singleton pattern
@@ -36,17 +31,24 @@ public class FirebaseFactory {
     private String mUserName;
     private String mRegion;
 
+    /**
+     * returns the region variable of this instace
+     * @return String
+     */
     public String getRegion() {
         return mRegion;
     }
 
+    /**
+     * Changes the value of mRegion based on parameter
+     * @param region
+     */
     public void setRegion(String region) {
         mRegion = region;
     }
 
     /**
      * Private constructor that is only called on by getInstance to ensure it's a singleton pattern
-     *
      * @param activity takes in the activity to handle changes between activities/UI
      */
     private FirebaseFactory(Activity activity) {
@@ -72,24 +74,44 @@ public class FirebaseFactory {
         return sInstance;
     }
 
+    /**
+     * returns the FireBaseAuth variable of this singleton object
+     * @return
+     */
     public FirebaseAuth getAuth() {
         return mAuth;
     }
 
-    public FirebaseDatabase getDatabase() {
-        return mDatabase;
-    }
-
+    /**
+     * Returns the DatabaseReference variable - mRef
+     * @return DatabaseReference
+     */
     public DatabaseReference getRef() {
         return mRef;
     }
 
+    /**
+     * Returns the current user of this instance
+     * @return FirebaseUser
+     */
     public FirebaseUser getUser() {
         return mUser;
     }
 
-    public DatabaseReference getUserRefs() {
-        return mUsersRef;
+    /**
+     * Returns the current username of the user
+     * @return String
+     */
+    public String getUserName() {
+        return mUserName;
+    }
+
+    /**
+     * Changes the value of mUsername based on parameter
+     * @param name
+     */
+    public void setUserName(String name) {
+        mUserName = name;
     }
 
     /**
@@ -104,7 +126,8 @@ public class FirebaseFactory {
                 Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                 if (task.isSuccessful()) {
                     mUserName = summonerName;
-                    mUsersRef.child(mAuth.getUid()).setValue(new User(summonerName, region, email));
+                    mUsersRef.child(mAuth.getUid()).child("summonerName").setValue(summonerName);
+                    mUsersRef.child(mAuth.getUid()).child("region").setValue(region);
                     mUsersRef.child(mAuth.getUid()).child("email").setValue(email);
                     activity.startActivity(new Intent(context, MainActivity.class));
                 }
@@ -130,7 +153,6 @@ public class FirebaseFactory {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInUserWithEmail:onComplete:" + task.isSuccessful());
                         if (task.isSuccessful()) {
-                            //mUserName = mUsersRef.child(mUser.getUid()).child("summonerName").getKey().toString();
                             activity.startActivity(new Intent(context, MainActivity.class));
                         }
                     }
@@ -138,21 +160,8 @@ public class FirebaseFactory {
         return false;
     }
 
-    public String getUserName() {
-        return mUserName;
-    }
-
-    public void setUserName(String name) {
-        mUserName = name;
-    }
-
-
-
-
-
     /**
      * Update user info based off information provided by SettingsActivity
-     *
      * @param username
      * @param region
      */

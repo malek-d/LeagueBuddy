@@ -32,11 +32,19 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
     private Context mContext;
     private String mRegion;
 
+    /**
+     * Inherited/Required class due to extending RecyclerView.Adapter
+     * Holds all our UI and widgets to be used later on
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView mChampionName, mChampionLevel, mChampionPoints;
         private ImageView mChampionIcon;
         private ProgressBar mProgressBar;
 
+        /**
+         * Holds all our widgets/views that will be used in this instance of the adapter
+         * @param itemView
+         */
         public MyViewHolder(View itemView) {
             super(itemView);
             mChampionName = itemView.findViewById(R.id.championName);
@@ -47,7 +55,13 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
         }
     }
 
-
+    /**
+     * Constructor for this class, takes in an ArrayList of Champions, activity context as well as
+     * the region which is used later on with the AsyncTask
+     * @param mChampList
+     * @param context
+     * @param region
+     */
     public ChampionsAdapter(ArrayList<Champion> mChampList, Context context, String region) {
         this.mChampList = mChampList;
         this.mContext = context;

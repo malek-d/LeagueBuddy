@@ -12,10 +12,9 @@ import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.Toast;
 
-import com.google.firebase.database.FirebaseDatabase;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.ViewModel.FirebaseFactory;
+import com.mad.leaguebuddy.model.FirebaseFactory;
 import com.mad.leaguebuddy.ViewModel.UrlFactory;
 
 
@@ -57,9 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         regionSpinner = findViewById(R.id.regionSpinner);
         summonerNameEditText = findViewById(R.id.summonerEditText);
         regionSpinner.setItems(getResources().getStringArray(R.array.regions));
-        /**
-         * You Should put all Firebase stuff in a separate class titled something like DbHandler or DbHelper
-         */
+
+        //TODO: move this to the FirebaseHandler class
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -80,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 mBool = b;
-                if (b) {
+                if (mBool) {
                     mAuthButton.setText(getString(R.string.login));
                     summonerInfoRow.setVisibility(View.GONE);
                 } else {

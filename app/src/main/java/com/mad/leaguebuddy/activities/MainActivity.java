@@ -28,10 +28,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.ViewModel.FirebaseFactory;
+import com.mad.leaguebuddy.model.FirebaseFactory;
 import com.mad.leaguebuddy.ViewModel.UrlFactory;
 import com.mad.leaguebuddy.adapters.ChampionsAdapter;
 import com.mad.leaguebuddy.ViewModel.RequestHandler;
@@ -324,6 +323,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * This function instantiates the class championMasteryTask AsyncTask by also providing the
+     * champion mastery url
      * @param championMasteryUrl
      */
     private void masteryTask(String championMasteryUrl) {

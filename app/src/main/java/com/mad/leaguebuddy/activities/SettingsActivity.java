@@ -8,19 +8,15 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.ViewModel.FirebaseFactory;
+import com.mad.leaguebuddy.model.FirebaseFactory;
 import com.mad.leaguebuddy.ViewModel.UrlFactory;
-
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 import info.hoang8f.widget.FButton;
 

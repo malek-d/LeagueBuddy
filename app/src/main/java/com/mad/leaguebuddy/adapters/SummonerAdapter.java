@@ -28,15 +28,29 @@ public class SummonerAdapter extends RecyclerView.Adapter<SummonerAdapter.ViewHo
     private ArrayList<Summoner> mSummoners;
     private Context mContext;
 
+    /**
+     * Constructor for this class, takes in an ArrayList of Summoners, activity context as well as
+     * the region which is used later on with the AsyncTask
+     * @param summoners
+     * @param context
+     */
     public SummonerAdapter(ArrayList<Summoner> summoners, Context context) {
         mSummoners = summoners;
         mContext = context;
     }
 
+    /**
+     * Inherited/Required class due to extending RecyclerView.Adapter
+     * Holds all our UI and widgets to be used later on
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mIcon;
         private TextView mSummonerName, mSummonerLevel, mLastOnline;
 
+        /**
+         * Holds all our widgets/views that will be used in this instance of the adapter
+         * @param view
+         */
         public ViewHolder(View view) {
             super(view);
             mIcon = view.findViewById(R.id.summonerIcon);

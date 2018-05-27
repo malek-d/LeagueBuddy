@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mad.leaguebuddy.R;
+import com.mad.leaguebuddy.ViewModel.RequestHandler;
 import com.mad.leaguebuddy.ViewModel.UrlFactory;
 import com.mad.leaguebuddy.model.Summoner;
 import com.mad.leaguebuddy.adapters.SummonerAdapter;
@@ -102,20 +103,9 @@ public class PlayerSearchActivity extends AppCompatActivity {
 
         @Override
         protected JSONObject doInBackground(Void... voids) {
-            Request request = new Request.Builder().url(mUrlFactor.getSummonerURL(mName, mRegion))
-                    .build();
-            OkHttpClient client = new OkHttpClient();
-            Response response;
-            try{
-                response = client.newCall(request).execute();
-                String jsonData = response.body().string();
-                return new JSONObject(jsonData);
-            } catch(IOException e){
-                e.printStackTrace();
-            } catch(JSONException e){
-                e.printStackTrace();
-            }
-            return null;
+            RequestHandler requestHandler = new RequestHandler();
+            JSONObject jsonObject = requestHandler.RequestHandlerAsJsonObject(mUrlFactor.getSummonerURL(mName, mRegion));
+            return  jsonObject;
         }
 
         @Override

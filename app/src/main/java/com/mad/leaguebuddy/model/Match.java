@@ -2,8 +2,9 @@ package com.mad.leaguebuddy.model;
 
 /**
  * Created by Malek Darwiche on 7/05/2018.
+ * Class which is instantiated for individual Match objects
+ * This object is used in the PlayerHistoryActivity
  */
-
 public class Match {
     private String mLane;
     private String mGameId;
@@ -13,6 +14,15 @@ public class Match {
     private String mRole;
     private String mMapName;
 
+    /**
+     * Constructor which takes in various parameters based on the information provided by API
+     * @param lane
+     * @param gameId
+     * @param champId
+     * @param timeStamp
+     * @param queueType
+     * @param role
+     */
     public Match(String lane, String gameId, String champId, Long timeStamp, String queueType, String role) {
         mLane = lane;
         mGameId = gameId;
@@ -24,62 +34,68 @@ public class Match {
         queueTypeToName(queueType);
     }
 
+    /**
+     * Get the lane of this match in string format
+     * @return
+     */
     public String getLane() {
         return mLane;
     }
 
+    /**
+     * Sets the value of lane based on parameter
+     * @param lane
+     */
     public void setLane(String lane) {
         mLane = lane;
     }
 
-    public String getGameId() {
-        return mGameId;
-    }
-
-    public void setGameId(String gameId) {
-        mGameId = gameId;
-    }
-
+    /**
+     * Gets champion id of champion used in match
+     * @return
+     */
     public String getChampId() {
         return mChampId;
     }
 
-    public void setChampId(String champId) {
-        mChampId = champId;
-    }
-
+    /**
+     * Retuns the timestamp of this match
+     * timestamp is the time from Janurary 1st 1990 till time of game
+     * @return
+     */
     public Long getTimeStamp() {
         return mTimeStamp;
     }
 
-    public void setTimeStamp(Long timeStamp) {
-        mTimeStamp = timeStamp;
-    }
-
+    /**
+     * Returns the type of queue/gamemode this match was
+     * @return mQueueType
+     */
     public String getQueueType() {
         return mQueueType;
     }
 
-    public void setQueueType(String queueType) {
-        mQueueType = queueType;
-    }
-
+    /**
+     * Returns the played role for that match
+     * @return
+     */
     public String getRole() {
         return mRole;
     }
 
-    public void setRole(String role) {
-        mRole = role;
-    }
-
+    /**
+     * Returns the map name of which the match was played on
+     * @return
+     */
     public String getMapName() {
         return mMapName;
     }
 
-    public void setMapName(String mapName) {
-        mMapName = mapName;
-    }
-
+    /**
+     * This function handles identifying what type of map and game mode was played based on the string
+     * queue code provided by the API
+     * @param queue
+     */
     private void queueTypeToName(String queue){
         switch (queue){
             case "400":

@@ -1,15 +1,12 @@
 package com.mad.leaguebuddy.ViewModel;
 
 /**
- * Created by Maleks on 21-Apr-18.
- */
-
-/**
  * Backbone handler class for this project which constructs and provides all web services URLs
  * needed to make adequate calls for data to be displayed
  * all strings are static final as they just need to be provided, not changed
  */
 public class UrlFactory {
+    //Constants declaration
     private static final String HTTPS = "https://";
     private static final String RIOT_URL = ".api.riotgames.com/lol/";
     private static final String SUMMONER_URL = "summoner/v3/summoners/by-name/";
@@ -20,6 +17,7 @@ public class UrlFactory {
     private static final String PNG_FORMAT = ".png";
     private static final String MATCH_URL = "match/v3/matchlists/by-account/";
     private static final String DDRAGON_CHAMPION_URL = "ddragon.leagueoflegends.com/cdn/8.10.1/img/champion/";
+    //End of declarations
 
     /**
      * Empty constructor to create a UrlFactory Object
