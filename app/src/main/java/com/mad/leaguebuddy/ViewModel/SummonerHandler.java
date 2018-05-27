@@ -8,11 +8,21 @@ import com.mad.leaguebuddy.R;
 
 /**
  * Created by Maleks on 12-May-18.
+ * This class is a helper class of sorts that aids with displaying proper images and user information
+ * based on provided information for functions
  */
-
 public class SummonerHandler {
+
+    /**
+     * Empty constructor to create an empty object
+     */
     public SummonerHandler(){}
 
+    /**
+     * Based on the provided tier string we check what string equals to and set mRankIcon based on that
+     * @param tier
+     * @param mRankIcon
+     */
     public void setRankIcon(String tier, ImageView mRankIcon) {
         switch (tier) {
             case "BRONZE":
@@ -39,6 +49,13 @@ public class SummonerHandler {
         }
     }
 
+    /**
+     * Glide helper function that can be used by any activity when provided with the correct parameters
+     * @param context
+     * @param url
+     * @param resourceId
+     * @param iv
+     */
     public void glideHelper(Context context, String url, int resourceId, ImageView iv){
         Glide.with(context).load(url).placeholder(resourceId).into(iv);
     }
