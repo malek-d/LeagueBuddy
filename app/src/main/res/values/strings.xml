@@ -63,4 +63,5 @@
     <string name="string_update">Update</string>
     <string name="logOutString">Log Out</string>
     <string name="deleteString">Delete Account</string>
+    <string name="homeClickString">This is the home page!</string>
 </resources>

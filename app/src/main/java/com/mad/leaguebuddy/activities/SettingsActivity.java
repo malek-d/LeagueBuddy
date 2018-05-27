@@ -24,6 +24,10 @@ import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 import info.hoang8f.widget.FButton;
 
+/**
+ * Basic Settings activity which displays current account information to the user and if wanted
+ * allow user to change their account settings in FireBase
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     @BindView(R.id.userNameET)
@@ -77,16 +81,28 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * When called by a button within the xml authenticates this user if details are valid for change
+     * @param view
+     */
     public void updateInfo(View view) {
         authenticateChange();
     }
 
+    /**
+     * Kills the current firebase instance and logs user out back to the loginActivity
+     * @param view
+     */
     public void signOut(View view){
         mFirebaseFactory.getAuth().signOut();
+        mFirebaseFactory.killInstance();
         Toasty.success(this, "You have been signed out", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
     }
 
+    /**
+     * Authenticates any new inputted information by the user before updating info on FireBase
+     */
     private void authenticateChange() {
         if(mRegion == null || mRegion == "DEFAULT"){
             Toasty.error(this, getString(R.string.selectRegionString), Toast.LENGTH_SHORT).show();

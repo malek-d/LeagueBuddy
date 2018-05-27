@@ -30,6 +30,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * This activity allows the user to search up for other users in any other given region
+ * Upon searching if a match is found we return that user with basic information displayed in the
+ * RecyclerView
+ */
 public class PlayerSearchActivity extends AppCompatActivity {
 
     private MaterialSpinner regionSpinner;
@@ -70,11 +75,22 @@ public class PlayerSearchActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method is called from an onClick by the search button in the xml
+     * Converts the inputted text field into a string then calls upon the asynctask for the search
+     * function to commence
+     * @param view
+     */
     public void commenceSearch(View view) {
         mName = mSummonerName.getText().toString();
         new searchForSummonerTask().execute();
     }
 
+    /**
+     * This Asynctask calls upon the user WEB API where a string summoner name is provider
+     * and user information is returned if a match is found
+     * We create a Summoner object then which is fed into the adapter
+     */
     private class searchForSummonerTask extends AsyncTask<Void, Void, JSONObject> {
 
         @Override

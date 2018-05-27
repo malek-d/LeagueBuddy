@@ -24,12 +24,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 import es.dmoral.toasty.Toasty;
 
-//Maybe rename to AuthenticationActivity as you also have registration in here
 /**
  * This Activity handles user authentication in regards to both logging into an existing account
  * or registering a new account
  */
-
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "";
     private boolean mBool; //Rename to make more sense i.e. isLogin, isBtnLogin or something
@@ -44,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     private UrlFactory UrlFactory = new UrlFactory();
     private String mRegion;
     private FirebaseFactory mFirebaseFactory = FirebaseFactory.getInstance(this);
-    private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
 
     @Override
@@ -125,13 +122,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    //what about validation if email is actually in email format ? and also to ensure email doesn't already exist ?
-    //I also feel like validation of data can be done in a different class like the object itself or utils not entirely sure :thinking:
     /**
      * Checks if user has entered all required fields and if they have then registers them as a new user
      * Otherwise alerts user that they need to enter all fields
      */
-
     private void tryRegister() {
         if(emailEditText.getText().toString().equals("") || passwordEditText.getText().toString().equals("") || summonerNameEditText.getText().toString().equals("")){
             Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show(); //I changed your strings thing to enter instead of Entire btw

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mad.leaguebuddy.R;
+import com.mad.leaguebuddy.ViewModel.FirebaseFactory;
 import com.mad.leaguebuddy.ViewModel.RequestHandler;
 import com.mad.leaguebuddy.ViewModel.UrlFactory;
 import com.mad.leaguebuddy.adapters.MatchAdapter;
@@ -42,6 +43,7 @@ public class PlayerHistoryActivity extends AppCompatActivity {
     private MatchAdapter mMatchAdapter;
     private String mAccountId;
     private String mRegion;
+    private FirebaseFactory mFirebaseFactory = FirebaseFactory.getInstance(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +59,9 @@ public class PlayerHistoryActivity extends AppCompatActivity {
         mMatchHistoryRV.setAdapter(mMatchAdapter);
 
         Intent intent = getIntent();
-
-        mRegion = intent.getStringExtra(MainActivity.REGION);
+        mRegion = mFirebaseFactory.getRegion();
         mAccountId = intent.getStringExtra(MainActivity.ACCOUNT_ID);
+        matchHistoryTaskCaller();
     }
 
     @Override
@@ -97,7 +99,7 @@ public class PlayerHistoryActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             UrlFactory UrlFactory = new UrlFactory();
-            mMatchUrl = UrlFactory.getMatchUrl(mAccountId, mRegion);
+            mMatchUrl = UrlFactory.getMatchUrl(mRegion,mAccountId);
         }
 
         @Override

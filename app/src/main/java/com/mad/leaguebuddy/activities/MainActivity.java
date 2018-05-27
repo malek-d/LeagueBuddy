@@ -14,12 +14,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,16 +46,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.OkHttpClient;
 
+/**
+ * This is the main class/ main function of this app, it displays all user information ranging from
+ * basic user details down to the top 10 most played user details for the specified user.
+ */
 public class MainActivity extends AppCompatActivity {
 
     public static final String ACCOUNT_ID = "accountId";
     public static final String REGION = "";
-    //Here Begins my member declarations
-    /*
-    * Handle firebase stuff separately
-    * */
+    private static final String TAG = "";
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser mUser;
@@ -87,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch(item.getItemId()){
                 case R.id.navigation_home:
-
+                    Toasty.success(MainActivity.this, getString(R.string.homeClickString), Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.navigation_search:
                     Intent intent = new Intent(MainActivity.this, PlayerSearchActivity.class);
@@ -95,9 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.navigation_notifications:
                     Intent historyIntent = new Intent(MainActivity.this, PlayerHistoryActivity.class);
-                    historyIntent.putExtra(ACCOUNT_ID, mRegion);
-                    historyIntent.putExtra(REGION, mAccountId);
-
+                    historyIntent.putExtra(ACCOUNT_ID, mAccountId);
                     startActivity(historyIntent);
                     break;
                 case R.id.navigation_settings:
@@ -173,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     /**
      * Method handles finding the correct user based on the provided snapshot of my Firebase Database
      * when found we save the username and region of the given user to be used in other activities
@@ -182,9 +185,11 @@ public class MainActivity extends AppCompatActivity {
     public void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             if(ds.getKey().equals(mUser.getUid())){
-                mSummonerName = ds.child("summonerName").getValue().toString();
+                mFirebaseFactory.setUserName(ds.child("summonerName").getValue().toString());
+                mSummonerName = mFirebaseFactory.getUserName();
                 mSummonerNameText.setText(mSummonerName);
-                mRegion = ds.child("region").getValue().toString();
+                mFirebaseFactory.setRegion(ds.child("region").getValue().toString());
+                mRegion = mFirebaseFactory.getRegion();
                 mURL = UrlFactory.getSummonerURL(mSummonerName, mRegion.toLowerCase());
                 summonerTask(mURL);
             }
@@ -221,11 +226,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * This Asynctask handles presenting all basic summoner/user information as well as providing
+     * a code to get profile image
+     * @param url
+     */
     private void summonerTask(String url) {
         new getSummonerTask(url).execute();
     }
-
     class getSummonerTask extends AsyncTask<Void, Void, JSONObject> {
         String url;
 
@@ -259,10 +267,15 @@ public class MainActivity extends AppCompatActivity {
                 lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " + dateFormat.format(
                         cal.getTime()));
             } catch(JSONException e){
+                Log.d(TAG, "JSON FILE ERROR" + e);
             }
         }
     }
 
+    /**
+     * This AsyncTask handles all forms of competitive ranked information for the given user
+     * Upon being fed the proper url it shall return ranked tier, status, wins and losses
+     */
     private class getRankedInfoTask extends AsyncTask<Void, Void, JSONArray> {
         String url;
 
@@ -346,7 +359,7 @@ public class MainActivity extends AppCompatActivity {
                             object.getString("championPointsUntilNextLevel"));
                     mChampionList.add(champion);
                 } catch(org.json.JSONException e){
-
+                    Log.d(TAG, "JSON FILE ERROR" + e);
                 }
                 mAdapter.notifyDataSetChanged();
             }

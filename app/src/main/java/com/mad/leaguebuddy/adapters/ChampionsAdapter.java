@@ -23,8 +23,9 @@ import java.util.ArrayList;
 
 /**
  * Created by Malek Darwiche on 22/04/2018.
+ * This adapter class handles the display and structuring of all champion information to be displayed
+ * This class also has its own AsyncTask to get more detailed information on the specific Champion
  */
-
 public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyViewHolder> {
 
     private ArrayList<Champion> mChampList;
@@ -68,6 +69,14 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
         championInfoTask(position, holder.mChampionName, holder.mChampionIcon, holder.mProgressBar);
     }
 
+    /**
+     * Instantiates the AsyncTask inner class to handle getting additional information for the given
+     * Champion
+     * @param position
+     * @param champName
+     * @param champIcon
+     * @param progressBar
+     */
     private void championInfoTask(int position, TextView champName, ImageView champIcon, ProgressBar progressBar) {
         new getChampionInfoTask(position, champName, champIcon, progressBar).execute();
     }
@@ -77,7 +86,10 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
         return mChampList.size();
     }
 
-
+    /**
+     * Inner Class AsyncTask that calls upon Champion API to get detailed information about a given champion
+     * based on ID
+     */
     private class getChampionInfoTask extends AsyncTask<Void, Void, String> {
         private Champion mChamp;
         private TextView championNameTV;

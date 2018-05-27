@@ -23,8 +23,8 @@ import butterknife.BindView;
 
 /**
  * Created by Maleks on 12-May-18.
+ * Adapter class that handles displaying previous matches for the user
  */
-
 public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> {
 
     private ArrayList<Match> mMatchArrayList;
@@ -100,11 +100,8 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
             match.setLane("SUPPORT");
         }
     }
-
     @Override
     public int getItemCount() {
         return mMatchArrayList.size();
     }
-
-
 }

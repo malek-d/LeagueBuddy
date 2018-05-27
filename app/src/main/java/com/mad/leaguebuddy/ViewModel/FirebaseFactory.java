@@ -21,9 +21,9 @@ import com.mad.leaguebuddy.activities.MainActivity;
 import com.mad.leaguebuddy.model.User;
 
 /**
- * Created by Maleks on 19-May-18.
+ * Java class that handles all FireBase java code in a singleton pattern
+ * This class has functions that would handle any kind of firebase
  */
-
 public class FirebaseFactory {
     private static final String TAG = "TAG";
     private FirebaseAuth mAuth;
@@ -32,23 +32,41 @@ public class FirebaseFactory {
     private DatabaseReference mUsersRef;
     private Activity activity;
     private FirebaseUser mUser;
-    private String mRegion;
+    private static FirebaseFactory sInstance;
     private String mUserName;
-    private String mEmail;
-    private static FirebaseFactory sInstance; //SINGLETON INSTANCE SAVES THE DAY
+    private String mRegion;
 
-    private FirebaseFactory(Activity activity){
+    public String getRegion() {
+        return mRegion;
+    }
+
+    public void setRegion(String region) {
+        mRegion = region;
+    }
+
+    /**
+     * Private constructor that is only called on by getInstance to ensure it's a singleton pattern
+     *
+     * @param activity takes in the activity to handle changes between activities/UI
+     */
+    private FirebaseFactory(Activity activity) {
         this.activity = activity;
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance();
         mRef = mDatabase.getReference();
         mUsersRef = mDatabase.getReference("users");
-
     }
 
-    public static synchronized FirebaseFactory getInstance(Activity activity){
-        if(sInstance == null){
+    /**
+     * Singleton function that either returns the current instance or creates an instance using the
+     * private constructor
+     *
+     * @param activity
+     * @return
+     */
+    public static synchronized FirebaseFactory getInstance(Activity activity) {
+        if (sInstance == null) {
             sInstance = new FirebaseFactory(activity);
         }
         return sInstance;
@@ -70,23 +88,9 @@ public class FirebaseFactory {
         return mUser;
     }
 
-    public String getRegion() {
-        return mRegion;
-    }
-
-    public String getUserName() {
-        return mUserName;
-    }
-
-    public String getEmail() {
-        return mEmail;
-    }
-
-    public DatabaseReference getUserRefs(){
+    public DatabaseReference getUserRefs() {
         return mUsersRef;
     }
-
-
 
     /**
      * If user has entered all required fields with valid data then their user details are saved into Firebase database
@@ -98,7 +102,8 @@ public class FirebaseFactory {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
+                    mUserName = summonerName;
                     mUsersRef.child(mAuth.getUid()).setValue(new User(summonerName, region, email));
                     mUsersRef.child(mAuth.getUid()).child("email").setValue(email);
                     activity.startActivity(new Intent(context, MainActivity.class));
@@ -109,21 +114,23 @@ public class FirebaseFactory {
     }
 
     /**
-     *  Authenticates user by checking if email and password match and exist in Firebase
-     *  If user exists then logs them in and redirects them to MainActivity
-     *  Otherwise a warning is given to user to alert them their details do not match and they need to retry login
+     * Authenticates user by checking if email and password match and exist in Firebase
+     * If user exists then logs them in and redirects them to MainActivity
+     * Otherwise a warning is given to user to alert them their details do not match and they need to retry login
+     *
      * @param context
      * @param email
      * @param password
      * @return
      */
-    public Boolean validateLogin(final Context context, String email, String password){
+    public Boolean validateLogin(final Context context, String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInUserWithEmail:onComplete:" + task.isSuccessful());
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
+                            //mUserName = mUsersRef.child(mUser.getUid()).child("summonerName").getKey().toString();
                             activity.startActivity(new Intent(context, MainActivity.class));
                         }
                     }
@@ -131,10 +138,33 @@ public class FirebaseFactory {
         return false;
     }
 
-    public void updateUserInfo(String username, String region){
+    public String getUserName() {
+        return mUserName;
+    }
+
+    public void setUserName(String name) {
+        mUserName = name;
+    }
+
+
+
+
+
+    /**
+     * Update user info based off information provided by SettingsActivity
+     *
+     * @param username
+     * @param region
+     */
+    public void updateUserInfo(String username, String region) {
         mUsersRef.child(mUser.getUid()).child("summonerName").setValue(username);
         mUsersRef.child(mUser.getUid()).child("region").setValue(region);
     }
 
-
+    /**
+     * On log out or destroy of app we call this function to end the instance
+     */
+    public void killInstance(){
+        sInstance = null;
+    }
 }

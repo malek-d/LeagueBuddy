@@ -19,6 +19,8 @@ import java.util.Calendar;
 
 /**
  * Created by Maleks on 05-May-18.
+ * This adapter is used within the PlayerSearchActivity and is used to properly display searched
+ * users within the RecyclerView
  */
 
 public class SummonerAdapter extends RecyclerView.Adapter<SummonerAdapter.ViewHolder> {
