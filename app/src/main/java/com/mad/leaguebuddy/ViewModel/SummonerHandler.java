@@ -57,8 +57,9 @@ public class SummonerHandler {
      * @param iv
      */
     public void glideHelper(Context context, String url, int resourceId, ImageView iv){
-        Glide.with(context).load(url).placeholder(resourceId).into(iv);
+        Glide.with(context)
+                .load(url)
+                .placeholder(resourceId)
+                .into(iv);
     }
-
-
 }
