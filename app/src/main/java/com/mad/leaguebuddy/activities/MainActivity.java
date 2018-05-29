@@ -28,8 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.ViewModel.GetSummonerTask;
-import com.mad.leaguebuddy.ViewModel.RankedInfoAsyncTask;
+import com.mad.leaguebuddy.ViewModel.SummonerAsyncClass;
+import com.mad.leaguebuddy.ViewModel.RankedInfoAsyncClass;
 import com.mad.leaguebuddy.model.FirebaseFactory;
 import com.mad.leaguebuddy.ViewModel.UrlFactory;
 import com.mad.leaguebuddy.adapters.ChampionsAdapter;
@@ -49,7 +49,6 @@ import java.util.concurrent.ExecutionException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
-import okhttp3.OkHttpClient;
 
 /**
  * This is the main class/ main function of this app, it displays all user information ranging from
@@ -139,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                JSONArray jsonArray = null;
                 try{
-                    jsonArray = new RankedInfoAsyncTask(mRankedURL).execute().get();
+                    jsonArray = new RankedInfoAsyncClass(mRankedURL).execute().get();
                     displayRankedInfo(jsonArray);
                     //new ChampionMasteryTask(UrlFactory.getChampionMasteryUrl(mSummonerId.toString(), mRegion), mAdapter).execute().get();
                     masteryTask(UrlFactory.getChampionMasteryUrl(mSummonerId.toString(), mRegion));
@@ -207,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                 mURL = UrlFactory.getSummonerURL(mSummonerName, mRegion.toLowerCase());
                 JSONObject jsonObject = null;
                 try{
-                    jsonObject = new GetSummonerTask(mURL).execute().get();
+                    jsonObject = new SummonerAsyncClass(mURL).execute().get();
                 } catch(InterruptedException e){
                     e.printStackTrace();
                 } catch(ExecutionException e){
@@ -218,6 +217,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Display info retrieved from the AsyncTask class of RankedInfoAsyncClass
+     * @param array
+     */
     private void displayRankedInfo(JSONArray array){
         try{
             mStatsLayout.setVisibility(View.VISIBLE);
@@ -245,6 +248,10 @@ public class MainActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.GONE);
     }
 
+    /**
+     * Display summoner info retrieved from the AsyncTask in SummonerAsyncClass
+     * @param s
+     */
     private void displaySummonerInfo(JSONObject s) {
         try{
             int id = Integer.parseInt(s.getString("id"));

@@ -7,14 +7,14 @@ import org.json.JSONArray;
  * Created by Maleks on 29-May-18.
  */
 
-public class RankedInfoAsyncTask extends AsyncTask<Void, Void, JSONArray> {
+public class RankedInfoAsyncClass extends AsyncTask<Void, Void, JSONArray> {
     /**
      * This AsyncTask handles all forms of competitive ranked information for the given user
      * Upon being fed the proper url it shall return ranked tier, status, wins and losses
      */
     String url;
 
-    public RankedInfoAsyncTask(String mRankedURL) {
+    public RankedInfoAsyncClass(String mRankedURL) {
         url = mRankedURL;
     }
 

@@ -10,10 +10,10 @@ import org.json.JSONObject;
  * This Asynctask class handles presenting all basic summoner/user information as well as providing
  * a code to get profile image
  */
-public class GetSummonerTask extends AsyncTask<Void, Void, JSONObject> {
+public class SummonerAsyncClass extends AsyncTask<Void, Void, JSONObject> {
     private String mUrl;
 
-    public GetSummonerTask(String url) {
+    public SummonerAsyncClass(String url) {
         mUrl = url;
     }
 
