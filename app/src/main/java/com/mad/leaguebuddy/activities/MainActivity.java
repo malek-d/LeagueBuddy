@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.winsTextView) protected TextView mWinsTextView;
     @BindView(R.id.lossesTextView) protected TextView mLossesTextView;
     @BindView(R.id.winrateTextView) protected TextView mAverageTextView;
-    @BindView(R.id.mLastOnlineTV) protected TextView lastOnlineTextView;
+    @BindView(R.id.mLastOnlineTV) protected TextView mLastOnlineTextView;
     @BindView(R.id.soloqueueTitleTV) protected TextView mSoloQueueTitle;
 
     @BindView(R.id.profileImageView) protected ImageView mProfileIcon;
@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
             Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(i);
             SimpleDateFormat dateFormat = new SimpleDateFormat("E d/MMM hh:mm:ss a");
-            lastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " +
+            mLastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " +
                     dateFormat.format(cal.getTime()));
         } catch(JSONException e){
             Log.d(TAG, "JSON FILE ERROR" + e);
