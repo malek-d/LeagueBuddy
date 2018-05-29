@@ -10,6 +10,10 @@ import org.json.JSONObject;
 public class SummonerAsyncClass extends AsyncTask<Void, Void, JSONObject> {
     private String mUrl;
 
+    /**
+     * Constructor which takes in the url needed to retrieve data on the given user
+     * @param url
+     */
     public SummonerAsyncClass(String url) {
         mUrl = url;
     }
