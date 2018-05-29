@@ -38,7 +38,7 @@ import okhttp3.Response;
  */
 public class PlayerSearchActivity extends AppCompatActivity {
 
-    private MaterialSpinner regionSpinner;
+    private MaterialSpinner mRegionSpinner;
     private EditText mSummonerName;
     private RecyclerView mResultRV;
     private ProgressBar mProgress;
@@ -55,7 +55,7 @@ public class PlayerSearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        regionSpinner = findViewById(R.id.regionSpinner);
+        mRegionSpinner = findViewById(R.id.regionSpinner);
         mSummonerName = findViewById(R.id.searchSummonerNameEditText);
         mResultRV = findViewById(R.id.searchResultRV);
         mProgress = findViewById(R.id.progressBar);
@@ -66,8 +66,8 @@ public class PlayerSearchActivity extends AppCompatActivity {
         mResultRV.setItemAnimator(new DefaultItemAnimator());
         mResultRV.setAdapter(mAdapter);
 
-        regionSpinner.setItems(getResources().getStringArray(R.array.regions));
-        regionSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        mRegionSpinner.setItems(getResources().getStringArray(R.array.regions));
+        mRegionSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {

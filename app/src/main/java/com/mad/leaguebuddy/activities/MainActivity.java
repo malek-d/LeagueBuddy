@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Champion> mChampionList = new ArrayList<>();
     private ChampionsAdapter mAdapter;
 
-    private RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
     private LinearLayout mStatsLayout;
     private SummonerHandler mSummonerHandler = new SummonerHandler();
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         mRankIcon = findViewById(R.id.rankIcon);
         mProgressBar = findViewById(R.id.statsProgressBar);
         mStatsLayout = findViewById(R.id.statsLayout);
-        recyclerView = findViewById(R.id.championMasteryView);
+        mRecyclerView = findViewById(R.id.championMasteryView);
         //Widget binding end
         //Custom font binding
         Typeface font = Typeface.createFromAsset(getAssets(), "Elianto-Regular.ttf");
@@ -160,9 +160,9 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new ChampionsAdapter(mChampionList, MainActivity.this, mRegion);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MainActivity.this,
                 LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setAdapter(mAdapter);
         mRef = mFirebaseFactory.getRef();
         mRef.child("users").addValueEventListener(new ValueEventListener() {
             @Override

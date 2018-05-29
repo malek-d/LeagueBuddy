@@ -30,32 +30,33 @@ import es.dmoral.toasty.Toasty;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "";
     private boolean mBool; //Rename to make more sense i.e. isLogin, isBtnLogin or something
-    private EditText emailEditText;
-    private EditText passwordEditText;
+    private EditText mEmailEditText;
+    private EditText mPasswordEditText;
     private Button mAuthButton;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private TableRow summonerInfoRow;
-    private MaterialSpinner regionSpinner;
-    private EditText summonerNameEditText;
+    private TableRow mSumInfoRow;
+    private MaterialSpinner mRegionSpinner;
+    private EditText mSummonerNameEditText;
     private UrlFactory UrlFactory = new UrlFactory();
     private String mRegion;
     private FirebaseFactory mFirebaseFactory = FirebaseFactory.getInstance(this);
+    private Switch mToggleBtn;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Switch toggleButton = findViewById(R.id.ToggleButton);
+        mToggleBtn = findViewById(R.id.ToggleButton);
         mAuth = FirebaseAuth.getInstance();
         mAuthButton =  findViewById(R.id.AuthenticateButton);
-        emailEditText = findViewById(R.id.emailEditText);
-        passwordEditText = findViewById(R.id.passwordEditText);
-        summonerInfoRow = findViewById(R.id.summonerTablerow);
-        regionSpinner = findViewById(R.id.regionSpinner);
-        summonerNameEditText = findViewById(R.id.summonerEditText);
-        regionSpinner.setItems(getResources().getStringArray(R.array.regions));
+        mEmailEditText = findViewById(R.id.emailEditText);
+        mPasswordEditText = findViewById(R.id.passwordEditText);
+        mSumInfoRow = findViewById(R.id.summonerTablerow);
+        mRegionSpinner = findViewById(R.id.regionSpinner);
+        mSummonerNameEditText = findViewById(R.id.summonerEditText);
+        mRegionSpinner.setItems(getResources().getStringArray(R.array.regions));
 
         //TODO: move this to the FirebaseHandler class
         mAuth = FirebaseAuth.getInstance();
@@ -73,17 +74,17 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         //Determines if toggle is set for user to login or register
-        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mToggleBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 mBool = b;
                 if (mBool) {
                     mAuthButton.setText(getString(R.string.login));
-                    summonerInfoRow.setVisibility(View.GONE);
+                    mSumInfoRow.setVisibility(View.GONE);
                 } else {
                     mAuthButton.setText(getString(R.string.register));
-                    summonerInfoRow.setVisibility(View.VISIBLE);
+                    mSumInfoRow.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -99,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        regionSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        mRegionSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 mRegion = item;
             }
@@ -125,14 +126,14 @@ public class LoginActivity extends AppCompatActivity {
      * Otherwise alerts user that they need to enter all fields
      */
     private void tryRegister() {
-        if(emailEditText.getText().toString().equals("") || passwordEditText.getText().toString().equals("") || summonerNameEditText.getText().toString().equals("")){
+        if(mEmailEditText.getText().toString().equals("") || mPasswordEditText.getText().toString().equals("") || mSummonerNameEditText.getText().toString().equals("")){
             Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show(); //I changed your strings thing to enter instead of Entire btw
         }else if(mRegion == null || mRegion == "DEFAULT"){
             Toasty.error(this, getString(R.string.selectRegionString), Toast.LENGTH_SHORT).show();
         }else {
-            String summonerName = summonerNameEditText.getText().toString();
+            String summonerName = mSummonerNameEditText.getText().toString();
             String region = UrlFactory.returnRegion(mRegion);
-            if(mFirebaseFactory.validateRegistration(this,emailEditText.getText().toString(), passwordEditText.getText().toString(), summonerName, region)){
+            if(mFirebaseFactory.validateRegistration(this,mEmailEditText.getText().toString(), mPasswordEditText.getText().toString(), summonerName, region)){
                 Toasty.info(getApplicationContext(), "Registration Failed", Toast.LENGTH_SHORT).show();
             }
         }
@@ -143,10 +144,10 @@ public class LoginActivity extends AppCompatActivity {
      * Otherwise alerts user they need to enter all fields
      */
     private void tryLogin() {
-        if(emailEditText.getText().toString().equals("") || passwordEditText.getText().toString().equals("")){
+        if(mEmailEditText.getText().toString().equals("") || mPasswordEditText.getText().toString().equals("")){
             Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show();
         }else {
-            if(mFirebaseFactory.validateLogin(this, emailEditText.getText().toString(), passwordEditText.getText().toString())){
+            if(mFirebaseFactory.validateLogin(this, mEmailEditText.getText().toString(), mPasswordEditText.getText().toString())){
                 Toasty.info(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
             }
         }

@@ -25,7 +25,7 @@ public class FirebaseFactory {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
     private DatabaseReference mUsersRef;
-    private Activity activity;
+    private Activity mActivity;
     private FirebaseUser mUser;
     private static FirebaseFactory sInstance;
     private String mUserName;
@@ -52,7 +52,7 @@ public class FirebaseFactory {
      * @param activity takes in the activity to handle changes between activities/UI
      */
     private FirebaseFactory(Activity activity) {
-        this.activity = activity;
+        this.mActivity = activity;
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance();
@@ -129,7 +129,7 @@ public class FirebaseFactory {
                     mUsersRef.child(mAuth.getUid()).child("summonerName").setValue(summonerName);
                     mUsersRef.child(mAuth.getUid()).child("region").setValue(region);
                     mUsersRef.child(mAuth.getUid()).child("email").setValue(email);
-                    activity.startActivity(new Intent(context, MainActivity.class));
+                    mActivity.startActivity(new Intent(context, MainActivity.class));
                 }
             }
         });
@@ -148,12 +148,12 @@ public class FirebaseFactory {
      */
     public Boolean validateLogin(final Context context, String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(mActivity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInUserWithEmail:onComplete:" + task.isSuccessful());
                         if (task.isSuccessful()) {
-                            activity.startActivity(new Intent(context, MainActivity.class));
+                            mActivity.startActivity(new Intent(context, MainActivity.class));
                         }
                     }
                 });
