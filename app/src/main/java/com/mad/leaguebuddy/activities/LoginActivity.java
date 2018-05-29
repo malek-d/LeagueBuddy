@@ -21,6 +21,8 @@ import com.mad.leaguebuddy.ViewModel.UrlFactory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
 /**
@@ -30,35 +32,27 @@ import es.dmoral.toasty.Toasty;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "";
     private boolean mBool; //Rename to make more sense i.e. isLogin, isBtnLogin or something
-    private EditText mEmailEditText;
-    private EditText mPasswordEditText;
-    private Button mAuthButton;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private TableRow mSumInfoRow;
-    private MaterialSpinner mRegionSpinner;
-    private EditText mSummonerNameEditText;
     private UrlFactory UrlFactory = new UrlFactory();
     private String mRegion;
     private FirebaseFactory mFirebaseFactory = FirebaseFactory.getInstance(this);
-    private Switch mToggleBtn;
-
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    @BindView(R.id.emailEditText) protected EditText mEmailEditText;
+    @BindView(R.id.passwordEditText) protected EditText mPasswordEditText;
+    @BindView(R.id.AuthenticateButton) protected Button mAuthButton;
+    @BindView(R.id.summonerTablerow) protected TableRow mSumInfoRow;
+    @BindView(R.id.regionSpinner) protected MaterialSpinner mRegionSpinner;
+    @BindView(R.id.summonerEditText) protected EditText mSummonerNameEditText;
+    @BindView(R.id.ToggleButton) protected Switch mToggleBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mToggleBtn = findViewById(R.id.ToggleButton);
+        ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
-        mAuthButton =  findViewById(R.id.AuthenticateButton);
-        mEmailEditText = findViewById(R.id.emailEditText);
-        mPasswordEditText = findViewById(R.id.passwordEditText);
-        mSumInfoRow = findViewById(R.id.summonerTablerow);
-        mRegionSpinner = findViewById(R.id.regionSpinner);
-        mSummonerNameEditText = findViewById(R.id.summonerEditText);
         mRegionSpinner.setItems(getResources().getStringArray(R.array.regions));
 
-        //TODO: move this to the FirebaseHandler class
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -86,18 +80,13 @@ public class LoginActivity extends AppCompatActivity {
                     mAuthButton.setText(getString(R.string.register));
                     mSumInfoRow.setVisibility(View.VISIBLE);
                 }
-
             }
         });
-
         mAuthButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mBool) {
-                    tryLogin();
-                } else {
-                    tryRegister();
-                }
+                if (mBool) { tryLogin();}
+                else {tryRegister();}
             }
         });
         mRegionSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
@@ -126,14 +115,16 @@ public class LoginActivity extends AppCompatActivity {
      * Otherwise alerts user that they need to enter all fields
      */
     private void tryRegister() {
-        if(mEmailEditText.getText().toString().equals("") || mPasswordEditText.getText().toString().equals("") || mSummonerNameEditText.getText().toString().equals("")){
+        if(mEmailEditText.getText().toString().equals("") || mPasswordEditText.getText().toString()
+                .equals("") || mSummonerNameEditText.getText().toString().equals("")){
             Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show(); //I changed your strings thing to enter instead of Entire btw
         }else if(mRegion == null || mRegion == "DEFAULT"){
             Toasty.error(this, getString(R.string.selectRegionString), Toast.LENGTH_SHORT).show();
         }else {
             String summonerName = mSummonerNameEditText.getText().toString();
             String region = UrlFactory.returnRegion(mRegion);
-            if(mFirebaseFactory.validateRegistration(this,mEmailEditText.getText().toString(), mPasswordEditText.getText().toString(), summonerName, region)){
+            if(mFirebaseFactory.validateRegistration(this,mEmailEditText.getText().toString(),
+                            mPasswordEditText.getText().toString(), summonerName, region)){
                 Toasty.info(getApplicationContext(), "Registration Failed", Toast.LENGTH_SHORT).show();
             }
         }

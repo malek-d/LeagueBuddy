@@ -26,25 +26,19 @@ import info.hoang8f.widget.FButton;
  */
 public class SettingsActivity extends AppCompatActivity {
 
-    @BindView(R.id.userNameET)
-    EditText mUserNameET;
-    @BindView(R.id.regionSpinner)
-    MaterialSpinner mRegionSpinner;
-    @BindView(R.id.logOutBtn)
-    FButton mLogOutBtn;
-    @BindView(R.id.updateInfoBtn)
-    FButton mUpdateInfoBtn;
+    @BindView(R.id.userNameET) protected EditText mUserNameET;
+    @BindView(R.id.regionSpinner)protected MaterialSpinner mRegionSpinner;
+    @BindView(R.id.logOutBtn)protected FButton mLogOutBtn;
+    @BindView(R.id.updateInfoBtn)protected FButton mUpdateInfoBtn;
     private String mRegion;
     private UrlFactory mUrlFactor = new UrlFactory();
     private FirebaseFactory mFirebaseFactory = FirebaseFactory.getInstance(this);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
-
         mRegionSpinner.setItems(getResources().getStringArray(R.array.regions));
         mRegionSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
@@ -55,18 +49,12 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         mUserNameET.setText(mFirebaseFactory.getUserName());
-
-
         mUserNameET.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void afterTextChanged(Editable editable) {

@@ -123,8 +123,6 @@ public class PlayerHistoryActivity extends AppCompatActivity {
                                 current.getString("queue"), current.getString("role"));
                         mMatchArrayList.add(match);
                         mMatchAdapter.notifyItemInserted(mMatchArrayList.size() - 1);
-
-
                     } catch(JSONException e){
                         e.printStackTrace();
                     }

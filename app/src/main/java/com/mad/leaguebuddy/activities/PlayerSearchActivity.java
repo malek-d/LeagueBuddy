@@ -26,6 +26,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -38,10 +40,11 @@ import okhttp3.Response;
  */
 public class PlayerSearchActivity extends AppCompatActivity {
 
-    private MaterialSpinner mRegionSpinner;
-    private EditText mSummonerName;
-    private RecyclerView mResultRV;
-    private ProgressBar mProgress;
+    @BindView(R.id.regionSpinner)protected MaterialSpinner mRegionSpinner;
+    @BindView(R.id.searchSummonerNameEditText)protected EditText mSummonerName;
+    @BindView(R.id.searchResultRV)protected RecyclerView mResultRV;
+    @BindView(R.id.progressBar) protected ProgressBar mProgress;
+
     private ArrayList<Summoner> mSummoners = new ArrayList<>();
     private UrlFactory mUrlFactor = new UrlFactory();
     private String mRegion;
@@ -53,12 +56,7 @@ public class PlayerSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_search);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        mRegionSpinner = findViewById(R.id.regionSpinner);
-        mSummonerName = findViewById(R.id.searchSummonerNameEditText);
-        mResultRV = findViewById(R.id.searchResultRV);
-        mProgress = findViewById(R.id.progressBar);
+        ButterKnife.bind(this);
 
         mAdapter = new SummonerAdapter(mSummoners, PlayerSearchActivity.this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
