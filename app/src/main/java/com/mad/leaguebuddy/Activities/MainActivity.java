@@ -36,8 +36,6 @@ import com.mad.leaguebuddy.Adapters.ChampionsAdapter;
 import com.mad.leaguebuddy.Handlers.RequestHandler;
 import com.mad.leaguebuddy.Handlers.SummonerHandler;
 import com.mad.leaguebuddy.Model.*;
-import com.victor.loading.newton.NewtonCradleLoading;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -143,9 +141,7 @@ public class MainActivity extends AppCompatActivity {
                     jsonArray = new RankedInfoAsyncClass(mRankedURL).execute().get();
                     displayRankedInfo(jsonArray);
                     masteryTask(mUrlFactory.getChampionMasteryUrl(mSummonerId.toString(), mRegion));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
             }
@@ -212,9 +208,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new SummonerAsyncClass(mURL).execute().get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
                 displaySummonerInfo(jsonObject);
@@ -262,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
     private void displaySummonerInfo(JSONObject s) {
         try {
             int id = Integer.parseInt(s.getString("id"));
-            mSummonerId = new Long(id);
+            mSummonerId = (long) id;
 
             mAccountId = s.getString("accountId");
             mRankedURL = mUrlFactory.getRankedStatsURL(mRegion.toLowerCase(), mSummonerId);
