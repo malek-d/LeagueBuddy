@@ -133,11 +133,13 @@ public class PlayerHistoryActivity extends AppCompatActivity {
                 for(int i = 0; i < 20; ++i){
                     try{
                         JSONObject current = jsonArray.getJSONObject(i);
+                        Log.d(LOG_TAG, "Check current JSONObject");
                         Match match = new Match(current.getString("lane"), current.getString("gameId"),
                                 current.getString("champion"), Long.parseLong(current.getString("timestamp")),
                                 current.getString("queue"), current.getString("role"));
                         mMatchArrayList.add(match);
                         mMatchAdapter.notifyItemInserted(mMatchArrayList.size() - 1);
+                        Log.d(LOG_TAG, "Match object created");
                     } catch(JSONException e){
                         e.printStackTrace();
                         Log.d(LOG_TAG, "Bad JSON file returned, see stack trace");

@@ -224,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Display info retrieved from the AsyncTask class of RankedInfoAsyncClass
-     *
      * @param array
      */
     private void displayRankedInfo(JSONArray array) {
