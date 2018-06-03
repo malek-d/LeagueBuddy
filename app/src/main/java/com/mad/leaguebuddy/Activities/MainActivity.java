@@ -313,6 +313,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(JSONArray jsonArray) {
             mStatsProgBar.setVisibility(View.GONE);
             for (int i = 0; i < 10; ++i) {
+                //Hardcode at 10 to ensure we only display top 10 most played champions for user
                 try {
                     JSONObject object = jsonArray.getJSONObject(i);
                     Champion champion = new Champion(object.getString("championLevel"),
