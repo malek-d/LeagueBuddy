@@ -8,127 +8,155 @@
     tools:context="com.mad.leaguebuddy.Activities.LoginActivity">
 
     <LinearLayout
-        android:layout_marginTop="10sp"
         android:id="@+id/LogoLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10sp"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="100sp"
-            android:src="@drawable/league_of_legends_logo_transparent"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:src="@drawable/league_of_legends_logo_transparent" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/FormLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
-        android:layout_centerInParent="true"
-        >
-        <TableLayout
-            android:layout_marginLeft="5sp"
-            android:layout_marginRight="5sp"
+        android:orientation="vertical">
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="1"
-            android:background="@drawable/bordered_background"
-            >
-            <TableRow>
-                <TextView android:textColor="@color/whiteText" android:text="@string/email" android:textStyle="bold"/>
-                <EditText
-                    android:textColor="@color/buttonColor"
-                    android:id="@+id/emailEditText"
-                    android:backgroundTint="@color/whiteText"
-                    android:inputType="textEmailAddress"/>
-            </TableRow>
-            <TableRow>
-                <TextView android:textColor="@color/whiteText" android:text="@string/password"  android:textStyle="bold"/>
-                <EditText
-                    android:backgroundTint="@color/whiteText"
-                    android:textColor="@color/buttonColor"
-                    android:id="@+id/passwordEditText"
-                    android:inputType="textPassword"/>
-            </TableRow>
-            <TableRow  android:id="@+id/summonerTablerow" >
-                <TextView android:textColor="@color/whiteText"
-                    android:textStyle="bold"
-                    android:id="@+id/summonerName"
-                    android:text="@string/summonerNameString"
-                    />
-                <EditText
-                    android:backgroundTint="@color/whiteText"
-                    android:textColor="@color/buttonColor"
-                    android:id="@+id/summonerEditText"
-                    android:inputType="text"/>
-                <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/regionSpinner"
-                    app:ms_background_color="@color/whiteText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </TableRow>
-            <LinearLayout>
-                <TextView android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/whiteText"
-                    android:text="@string/signInQuestion"
-                    android:layout_marginRight="10sp"
-                    android:textStyle="bold"/>
-                <Switch
-                    android:id="@+id/ToggleButton"
-                    android:showText="false"
-                    android:backgroundTint="@color/authenticateColor"
-                    android:switchTextAppearance="@style/SwitchTextAppearance"
-                    android:textColor="@color/whiteText"
-                    android:textOff="@string/register"
-                    android:textOn="@string/login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:background="@drawable/bordered_background">
 
-        </TableLayout>
+            <TableLayout
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="1"
+                    android:layout_width="wrap_content">
+
+                <TableRow>
+
+                    <TextView
+                        android:text="@string/email"
+                        android:textColor="@color/whiteText"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/emailEditText"
+                        android:backgroundTint="@color/whiteText"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/buttonColor" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="@string/password"
+                        android:textColor="@color/whiteText"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/passwordEditText"
+                        android:backgroundTint="@color/whiteText"
+                        android:inputType="textPassword"
+                        android:textColor="@color/buttonColor" />
+                </TableRow>
+
+                <TableRow android:id="@+id/summonerTablerow">
+
+                    <TextView
+                        android:id="@+id/summonerName"
+                        android:text="@string/summonerNameString"
+                        android:textColor="@color/whiteText"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/summonerEditText"
+                        android:backgroundTint="@color/whiteText"
+                        android:inputType="text"
+                        android:textColor="@color/buttonColor" />
+
+                    <com.jaredrummler.materialspinner.MaterialSpinner
+                        android:id="@+id/regionSpinner"
+                        app:ms_background_color="@color/whiteText" />
+                </TableRow>
+
+                <LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10sp"
+                        android:text="@string/signInQuestion"
+                        android:textColor="@color/whiteText"
+                        android:textStyle="bold" />
+
+                    <Switch
+                        android:id="@+id/ToggleButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/authenticateColor"
+                        android:showText="false"
+                        android:switchTextAppearance="@style/SwitchTextAppearance"
+                        android:textColor="@color/whiteText"
+                        android:textOff="@string/register"
+                        android:textOn="@string/login" />
+                </LinearLayout>
+
+            </TableLayout>
+        </HorizontalScrollView>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:layout_below="@+id/FormLayout"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/AuthenticateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/authenticateColor"
-            android:textColor="@color/buttonColor"
-            android:text="@string/register"/>
+            android:text="@string/register"
+            android:textColor="@color/buttonColor" />
+
         <Button
             android:id="@+id/CancelButton"
-            android:backgroundTint="@color/redCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/redCancel"
             android:text="@string/Cancel"
-            android:textStyle="bold"
-            android:textColor="@color/buttonColor"/>
+            android:textColor="@color/buttonColor"
+            android:textStyle="bold" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20sp">
+        android:layout_marginBottom="20sp"
+        android:gravity="center">
+
         <ProgressBar
             android:id="@+id/loginProgressBar"
             android:layout_width="wrap_content"
-            android:visibility="gone"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
     </LinearLayout>
 
 </RelativeLayout>

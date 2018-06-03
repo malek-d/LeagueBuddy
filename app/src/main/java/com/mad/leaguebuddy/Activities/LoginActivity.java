@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
             mProgBar.setVisibility(View.VISIBLE);
             String summonerName = mSummonerNameEditText.getText().toString();
             String region = UrlFactory.returnRegion(mRegion);
-            if(mFirebaseFactory.validateRegistration(this,mEmailEditText.getText().toString(),
+            if(!mFirebaseFactory.validateRegistration(this,mEmailEditText.getText().toString(),
                             mPasswordEditText.getText().toString(), summonerName, region)){
                 Toasty.info(getApplicationContext(), "Registration Failed", Toast.LENGTH_SHORT).show();
                 mProgBar.setVisibility(View.INVISIBLE);
@@ -143,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
             Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show();
         }else {
             mProgBar.setVisibility(View.VISIBLE);
-            if(mFirebaseFactory.validateLogin(this, mEmailEditText.getText().toString(), mPasswordEditText.getText().toString())){
+            if(!mFirebaseFactory.validateLogin(this, mEmailEditText.getText().toString(), mPasswordEditText.getText().toString())){
                 Toasty.info(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
                 mProgBar.setVisibility(View.INVISIBLE);
             }
