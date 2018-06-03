@@ -80,4 +80,7 @@
     <string name="summonerLevelTestString">Level: 30</string>
     <string name="arrowImageViewDescription">Temporary icon used for future functionality</string>
     <string name="summonerIconDescription">Summoner icon of this user will be displayed in this ImageView</string>
+    <string name="registrationFailedString">Registration Failed</string>
+    <string name="attemptingLoginString">Attempting login</string>
+    <string name="attemptingRegistrationString">Attempting registration</string>
 </resources>

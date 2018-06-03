@@ -15,6 +15,7 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mad.leaguebuddy.R;
 import com.mad.leaguebuddy.Model.FirebaseFactory;
 import com.mad.leaguebuddy.Handlers.UrlFactory;
+import com.victor.loading.newton.NewtonCradleLoading;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

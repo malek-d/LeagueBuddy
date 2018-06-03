@@ -36,6 +36,8 @@ import com.mad.leaguebuddy.Adapters.ChampionsAdapter;
 import com.mad.leaguebuddy.Handlers.RequestHandler;
 import com.mad.leaguebuddy.Handlers.SummonerHandler;
 import com.mad.leaguebuddy.Model.*;
+import com.victor.loading.newton.NewtonCradleLoading;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.profileImageView) protected ImageView mProfileIcon;
     @BindView(R.id.rankIcon) protected ImageView mRankIcon;
     @BindView(R.id.championMasteryView) protected RecyclerView mRecyclerView;
-    @BindView(R.id.statsProgressBar) protected ProgressBar mProgressBar;
+    @BindView(R.id.statsProgressBar) protected ProgressBar mStatsProgBar;
     @BindView(R.id.statsLayout) protected LinearLayout mStatsLayout;
 
     private ArrayList<Champion> mChampionList = new ArrayList<>();
@@ -250,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        mProgressBar.setVisibility(View.GONE);
+        mStatsProgBar.setVisibility(View.GONE);
     }
 
     /**
@@ -310,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            mProgressBar.setVisibility(View.GONE);
+            mStatsProgBar.setVisibility(View.GONE);
             for (int i = 0; i < 10; ++i) {
                 try {
                     JSONObject object = jsonArray.getJSONObject(i);

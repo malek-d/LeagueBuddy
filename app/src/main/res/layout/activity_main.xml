@@ -63,12 +63,15 @@
                 android:textSize="40sp"
                 android:textStyle="bold"/>
         </LinearLayout>
+
+
+
         <ProgressBar
             android:id="@+id/statsProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <LinearLayout
             android:id="@+id/statsLayout"
             android:layout_width="wrap_content"

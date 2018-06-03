@@ -4,13 +4,12 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/runeterra_targon_blurred">
-    <ProgressBar
-        android:id="@+id/historyProgressBar"
+
+    <com.victor.loading.newton.NewtonCradleLoading
+        android:id="@+id/CradleLoadingHistoryActivity"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="visible"
-        />
+        android:layout_height="40sp"
+        android:layout_centerInParent="true"/>
     <LinearLayout
 
         android:id="@+id/historyLayout"
@@ -21,6 +20,7 @@
         android:layout_marginRight="60dp"
         android:layout_marginTop="30dp"
         android:orientation="vertical">
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/matchHistoryRV"

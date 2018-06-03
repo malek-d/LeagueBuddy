@@ -20,6 +20,8 @@ import com.mad.leaguebuddy.Handlers.RequestHandler;
 import com.mad.leaguebuddy.Handlers.UrlFactory;
 import com.mad.leaguebuddy.Adapters.MatchAdapter;
 import com.mad.leaguebuddy.Model.Match;
+import com.victor.loading.book.BookLoading;
+import com.victor.loading.newton.NewtonCradleLoading;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +41,7 @@ public class PlayerHistoryActivity extends AppCompatActivity {
 
     @BindView(R.id.matchHistoryRV)protected RecyclerView mMatchHistoryRV;
     @BindView(R.id.historyLayout)protected LinearLayout mHistoryLayout;
-    @BindView(R.id.historyProgressBar) protected ProgressBar mProgressBar;
+    @BindView(R.id.CradleLoadingHistoryActivity) protected NewtonCradleLoading mNewtonCradleLoading;
 
     private ArrayList<Match> mMatchArrayList = new ArrayList<>();
     private MatchAdapter mMatchAdapter;
@@ -53,7 +55,7 @@ public class PlayerHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player_history);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
-
+        mNewtonCradleLoading.start();
         mMatchAdapter = new MatchAdapter(mMatchArrayList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         mMatchHistoryRV.setLayoutManager(layoutManager);
@@ -121,11 +123,13 @@ public class PlayerHistoryActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
             if(jsonArray == null){
-                mProgressBar.setVisibility(View.GONE);
+                mNewtonCradleLoading.stop();
+                mNewtonCradleLoading.setVisibility(View.GONE);
                 Toasty.info(PlayerHistoryActivity.this, "No match history data found :(", Toast.LENGTH_SHORT).show();
                 Log.d(LOG_TAG, "onPostExecute: PlayerHistoryActivity class no data found for user");
             } else{
-                mProgressBar.setVisibility(View.GONE);
+                mNewtonCradleLoading.stop();
+                mNewtonCradleLoading.setVisibility(View.GONE);
                 for(int i = 0; i < 20; ++i){
                     try{
                         JSONObject current = jsonArray.getJSONObject(i);

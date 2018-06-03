@@ -21,6 +21,7 @@ import com.mad.leaguebuddy.Handlers.UrlFactory;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.regionSpinner) protected MaterialSpinner mRegionSpinner;
     @BindView(R.id.summonerEditText) protected EditText mSummonerNameEditText;
     @BindView(R.id.ToggleButton) protected Switch mToggleBtn;
-    @BindView(R.id.loginProgressBar) protected ProgressBar mProgBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,21 +119,20 @@ public class LoginActivity extends AppCompatActivity {
     private void tryRegister() {
         if(mEmailEditText.getText().toString().equals("") || mPasswordEditText.getText().toString()
                 .equals("") || mSummonerNameEditText.getText().toString().equals("")){
-            Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show(); //I changed your strings thing to enter instead of Entire btw
-        }else if(mRegion == null || mRegion == "DEFAULT"){
+            Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show();
+        }else if(mRegion == null || mRegion.equals("DEFAULT")){
             Toasty.error(this, getString(R.string.selectRegionString), Toast.LENGTH_SHORT).show();
         }else {
-            mProgBar.setVisibility(View.VISIBLE);
+            Toasty.info(this, getString(R.string.attemptingRegistrationString), Toast.LENGTH_LONG ).show();
             String summonerName = mSummonerNameEditText.getText().toString();
             String region = UrlFactory.returnRegion(mRegion);
             if(!mFirebaseFactory.validateRegistration(this,mEmailEditText.getText().toString(),
-                            mPasswordEditText.getText().toString(), summonerName, region)){
-                Toasty.info(getApplicationContext(), "Registration Failed", Toast.LENGTH_SHORT).show();
-                mProgBar.setVisibility(View.INVISIBLE);
+                    mPasswordEditText.getText().toString(), summonerName, region)){
+                Toasty.info(getApplicationContext(), getString(R.string.registrationFailedString), Toast.LENGTH_SHORT).show();
+
             }
         }
     }
-
     /**
      * Checks if user has entered all required fields and if they have then proceeds to log them in
      * Otherwise alerts user they need to enter all fields
@@ -142,10 +141,10 @@ public class LoginActivity extends AppCompatActivity {
         if(mEmailEditText.getText().toString().equals("") || mPasswordEditText.getText().toString().equals("")){
             Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show();
         }else {
-            mProgBar.setVisibility(View.VISIBLE);
+            Toasty.info(this, getString(R.string.attemptingLoginString), Toast.LENGTH_LONG ).show();
             if(!mFirebaseFactory.validateLogin(this, mEmailEditText.getText().toString(), mPasswordEditText.getText().toString())){
-                Toasty.info(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
-                mProgBar.setVisibility(View.INVISIBLE);
+                Toasty.info(getApplicationContext(), getString(R.string.loginFailedString), Toast.LENGTH_SHORT).show();
+
             }
         }
     }

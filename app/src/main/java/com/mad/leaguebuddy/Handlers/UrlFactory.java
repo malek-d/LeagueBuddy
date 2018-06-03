@@ -13,10 +13,10 @@ public class UrlFactory {
     private static final String API_KEY = "?api_key=RGAPI-0f76286c-8a5e-41db-ace9-f14f2b98e7a0";
     private static final String LEAGUE_URL = "league/v3/positions/by-summoner/";
     private static final String CHAMPION_MASTERY_URL = "champion-mastery/v3/champion-masteries/by-summoner/";
-    private static final String DDRAGON_IMAGE_URL = "http://ddragon.leagueoflegends.com/cdn/8.10.1/img/profileicon/";
+    private static final String DDRAGON_IMAGE_URL = "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/profileicon/";
     private static final String PNG_FORMAT = ".png";
     private static final String MATCH_URL = "match/v3/matchlists/by-account/";
-    private static final String DDRAGON_CHAMPION_URL = "ddragon.leagueoflegends.com/cdn/8.10.1/img/champion/";
+    private static final String DDRAGON_CHAMPION_URL = "ddragon.leagueoflegends.com/cdn/8.11.1/img/champion/";
     //End of declarations
 
     /**

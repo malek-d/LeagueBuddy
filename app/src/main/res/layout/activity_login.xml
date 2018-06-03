@@ -24,6 +24,7 @@
             android:src="@drawable/league_of_legends_logo_transparent" />
     </LinearLayout>
 
+
     <LinearLayout
         android:id="@+id/FormLayout"
         android:layout_width="match_parent"
@@ -33,6 +34,7 @@
         android:layout_marginRight="10sp"
         android:orientation="vertical">
 
+
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,9 +43,9 @@
             android:background="@drawable/bordered_background">
 
             <TableLayout
-                    android:layout_height="wrap_content"
-                    android:stretchColumns="1"
-                    android:layout_width="wrap_content">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1">
 
                 <TableRow>
 
@@ -152,11 +154,12 @@
         android:layout_marginBottom="20sp"
         android:gravity="center">
 
-        <ProgressBar
-            android:id="@+id/loginProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+
+        <!--<ProgressBar-->
+        <!--android:id="@+id/loginProgressBar"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:visibility="gone" />-->
     </LinearLayout>
 
 </RelativeLayout>

@@ -838,5 +838,12 @@
             "id": 516,
             "key": "Ornn",
             "name": "Ornn"
+        },
+        "555": {
+          "title": "the Bloodharbor Ripper",
+          "id": 555,
+          "name": "Pyke",
+          "key": "Pyke"
         }
+
 }

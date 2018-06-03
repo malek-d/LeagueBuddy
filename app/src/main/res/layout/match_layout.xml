@@ -25,8 +25,8 @@
             <ImageView
                 android:contentDescription="@string/laneImageViewDescription"
                 android:id="@+id/laneImageView"
-                android:layout_width="20sp"
-                android:layout_height="20sp"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
                 android:layout_gravity="center"
                 android:src="@drawable/poro_question" />
 
@@ -41,6 +41,7 @@
         </LinearLayout>
 
         <LinearLayout
+
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_marginStart="20sp"
@@ -72,11 +73,12 @@
                 android:gravity="bottom"
                 android:text="@string/gameDateString"
                 android:textColor="@color/whiteText"
-                android:textSize="11sp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginStart="5sp"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_width="0sp"
@@ -87,14 +89,13 @@
                 android:contentDescription="@string/matchChampionIconTVDescription"
                 android:src="@drawable/poro_question"
                 android:id="@+id/matchChampionIconIV"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="20sp" />
 
             <TextView
-                android:layout_marginEnd="2sp"
-                android:layout_gravity="center"
+                android:layout_gravity="start"
                 android:id="@+id/matchChampionNameTV"
                 android:layout_width="wrap_content"
                 android:text="@string/testString"

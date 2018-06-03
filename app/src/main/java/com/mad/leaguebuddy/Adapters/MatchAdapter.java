@@ -41,7 +41,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
          * Binds all widgets to their respective view in the xml
          * @param itemView
          */
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
             mLaneImageView = itemView.findViewById(R.id.laneImageView);
             mMatchChampionIconIV = itemView.findViewById(R.id.matchChampionIconIV);
@@ -55,8 +55,8 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
 
     /**
      * Constructor of this class, takes in an ArrayList of matches aswell as the Activity context
-     * @param matchArrayList
-     * @param context
+     * @param matchArrayList An arralist containing Match objects to display within recyclerView
+     * @param context The activities context
      */
     public MatchAdapter(ArrayList<Match> matchArrayList, Context context) {
         mMatchArrayList = matchArrayList;
