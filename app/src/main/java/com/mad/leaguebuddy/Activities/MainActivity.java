@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SummonerHandler mSummonerHandler = new SummonerHandler();
     private FirebaseFactory mFirebaseFactory = FirebaseFactory.getInstance(this);
-    private UrlFactory UrlFactory = new UrlFactory();
+    private UrlFactory mUrlFactory = new UrlFactory();
 
     private String mSummonerName, mURL, mRegion, mRankedURL, mAccountId;
     private Long mSummonerId;
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     jsonArray = new RankedInfoAsyncClass(mRankedURL).execute().get();
                     displayRankedInfo(jsonArray);
-                    masteryTask(UrlFactory.getChampionMasteryUrl(mSummonerId.toString(), mRegion));
+                    masteryTask(mUrlFactory.getChampionMasteryUrl(mSummonerId.toString(), mRegion));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
                 mSummonerNameText.setText(mSummonerName);
                 mFirebaseFactory.setRegion(ds.child("region").getValue().toString());
                 mRegion = mFirebaseFactory.getRegion();
-                mURL = UrlFactory.getSummonerURL(mSummonerName, mRegion.toLowerCase());
+                mURL = mUrlFactory.getSummonerURL(mSummonerName, mRegion.toLowerCase());
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new SummonerAsyncClass(mURL).execute().get();
@@ -265,8 +265,8 @@ public class MainActivity extends AppCompatActivity {
             mSummonerId = new Long(id);
 
             mAccountId = s.getString("accountId");
-            mRankedURL = UrlFactory.getRankedStatsURL(mRegion.toLowerCase(), mSummonerId);
-            mSummonerHandler.glideHelper(MainActivity.this, UrlFactory.getDdragonImageUrl
+            mRankedURL = mUrlFactory.getRankedStatsURL(mRegion.toLowerCase(), mSummonerId);
+            mSummonerHandler.glideHelper(MainActivity.this, mUrlFactory.getDdragonImageUrl
                     (s.getString("profileIconId")), R.drawable.poro_question, mProfileIcon);
             mLevelText.setText(getString(R.string.levelString) + " " + s.getString("summonerLevel"));
 
@@ -297,16 +297,16 @@ public class MainActivity extends AppCompatActivity {
      * to be forwarded to the adapter
      */
     private class championMasteryTask extends AsyncTask<Void, Void, JSONArray> {
-        private String masteryURL;
+        private String mMasteryURL;
 
         public championMasteryTask(String championMasteryUrl) {
-            masteryURL = championMasteryUrl;
+            mMasteryURL = championMasteryUrl;
         }
 
         @Override
         protected JSONArray doInBackground(Void... voids) {
             RequestHandler rh = new RequestHandler();
-            return rh.RequestHandlerAsJsonArray(masteryURL);
+            return rh.RequestHandlerAsJsonArray(mMasteryURL);
         }
 
         @Override

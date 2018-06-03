@@ -8,20 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.mad.leaguebuddy.Handlers.UrlFactory;
 import com.mad.leaguebuddy.R;
 import com.mad.leaguebuddy.Model.FirebaseFactory;
-import com.mad.leaguebuddy.Handlers.UrlFactory;
 
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +32,7 @@ import es.dmoral.toasty.Toasty;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "";
     private boolean mBool; //Rename to make more sense i.e. isLogin, isBtnLogin or something
-    private UrlFactory UrlFactory = new UrlFactory();
+    private UrlFactory mUrlFactory = new UrlFactory();
     private String mRegion;
     private FirebaseFactory mFirebaseFactory = FirebaseFactory.getInstance(this);
     private FirebaseAuth mAuth;
@@ -125,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
         }else {
             Toasty.info(this, getString(R.string.attemptingRegistrationString), Toast.LENGTH_LONG ).show();
             String summonerName = mSummonerNameEditText.getText().toString();
-            String region = UrlFactory.returnRegion(mRegion);
+            String region = mUrlFactory.returnRegion(mRegion);
             if(!mFirebaseFactory.validateRegistration(this,mEmailEditText.getText().toString(),
                     mPasswordEditText.getText().toString(), summonerName, region)){
                 Toasty.info(getApplicationContext(), getString(R.string.registrationFailedString), Toast.LENGTH_SHORT).show();

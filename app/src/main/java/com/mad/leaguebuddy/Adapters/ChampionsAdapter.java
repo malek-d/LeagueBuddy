@@ -106,21 +106,21 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
      */
     private class getChampionInfoTask extends AsyncTask<Void, Void, String> {
         private Champion mChamp;
-        private TextView championNameTV;
-        private ImageView championIconIV;
+        private TextView mChampNameTV;
+        private ImageView mChampIconIV;
         private int mChampionArrayPosition;
-        private ProgressBar progressBar;
+        private ProgressBar mProgressBar;
 
         public getChampionInfoTask(int position, TextView champName, ImageView champIcon, ProgressBar progress) {
-            championNameTV = champName;
+            mChampNameTV = champName;
             mChampionArrayPosition = position;
-            championIconIV = champIcon;
-            progressBar = progress;
+            mChampIconIV = champIcon;
+            mProgressBar = progress;
         }
 
         @Override
         protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -138,14 +138,14 @@ public class ChampionsAdapter extends RecyclerView.Adapter<ChampionsAdapter.MyVi
                 mChamp.setChampionKey(champion.getString("key"));
                 mChamp.setChampionName(champion.getString("name"));
                 mChamp.setChampionTitle(champion.getString("title"));
-                championNameTV.setText(mChamp.getChampionName() + "\n" + mChamp.getChampionTitle());
+                mChampNameTV.setText(mChamp.getChampionName() + "\n" + mChamp.getChampionTitle());
                 SummonerHandler summonerHandler = new SummonerHandler();
                 UrlFactory UrlFactory = new UrlFactory();
-                summonerHandler.glideHelper(mContext, UrlFactory.getDdragonChampionUrl(mChamp.getChampionKey()), 0 , championIconIV );
+                summonerHandler.glideHelper(mContext, UrlFactory.getDdragonChampionUrl(mChamp.getChampionKey()), 0 , mChampIconIV );
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            progressBar.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 
