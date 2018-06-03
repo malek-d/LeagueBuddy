@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20sp"
+        android:layout_marginRight="60sp"
+        android:layout_marginTop="20sp"
         android:background="@drawable/bordered_background"
         android:orientation="vertical">
 
@@ -22,7 +22,7 @@
 
             <EditText
                 android:id="@+id/searchSummonerNameEditText"
-                android:layout_width="0dp"
+                android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:hint="@string/searchForSummoner"
@@ -31,7 +31,7 @@
 
             <ImageView
 
-                android:layout_width="0dp"
+                android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="commenceSearch"
@@ -47,10 +47,9 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/searchResultRV"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="20sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/regionSpinner"></android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content" />
 
 
     </LinearLayout>

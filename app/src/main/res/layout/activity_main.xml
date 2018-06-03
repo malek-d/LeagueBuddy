@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/freljord_main_blurred"
     android:orientation="vertical"
-    tools:context="com.mad.leaguebuddy.activities.MainActivity">
+    tools:context="com.mad.leaguebuddy.Activities.MainActivity">
 
     <RelativeLayout
         android:id="@+id/content"
@@ -63,7 +63,12 @@
                 android:textSize="40sp"
                 android:textStyle="bold"/>
         </LinearLayout>
-
+        <ProgressBar
+            android:id="@+id/statsProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            />
         <LinearLayout
             android:id="@+id/statsLayout"
             android:layout_width="wrap_content"
@@ -77,11 +82,7 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <ProgressBar
-                android:id="@+id/statsProgressBar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"/>
+
 
             <TextView
                 android:id="@+id/soloqueueTitleTV"
@@ -97,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="20sp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -178,17 +179,17 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/championMasteryView"
-            android:layout_width="0dp"
+            android:layout_width="0sp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/statsLayout"
             android:layout_alignRight="@id/statsLayout"
             android:layout_below="@id/statsLayout"
             android:orientation="horizontal"
             >
-
         </android.support.v7.widget.RecyclerView>
 
         <TextView
+            android:background="@color/slightlyTransparent"
             android:id="@+id/mLastOnlineTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

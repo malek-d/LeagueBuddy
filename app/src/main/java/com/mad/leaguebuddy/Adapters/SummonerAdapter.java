@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.adapters;
+package com.mad.leaguebuddy.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,9 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.ViewModel.SummonerHandler;
-import com.mad.leaguebuddy.ViewModel.UrlFactory;
-import com.mad.leaguebuddy.model.Summoner;
+import com.mad.leaguebuddy.Handlers.SummonerHandler;
+import com.mad.leaguebuddy.Handlers.UrlFactory;
+import com.mad.leaguebuddy.Model.Summoner;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

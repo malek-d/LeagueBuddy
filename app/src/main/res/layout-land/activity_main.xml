@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/freljord_main_blurred"
     android:orientation="vertical"
-    tools:context="com.mad.leaguebuddy.activities.MainActivity">
+    tools:context="com.mad.leaguebuddy.Activities.MainActivity">
 
     <ScrollView
         android:layout_width="wrap_content"

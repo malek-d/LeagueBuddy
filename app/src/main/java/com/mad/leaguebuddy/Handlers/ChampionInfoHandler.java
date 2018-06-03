@@ -1,8 +1,8 @@
-package com.mad.leaguebuddy.ViewModel;
+package com.mad.leaguebuddy.Handlers;
 
 import android.content.Context;
 
-import com.mad.leaguebuddy.model.Champion;
+import com.mad.leaguebuddy.Model.Champion;
 
 import org.json.JSONException;
 import org.json.JSONObject;

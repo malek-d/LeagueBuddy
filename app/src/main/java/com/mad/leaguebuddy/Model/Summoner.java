@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.model;
+package com.mad.leaguebuddy.Model;
 
 /**
  * Created by Maleks on 24-Apr-18.

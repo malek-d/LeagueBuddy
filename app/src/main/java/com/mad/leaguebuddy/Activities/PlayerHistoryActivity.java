@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.activities;
+package com.mad.leaguebuddy.Activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -7,16 +7,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.model.FirebaseFactory;
-import com.mad.leaguebuddy.ViewModel.RequestHandler;
-import com.mad.leaguebuddy.ViewModel.UrlFactory;
-import com.mad.leaguebuddy.adapters.MatchAdapter;
-import com.mad.leaguebuddy.model.Match;
+import com.mad.leaguebuddy.Model.FirebaseFactory;
+import com.mad.leaguebuddy.Handlers.RequestHandler;
+import com.mad.leaguebuddy.Handlers.UrlFactory;
+import com.mad.leaguebuddy.Adapters.MatchAdapter;
+import com.mad.leaguebuddy.Model.Match;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,8 +35,11 @@ import es.dmoral.toasty.Toasty;
  * This activity handles the display of the users match history data from their 20 most recent games
  */
 public class PlayerHistoryActivity extends AppCompatActivity {
+    private static final String LOG_TAG = "tag";
+
     @BindView(R.id.matchHistoryRV)protected RecyclerView mMatchHistoryRV;
     @BindView(R.id.historyLayout)protected LinearLayout mHistoryLayout;
+    @BindView(R.id.historyProgressBar) protected ProgressBar mProgressBar;
 
     private ArrayList<Match> mMatchArrayList = new ArrayList<>();
     private MatchAdapter mMatchAdapter;
@@ -107,6 +113,7 @@ public class PlayerHistoryActivity extends AppCompatActivity {
                 return jsonArray;
             } catch(JSONException e){
                 e.printStackTrace();
+                Log.d(LOG_TAG, "Bad JSON file returned, see stack trace");
             }
             return null;
         }
@@ -114,7 +121,11 @@ public class PlayerHistoryActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
             if(jsonArray == null){
+                mProgressBar.setVisibility(View.GONE);
+                Toasty.info(PlayerHistoryActivity.this, "No match history data found :(", Toast.LENGTH_SHORT).show();
+                Log.d(LOG_TAG, "onPostExecute: PlayerHistoryActivity class no data found for user");
             } else{
+                mProgressBar.setVisibility(View.GONE);
                 for(int i = 0; i < 20; ++i){
                     try{
                         JSONObject current = jsonArray.getJSONObject(i);
@@ -125,6 +136,7 @@ public class PlayerHistoryActivity extends AppCompatActivity {
                         mMatchAdapter.notifyItemInserted(mMatchArrayList.size() - 1);
                     } catch(JSONException e){
                         e.printStackTrace();
+                        Log.d(LOG_TAG, "Bad JSON file returned, see stack trace");
                     }
                 }
             }

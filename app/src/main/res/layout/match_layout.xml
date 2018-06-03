@@ -1,90 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100sp"
-    android:background="@drawable/bordered_item_background"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="5sp"
+    android:background="@drawable/bordered_item_background">
 
     <LinearLayout
+        android:baselineAligned="false"
         android:id="@+id/imageLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:orientation="horizontal">
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0sp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10sp"
+            android:layout_weight="1"
             android:orientation="vertical">
+
             <ImageView
+                android:contentDescription="@string/laneImageViewDescription"
                 android:id="@+id/laneImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:maxHeight="20dp"
-                android:maxWidth="20dp"/>
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_gravity="center"
+                android:src="@drawable/poro_question" />
+
             <TextView
-                android:gravity="center"
-                android:textColor="@color/whiteText"
                 android:id="@+id/laneTV"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/botLaneString"
+                android:layout_gravity="center"
+                android:textColor="@color/whiteText" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0sp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20sp"
+            android:layout_weight="3"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:text="@string/summonersRiftString"
+                android:id="@+id/mapNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginEnd="5sp"
+                android:textColor="@color/whiteText" />
 
-                <TextView
-                    android:textColor="@color/whiteText"
-                    android:id="@+id/mapNameTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_height="wrap_content"/>
+            <TextView
+                android:text="@string/_5v5_ranked_queue"
+                android:id="@+id/queueTypeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/whiteText" />
 
-                <TextView
-                    android:textColor="@color/whiteText"
-                    android:id="@+id/queueTypeTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+            <TextView
+                android:id="@+id/gameDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="20sp"
 
+                android:gravity="bottom"
+                android:text="@string/gameDateString"
+                android:textColor="@color/whiteText"
+                android:textSize="11sp" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:contentDescription="@string/matchChampionIconTVDescription"
+                android:src="@drawable/poro_question"
+                android:id="@+id/matchChampionIconIV"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20sp" />
+
+            <TextView
+                android:layout_marginEnd="2sp"
+                android:layout_gravity="center"
+                android:id="@+id/matchChampionNameTV"
+                android:layout_width="wrap_content"
+                android:text="@string/testString"
+                android:layout_height="wrap_content"
+                android:textColor="@color/whiteText"
+                android:textSize="12sp" />
+        </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:text="Game date: 2432442343243"
-        android:textSize="10dp"
-        android:id="@+id/gameDateTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/whiteText"/>
-
-        <ImageView
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:id="@+id/matchChampionIconIV"
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
-        <TextView
-            android:textSize="12dp"
-            android:layout_marginRight="20dp"
-            android:layout_below="@id/matchChampionIconIV"
-            android:layout_alignParentRight="true"
-            android:layout_height="wrap_content"
-            android:textColor="@color/whiteText"
-            android:id="@+id/matchChampionNameTV"
-            android:layout_width="wrap_content"/>
-
 </RelativeLayout>

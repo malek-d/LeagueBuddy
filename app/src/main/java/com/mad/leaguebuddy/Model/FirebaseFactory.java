@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.model;
+package com.mad.leaguebuddy.Model;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.mad.leaguebuddy.activities.MainActivity;
+import com.mad.leaguebuddy.Activities.MainActivity;
 
 /**
  * Java class that handles all FireBase java code in a singleton pattern

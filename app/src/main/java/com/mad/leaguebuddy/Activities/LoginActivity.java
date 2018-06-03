@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.activities;
+package com.mad.leaguebuddy.Activities;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -8,14 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.model.FirebaseFactory;
-import com.mad.leaguebuddy.ViewModel.UrlFactory;
+import com.mad.leaguebuddy.Model.FirebaseFactory;
+import com.mad.leaguebuddy.Handlers.UrlFactory;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.regionSpinner) protected MaterialSpinner mRegionSpinner;
     @BindView(R.id.summonerEditText) protected EditText mSummonerNameEditText;
     @BindView(R.id.ToggleButton) protected Switch mToggleBtn;
+    @BindView(R.id.loginProgressBar) protected ProgressBar mProgBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,11 +123,13 @@ public class LoginActivity extends AppCompatActivity {
         }else if(mRegion == null || mRegion == "DEFAULT"){
             Toasty.error(this, getString(R.string.selectRegionString), Toast.LENGTH_SHORT).show();
         }else {
+            mProgBar.setVisibility(View.VISIBLE);
             String summonerName = mSummonerNameEditText.getText().toString();
             String region = UrlFactory.returnRegion(mRegion);
             if(mFirebaseFactory.validateRegistration(this,mEmailEditText.getText().toString(),
                             mPasswordEditText.getText().toString(), summonerName, region)){
                 Toasty.info(getApplicationContext(), "Registration Failed", Toast.LENGTH_SHORT).show();
+                mProgBar.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -138,8 +142,10 @@ public class LoginActivity extends AppCompatActivity {
         if(mEmailEditText.getText().toString().equals("") || mPasswordEditText.getText().toString().equals("")){
             Toasty.error(this, getString(R.string.emptyFieldsString), Toast.LENGTH_SHORT).show();
         }else {
+            mProgBar.setVisibility(View.VISIBLE);
             if(mFirebaseFactory.validateLogin(this, mEmailEditText.getText().toString(), mPasswordEditText.getText().toString())){
                 Toasty.info(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
+                mProgBar.setVisibility(View.INVISIBLE);
             }
         }
     }

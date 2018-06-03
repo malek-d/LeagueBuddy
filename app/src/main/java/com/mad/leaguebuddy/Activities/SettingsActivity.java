@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.activities;
+package com.mad.leaguebuddy.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,12 +8,13 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.model.FirebaseFactory;
-import com.mad.leaguebuddy.ViewModel.UrlFactory;
+import com.mad.leaguebuddy.Model.FirebaseFactory;
+import com.mad.leaguebuddy.Handlers.UrlFactory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.regionSpinner)protected MaterialSpinner mRegionSpinner;
     @BindView(R.id.logOutBtn)protected FButton mLogOutBtn;
     @BindView(R.id.updateInfoBtn)protected FButton mUpdateInfoBtn;
+    @BindView(R.id.settingsProgressBar) protected ProgressBar mSettingsProgressBar;
     private String mRegion;
     private UrlFactory mUrlFactor = new UrlFactory();
     private FirebaseFactory mFirebaseFactory = FirebaseFactory.getInstance(this);
@@ -70,6 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
      * @param view
      */
     public void updateInfo(View view) {
+        mSettingsProgressBar.setVisibility(View.VISIBLE);
         authenticateChange();
     }
 
@@ -90,6 +93,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void authenticateChange() {
         if(mRegion == null || mRegion == "DEFAULT"){
             Toasty.error(this, getString(R.string.selectRegionString), Toast.LENGTH_SHORT).show();
+            mSettingsProgressBar.setVisibility(View.GONE);
         }else{
             mFirebaseFactory.updateUserInfo(mUserNameET.getText().toString(), mRegion);
             Toasty.success(this, "Change successful", Toast.LENGTH_SHORT).show();

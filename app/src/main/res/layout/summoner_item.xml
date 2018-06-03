@@ -12,7 +12,8 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/summonerIconDescription"
+            android:layout_marginStart="10dp"
             android:layout_gravity="center_vertical"
             android:id="@+id/summonerIcon"
             android:layout_width="60dp"
@@ -21,7 +22,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -29,16 +30,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="Counterlogic"
+                android:text="@string/summonerNameTestString"
                 android:textColor="@color/whiteText"
-                android:textSize="20dp"/>
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/summonerLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/whiteText"
-                android:text="Level: 30"/>
+                android:text="@string/summonerLevelTestString"/>
             <TextView
                 android:id="@+id/searchLastOnlineTV"
                 android:textColor="@color/whiteText"
@@ -50,9 +51,10 @@
     </LinearLayout>
 
     <ImageView
+        android:contentDescription="@string/arrowImageViewDescription"
         android:layout_centerVertical="true"
-        android:layout_marginRight="30dp"
-        android:layout_alignParentRight="true"
+        android:layout_marginEnd="30dp"
+        android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_select_item_white"/>

@@ -2,7 +2,7 @@ package com.mad.leaguebuddy.AsyncTasks;
 
 import android.os.AsyncTask;
 
-import com.mad.leaguebuddy.ViewModel.RequestHandler;
+import com.mad.leaguebuddy.Handlers.RequestHandler;
 
 import org.json.JSONObject;
 

@@ -64,4 +64,20 @@
     <string name="logOutString">Log Out</string>
     <string name="deleteString">Delete Account</string>
     <string name="homeClickString">This is the home page!</string>
+    <string name="botLaneString">BOTTOM</string>
+    <string name="testString">Jinx</string>
+    <string name="summonersRiftString">Summoner\'s Rift</string>
+    <string name="_5v5_ranked_queue">5v5 Ranked Queue</string>
+    <string name="botLaneString1">Bot Lane</string>
+    <string name="midLaneString">Mid Lane</string>
+    <string name="jungleString">Jungle</string>
+    <string name="topLaneString">Top lane</string>
+    <string name="supportString">Support</string>
+    <string name="championIconDescription">Image of a champion is displayed in this ImageView</string>
+    <string name="laneImageViewDescription">Image of the lane played will display here</string>
+    <string name="matchChampionIconTVDescription">Image of championn played will be displayed here</string>
+    <string name="summonerNameTestString">Counterlogic</string>
+    <string name="summonerLevelTestString">Level: 30</string>
+    <string name="arrowImageViewDescription">Temporary icon used for future functionality</string>
+    <string name="summonerIconDescription">Summoner icon of this user will be displayed in this ImageView</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.adapters;
+package com.mad.leaguebuddy.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,17 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.ViewModel.ChampionInfoHandler;
-import com.mad.leaguebuddy.ViewModel.SummonerHandler;
-import com.mad.leaguebuddy.ViewModel.UrlFactory;
-import com.mad.leaguebuddy.model.Champion;
-import com.mad.leaguebuddy.model.Match;
+import com.mad.leaguebuddy.Handlers.ChampionInfoHandler;
+import com.mad.leaguebuddy.Handlers.SummonerHandler;
+import com.mad.leaguebuddy.Handlers.UrlFactory;
+import com.mad.leaguebuddy.Model.Champion;
+import com.mad.leaguebuddy.Model.Match;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import butterknife.BindView;
 
 /**
  * Created by Maleks on 12-May-18.
@@ -102,21 +100,25 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
     private void setLaneIcon(Match match, ImageView laneImageView) {
         switch(match.getLane()){
             case "BOTTOM":
+                match.setLane(mContext.getString(R.string.botLaneString1));
                 laneImageView.setImageResource(R.mipmap.bot_lane_icon);
                 break;
             case "MID":
+                match.setLane(mContext.getString(R.string.midLaneString));
                 laneImageView.setImageResource(R.mipmap.mid_lane_icon);
                 break;
             case "JUNGLE":
+                match.setLane(mContext.getString(R.string.jungleString));
                 laneImageView.setImageResource(R.mipmap.jungle_icon);
                 break;
             case "TOP":
+                match.setLane(mContext.getString(R.string.topLaneString));
                 laneImageView.setImageResource(R.mipmap.top_lane_icon);
                 break;
         }
         if(match.getRole().equals("DUO_SUPPORT")){
             laneImageView.setImageResource(R.mipmap.support_icon);
-            match.setLane("SUPPORT");
+            match.setLane(mContext.getString(R.string.supportString));
         }
     }
     @Override

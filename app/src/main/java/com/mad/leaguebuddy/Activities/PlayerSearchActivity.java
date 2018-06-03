@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.activities;
+package com.mad.leaguebuddy.Activities;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -15,23 +15,19 @@ import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mad.leaguebuddy.R;
-import com.mad.leaguebuddy.ViewModel.RequestHandler;
-import com.mad.leaguebuddy.ViewModel.UrlFactory;
-import com.mad.leaguebuddy.model.Summoner;
-import com.mad.leaguebuddy.adapters.SummonerAdapter;
+import com.mad.leaguebuddy.Handlers.RequestHandler;
+import com.mad.leaguebuddy.Handlers.UrlFactory;
+import com.mad.leaguebuddy.Model.Summoner;
+import com.mad.leaguebuddy.Adapters.SummonerAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * This activity allows the user to search up for other users in any other given region
@@ -57,6 +53,8 @@ public class PlayerSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player_search);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
+
+        mSummonerName.setHintTextColor(getResources().getColor(R.color.fbutton_color_concrete));
 
         mAdapter = new SummonerAdapter(mSummoners, PlayerSearchActivity.this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());

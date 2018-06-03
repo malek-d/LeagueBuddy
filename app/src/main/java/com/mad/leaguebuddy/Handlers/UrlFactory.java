@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.ViewModel;
+package com.mad.leaguebuddy.Handlers;
 
 /**
  * Backbone handler class for this project which constructs and provides all web services URLs

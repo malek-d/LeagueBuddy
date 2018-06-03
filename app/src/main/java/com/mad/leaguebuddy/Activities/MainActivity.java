@@ -1,4 +1,4 @@
-package com.mad.leaguebuddy.activities;
+package com.mad.leaguebuddy.Activities;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -30,12 +30,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.mad.leaguebuddy.R;
 import com.mad.leaguebuddy.AsyncTasks.SummonerAsyncClass;
 import com.mad.leaguebuddy.AsyncTasks.RankedInfoAsyncClass;
-import com.mad.leaguebuddy.model.FirebaseFactory;
-import com.mad.leaguebuddy.ViewModel.UrlFactory;
-import com.mad.leaguebuddy.adapters.ChampionsAdapter;
-import com.mad.leaguebuddy.ViewModel.RequestHandler;
-import com.mad.leaguebuddy.ViewModel.SummonerHandler;
-import com.mad.leaguebuddy.model.*;
+import com.mad.leaguebuddy.Model.FirebaseFactory;
+import com.mad.leaguebuddy.Handlers.UrlFactory;
+import com.mad.leaguebuddy.Adapters.ChampionsAdapter;
+import com.mad.leaguebuddy.Handlers.RequestHandler;
+import com.mad.leaguebuddy.Handlers.SummonerHandler;
+import com.mad.leaguebuddy.Model.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,9 +76,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.winrateTextView) protected TextView mAverageTextView;
     @BindView(R.id.mLastOnlineTV) protected TextView mLastOnlineTextView;
     @BindView(R.id.soloqueueTitleTV) protected TextView mSoloQueueTitle;
-
     @BindView(R.id.profileImageView) protected ImageView mProfileIcon;
-    @BindView(R.id.rankIcon)protected ImageView mRankIcon;
+    @BindView(R.id.rankIcon) protected ImageView mRankIcon;
     @BindView(R.id.championMasteryView) protected RecyclerView mRecyclerView;
     @BindView(R.id.statsProgressBar) protected ProgressBar mProgressBar;
     @BindView(R.id.statsLayout) protected LinearLayout mStatsLayout;
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch(item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.navigation_home:
                     Toasty.success(MainActivity.this, getString(R.string.homeClickString), Toast.LENGTH_SHORT).show();
                     return true;
@@ -132,25 +131,26 @@ public class MainActivity extends AppCompatActivity {
 
         mLevelText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-               JSONArray jsonArray = null;
-                try{
+                JSONArray jsonArray;
+                try {
                     jsonArray = new RankedInfoAsyncClass(mRankedURL).execute().get();
                     displayRankedInfo(jsonArray);
-                    //new ChampionMasteryTask(UrlFactory.getChampionMasteryUrl(mSummonerId.toString(), mRegion), mAdapter).execute().get();
                     masteryTask(UrlFactory.getChampionMasteryUrl(mSummonerId.toString(), mRegion));
-                } catch(InterruptedException e){
+                } catch (InterruptedException e) {
                     e.printStackTrace();
-                } catch(ExecutionException e){
+                } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {}
+            public void afterTextChanged(Editable editable) {
+            }
         });
 
         mAdapter = new ChampionsAdapter(mChampionList, MainActivity.this, mRegion);
@@ -165,8 +165,10 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 showData(dataSnapshot);
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
     }
 
@@ -184,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if(mAuthListener != null){
+        if (mAuthListener != null) {
             mFirebaseFactory.getAuth().removeAuthStateListener(mAuthListener);
         }
     }
@@ -193,11 +195,12 @@ public class MainActivity extends AppCompatActivity {
      * Method handles finding the correct user based on the provided snapshot of my Firebase Database
      * when found we save the username and region of the given user to be used in other activities
      * when needed
+     *
      * @param dataSnapshot
      */
     public void showData(DataSnapshot dataSnapshot) {
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            if(ds.getKey().equals(mUser.getUid())){
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            if (ds.getKey().equals(mUser.getUid())) {
                 mFirebaseFactory.setUserName(ds.child("summonerName").getValue().toString());
                 mSummonerName = mFirebaseFactory.getUserName();
                 mSummonerNameText.setText(mSummonerName);
@@ -205,11 +208,11 @@ public class MainActivity extends AppCompatActivity {
                 mRegion = mFirebaseFactory.getRegion();
                 mURL = UrlFactory.getSummonerURL(mSummonerName, mRegion.toLowerCase());
                 JSONObject jsonObject = null;
-                try{
+                try {
                     jsonObject = new SummonerAsyncClass(mURL).execute().get();
-                } catch(InterruptedException e){
+                } catch (InterruptedException e) {
                     e.printStackTrace();
-                } catch(ExecutionException e){
+                } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
                 displaySummonerInfo(jsonObject);
@@ -219,10 +222,12 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Display info retrieved from the AsyncTask class of RankedInfoAsyncClass
+     *
      * @param array
      */
-    private void displayRankedInfo(JSONArray array){
-        try{
+    private void displayRankedInfo(JSONArray array) {
+        try {
+
             mStatsLayout.setVisibility(View.VISIBLE);
             JSONObject object = array.getJSONObject(0);
             mRankTextView.setText(object.getString("tier") + " " + object.getString("rank"));
@@ -233,16 +238,16 @@ public class MainActivity extends AppCompatActivity {
             int losses = Integer.parseInt(object.getString("losses"));
             double winrate = (wins + losses);
             winrate = Math.round(((wins / winrate) * 100) * 100) / 100;
-            if(winrate >= 50){
+            if (winrate >= 50) {
                 mAverageTextView.setTextColor(getResources().getColor(R.color.androidGreen));
-            } else{
+            } else {
                 mAverageTextView.setTextColor(getResources().getColor(R.color.negativeWinrateRed));
             }
             mAverageTextView.setText(new StringBuilder().append(winrate).append(getString
                     (R.string.percentString)).toString());
             setTitle(getString(R.string.tierNameString) + "  " + object.getString("leagueName"));
             mSummonerHandler.setRankIcon(object.getString("tier"), mRankIcon);
-        } catch(JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         mProgressBar.setVisibility(View.GONE);
@@ -250,10 +255,11 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Display summoner info retrieved from the AsyncTask in SummonerAsyncClass
+     *
      * @param s
      */
     private void displaySummonerInfo(JSONObject s) {
-        try{
+        try {
             int id = Integer.parseInt(s.getString("id"));
             mSummonerId = new Long(id);
 
@@ -263,19 +269,21 @@ public class MainActivity extends AppCompatActivity {
                     (s.getString("profileIconId")), R.drawable.poro_question, mProfileIcon);
             mLevelText.setText(getString(R.string.levelString) + " " + s.getString("summonerLevel"));
 
-            Long i =  Long.valueOf(s.getString("revisionDate"));
+            Long i = Long.valueOf(s.getString("revisionDate"));
             Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(i);
             SimpleDateFormat dateFormat = new SimpleDateFormat("E d/MMM hh:mm:ss a");
             mLastOnlineTextView.setText(getString(R.string.lastOnlineString) + " " +
                     dateFormat.format(cal.getTime()));
-        } catch(JSONException e){
+        } catch (JSONException e) {
             Log.d(TAG, "JSON FILE ERROR" + e);
         }
     }
+
     /**
      * This function instantiates the class championMasteryTask AsyncTask by also providing the
      * champion mastery url
+     *
      * @param championMasteryUrl
      */
     private void masteryTask(String championMasteryUrl) {
@@ -302,15 +310,16 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            for(int i = 0; i < 10; ++i){
-                try{
+            mProgressBar.setVisibility(View.GONE);
+            for (int i = 0; i < 10; ++i) {
+                try {
                     JSONObject object = jsonArray.getJSONObject(i);
                     Champion champion = new Champion(object.getString("championLevel"),
                             object.getString("championPoints"),
                             object.getString("championId"),
                             object.getString("championPointsUntilNextLevel"));
                     mChampionList.add(champion);
-                } catch(org.json.JSONException e){
+                } catch (org.json.JSONException e) {
                     Log.d(TAG, "JSON FILE ERROR" + e);
                 }
                 mAdapter.notifyDataSetChanged();
